@@ -1,3 +1,17 @@
 ---
-title: "the digital market"
+title: ""
 ---
+
+[![](images/title_image.png){fig-align="left" width="687"}](https://dribbble.com/shots/16115704-The-Digital-Dollar/attachments/7967833?mode=media)
+
+# the digital market
+
+\[Blerb about the DE\]
+
+## Introduction
+
+```{r libraries, warning=FALSE}
+library(dygraphs)
+dygraph(nhtemp, main = "Place Holdern Graph") %>% 
+  dyRangeSelector(dateWindow = c("1920-01-01", "1960-01-01"))
+```

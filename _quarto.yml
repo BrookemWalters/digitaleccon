@@ -6,7 +6,7 @@ website:
   title: "exploring the digital market"
   page-navigation: true
   reader-mode: true
-  favicon: "images/logo.png"
+  favicon: "images/icon.png"
   navbar:
     tools:
       - icon: github
@@ -15,29 +15,25 @@ website:
       - icon: linkedin
         href: https://www.linkedin.com/in/bmwlters
         text: "LinkedIn"
-      - icon: person-fill
-        text: "Meet Brooke Walters"
-        menu:
-          - text: about me
-            href: index.qmd
-          - text: "positionality"
-            href: sections/reflections/sop.qmd
     search: true
-    background: white
     collapse-below: lg
     type: dark
-    logo: "images/logo_dollar.png"
+    logo: "images/icon.png"
     left: 
     - text: home
       href: dm.qmd
     - text: citations
       href: citations.qmd 
   page-footer:
-    right: "This page is built with ☕ and [Quarto](https://quarto.org/)."
+    background: "#78C2AD"
+    right: "Brooke Walters 2024" 
+    left: "This page is built with ☕ and [Quarto](https://quarto.org/)."
 
 format:
   html:
-    theme: cosmo
+    code-fold: true
+    code-summary: "Show the code"
+    theme: minty
     css: styles.css
     toc: true
 

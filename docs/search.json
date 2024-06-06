@@ -12,5 +12,19 @@
     "title": "Sunset Sea",
     "section": "",
     "text": "Sunset Sea\nWelcome to Sunset Sea."
+  },
+  {
+    "objectID": "dm.html",
+    "href": "dm.html",
+    "title": "the digital market",
+    "section": "",
+    "text": "[Blerb about the DE]"
+  },
+  {
+    "objectID": "dm.html#introduction",
+    "href": "dm.html#introduction",
+    "title": "the digital market",
+    "section": "Introduction",
+    "text": "Introduction\n\n\nShow the code\nlibrary(dygraphs)\ndygraph(nhtemp, main = \"Place Holdern Graph\") %&gt;% \n  dyRangeSelector(dateWindow = c(\"1920-01-01\", \"1960-01-01\"))"
   }
 ]
