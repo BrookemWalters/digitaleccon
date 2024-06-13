@@ -1,0 +1,165 @@
+---
+title: "Data Explore"
+---
+
+## Introduction
+
+\[BLAH BLAH BLAH\]
+
+```{r Setup environment, message=FALSE, warning=FALSE}
+
+library(treemap) # create a basic treemap
+library(d3treeR) # html tree mao
+library(htmlwidgets)
+library(plotly) # dynamic graphs
+library(tidyverse) # data wrangling
+library(readxl) # file reading
+
+
+# import data
+DE22 <- read_excel("docs/DE22.xlsx")
+
+# wrangle the data
+DE22 <-  DE22 %>% 
+  mutate(Mil_Dols = as.numeric(Mil_Dols))
+
+
+de_palette <-  c("#E27EA6", "#F2D08A","#78C2AD","#34495E")
+
+```
+
+## What makes Up the digital economy?
+
+```{r eval=FALSE}
+# showing the code but not running it
+# https://rdrr.io/github/timelyportfolio/d3treeR/man/d3tree2.html
+
+# prepare the data for the chart
+real_value_activity <-  DE22 %>% 
+  # remove subtotals
+  filter(!str_detect(MicroAttribute, regex("total", ignore_case = TRUE)),
+    Measurement == "Digital Economy Real Value Added by Activity", # select measurement
+    year == "2022") %>% 
+  select(Category, MicroAttribute, Bil_Dols) %>% 
+  mutate( MicroAttribute= sub("_.*$", "", MicroAttribute),
+          Bil_dollars = round(Bil_Dols, 1),
+          # the d3 package doesn't allow for extra labels so combine the strings and make own label!
+          MicroAttribute_labels = str_c(MicroAttribute, ", $", Bil_Dols, " B"))
+
+# create a dynamic tree map
+real_value <- treemap(real_value_activity,
+    index = c("Category", "MicroAttribute_labels"),
+    align.labels=list(
+        c("center", "top"), 
+        c("right", "center")),  
+    vSize = "Bil_Dols",
+    type = "index",
+    vColor="Category",
+    title = "Digital Economy Real Value Added by Activity",
+    palette = de_palette
+  ) # end of treemap options
+
+tree <- d3tree(real_value,
+              width = "100%",
+              height = "600px",
+              rootname ="2022 Digital Economy Real Value Added by Activity (US Billions)")
+
+saveWidget(tree, file = "TreePlot.html", selfcontained = T)
+```
+
+
+
+```{r include=FALSE}
+# running the code but not showing it
+# https://rdrr.io/github/timelyportfolio/d3treeR/man/d3tree2.html
+
+# prepare the data for the chart
+real_value_activity <-  DE22 %>% 
+  # remove subtotals
+  filter(!str_detect(MicroAttribute, regex("total", ignore_case = TRUE)),
+    Measurement == "Digital Economy Real Value Added by Activity", # select measurement
+    year == "2022") %>% 
+  select(Category, MicroAttribute, Bil_Dols) %>% 
+  mutate( MicroAttribute= sub("_.*$", "", MicroAttribute),
+          Bil_dollars = round(Bil_Dols, 1),
+          # the d3 package doesn't allow for extra labels so combine the strings and make own label!
+          MicroAttribute_labels = str_c(MicroAttribute, ", $", Bil_Dols, " B"))
+
+# create a dynamic tree map
+real_value <- treemap(real_value_activity,
+    index = c("Category", "MicroAttribute_labels"),
+    align.labels=list(
+        c("center", "top"), 
+        c("right", "center")),  
+    vSize = "Bil_Dols",
+    type = "index",
+    vColor="Category",
+    title = "Digital Economy Real Value Added by Activity",
+    palette = de_palette
+  ) # end of treemap options
+
+tree <- d3tree(real_value,
+              width = "100%",
+              height = "600px",
+              rootname ="2022 Digital Economy Real Value Added by Activity (US Billions)")
+
+saveWidget(tree, file = "TreePlot.html", selfcontained = T)
+```
+
+```{r echo=FALSE}
+tree
+```
+\[ add context here!\]
+
+## How has the digital market changed over time?
+
+```{r}
+de_time <-  DE22 %>%
+  filter(!str_detect(MicroAttribute, regex("total", ignore_case = TRUE))) %>% 
+  filter(Measurement == "Real Digital Economy Gross Output by Activity") %>% 
+  group_by(Category, year) %>% 
+    summarise(Bil_Dols = sum(Bil_Dols))
+
+# ggplot(
+#   data = de_time,
+#   mapping = aes(x = year, y = `Dollars in Millions`, fill = Category) 
+# ) +
+# geom_area(colour = "black", size = 0.2, alpha = 0.8)
+
+
+fig <- plot_ly(de_time, 
+                x = ~year, 
+                y = ~Bil_Dols,
+                color = ~Category, # Use color for different categories
+                type = 'scatter',
+                mode = 'lines', 
+                fill = 'tonexty',   # Fill to next y-value
+                line = list(width = 2)) %>%
+  
+  layout(title = "Real Digital Economy Gross Output by Activity",
+         xaxis = list(title = "Year"),
+         yaxis = list(title = "Billions of Dollars"))
+
+
+fig
+```
+
+```{r}
+de_time_graph <- ggplot(de_time, aes(x = year, y = Bil_Dols, fill = Category)) +
+  geom_area()  
+
+ggplotly(de_time_graph)
+de_time_graph
+```
+
+
+
+
+
+
+```{r}
+
+
+
+```
+
