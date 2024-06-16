@@ -21,11 +21,56 @@ DE22 <- read_excel("docs/DE22.xlsx")
 
 # wrangle the data
 DE22 <-  DE22 %>% 
-  mutate(Mil_Dols = as.numeric(Mil_Dols))
+  mutate(Value = as.numeric(Value))
 
 
-de_palette <-  c("#E27EA6", "#F2D08A","#78C2AD","#34495E")
+de_palette0<- c(
+  "#F279B2", # eCommerce
+  "#C2D987", #infrastructure 
+  "#084C97")  # Printed digital serivces
 
+
+de_palette <- c(
+  "Digital Economy" = "#555555",
+  "Priced Digital Services" = "#084c97",
+  "Infrastructure" = "#DBE55F",
+  "E-Commerce" = "#FF2f88",
+  "Federal Nondefense Digital Services" = "#F66A4E")
+
+
+
+de_palette1 <- c(
+    "Professional and business services" = "#555555",
+    "Finance, insurance, real estate, rental, and leasing" = "#084c97",
+    "Government" = "#F66A4E",
+    "Information" = "#FF2f88",
+    "Arts, entertainment, recreation, accommodation, and food services" = "#DBE55F" ,
+    "Construction" = "#78C2AD",
+    "Transportation and warehousing" = "#F279B2",
+    "Wholesale trade" = "#C2D987",
+    "Manufacturing" = "#A2D4D1",
+    "Retail Trade" = "#5E77AA",
+    "Utilities" = "#92B7D5"
+)
+
+
+
+
+
+
+
+de_palette2<- c(
+  "#5E77AA",    # Lighter Purple
+  "#084C97",   # Original Purple
+  "#A2D4D1",   # Lighter Blue
+  "#78C2AD",   # Original Blue
+  "#C2D987",   # Lighter Green
+  "#DBE55F",   # Original Green
+  "#F279B2",   # Lighter Pink
+  "#FF2F88"    # Original Pink
+)
+
+source_annotation <- "<a href='https://apps.bea.gov/scb/issues/2023/12-december/1223-digital-economy.htm' target='_blank' style='font-size: 8px;'>Source: U.S. Digital Economy: New & Revised Estimates, 2017–2022, the Bureau of Economic Analysis</a>"
 ```
 
 ## What makes Up the digital economy?
@@ -37,14 +82,16 @@ de_palette <-  c("#E27EA6", "#F2D08A","#78C2AD","#34495E")
 # prepare the data for the chart
 real_value_activity <-  DE22 %>% 
   # remove subtotals
-  filter(!str_detect(MicroAttribute, regex("total", ignore_case = TRUE)),
+  filter(!str_detect(MicroAttribute, regex("_TOTAL", ignore_case = TRUE)),
     Measurement == "Digital Economy Real Value Added by Activity", # select measurement
-    year == "2022") %>% 
+    Year == "2022") %>% 
   select(Category, MicroAttribute, Bil_Dols) %>% 
   mutate( MicroAttribute= sub("_.*$", "", MicroAttribute),
           Bil_dollars = round(Bil_Dols, 1),
           # the d3 package doesn't allow for extra labels so combine the strings and make own label!
           MicroAttribute_labels = str_c(MicroAttribute, ", $", Bil_Dols, " B"))
+
+
 
 # create a dynamic tree map
 real_value <- treemap(real_value_activity,
@@ -54,9 +101,9 @@ real_value <- treemap(real_value_activity,
         c("right", "center")),  
     vSize = "Bil_Dols",
     type = "index",
-    vColor="Category",
+    vColor="MicroAttribute_labels",
     title = "Digital Economy Real Value Added by Activity",
-    palette = de_palette
+    palette = de_palette0
   ) # end of treemap options
 
 tree <- d3tree(real_value,
@@ -64,10 +111,10 @@ tree <- d3tree(real_value,
               height = "600px",
               rootname ="2022 Digital Economy Real Value Added by Activity (US Billions)")
 
+
+
 saveWidget(tree, file = "TreePlot.html", selfcontained = T)
 ```
-
-
 
 ```{r include=FALSE}
 # running the code but not showing it
@@ -76,14 +123,16 @@ saveWidget(tree, file = "TreePlot.html", selfcontained = T)
 # prepare the data for the chart
 real_value_activity <-  DE22 %>% 
   # remove subtotals
-  filter(!str_detect(MicroAttribute, regex("total", ignore_case = TRUE)),
+  filter(!str_detect(MicroAttribute, regex("_TOTAL", ignore_case = TRUE)),
     Measurement == "Digital Economy Real Value Added by Activity", # select measurement
-    year == "2022") %>% 
+    Year == "2022") %>% 
   select(Category, MicroAttribute, Bil_Dols) %>% 
   mutate( MicroAttribute= sub("_.*$", "", MicroAttribute),
           Bil_dollars = round(Bil_Dols, 1),
           # the d3 package doesn't allow for extra labels so combine the strings and make own label!
           MicroAttribute_labels = str_c(MicroAttribute, ", $", Bil_Dols, " B"))
+
+
 
 # create a dynamic tree map
 real_value <- treemap(real_value_activity,
@@ -93,15 +142,18 @@ real_value <- treemap(real_value_activity,
         c("right", "center")),  
     vSize = "Bil_Dols",
     type = "index",
-    vColor="Category",
+    vColor="MicroAttribute_labels",
     title = "Digital Economy Real Value Added by Activity",
-    palette = de_palette
+    palette = de_palette0
   ) # end of treemap options
 
 tree <- d3tree(real_value,
               width = "100%",
               height = "600px",
-              rootname ="2022 Digital Economy Real Value Added by Activity (US Billions)")
+              rootname ="2022 Digital Economy Real Value Added by Activity (US Billions)",
+              )
+
+
 
 saveWidget(tree, file = "TreePlot.html", selfcontained = T)
 ```
@@ -109,57 +161,228 @@ saveWidget(tree, file = "TreePlot.html", selfcontained = T)
 ```{r echo=FALSE}
 tree
 ```
+
 \[ add context here!\]
 
 ## How has the digital market changed over time?
 
-```{r}
+### Real Digital Economy Gross Output by Activity:
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=TRUE}
+# https://plotly.com/r/styling-figures/
 de_time <-  DE22 %>%
-  filter(!str_detect(MicroAttribute, regex("total", ignore_case = TRUE))) %>% 
+  filter(str_detect(MicroAttribute, regex("_TOTAL", ignore_case = TRUE))) %>% 
   filter(Measurement == "Real Digital Economy Gross Output by Activity") %>% 
-  group_by(Category, year) %>% 
-    summarise(Bil_Dols = sum(Bil_Dols))
+  group_by(Category, Year) %>% 
+    summarise(Bil_Dols= sum(Bil_Dols))
 
-# ggplot(
-#   data = de_time,
-#   mapping = aes(x = year, y = `Dollars in Millions`, fill = Category) 
-# ) +
-# geom_area(colour = "black", size = 0.2, alpha = 0.8)
+# create factors so the legend is in order of largest to smallest
+de_time$Category <- factor(de_time$Category,
+                          levels = c(
+                            "Federal Nondefense Digital Services",
+                            "E-Commerce",
+                            "Infrastructure",
+                            "Priced Digital Services",
+                            "Digital Economy"))
 
-
-fig <- plot_ly(de_time, 
-                x = ~year, 
+gross_output_plot <- plot_ly(de_time, 
+                x = ~Year, 
                 y = ~Bil_Dols,
                 color = ~Category, # Use color for different categories
-                type = 'scatter',
-                mode = 'lines', 
-                fill = 'tonexty',   # Fill to next y-value
-                line = list(width = 2)) %>%
+                colors = de_palette,
+                marker = list(sizeref = 8), 
+                line = list(width = 2),
+                fill =  "tonexty") %>% # allows colors to stack without colors overlapping
   
-  layout(title = "Real Digital Economy Gross Output by Activity",
-         xaxis = list(title = "Year"),
-         yaxis = list(title = "Billions of Dollars"))
+  add_trace(
+    type = "scatter",
+    mode = "lines+markers",   
+    text = ~ifelse(
+      Year == 2022,
+        paste( # show five year growth for 2022 data points
+          "Five Year Growth: +",
+          scales::percent((Bil_Dols[Year == 2022] - Bil_Dols[Year == 2017]) / Bil_Dols[Year == 2017]),
+          "<br>Year: ", Year,
+          "<br>Category: ", Category,
+          "<br>$", formatC(Bil_Dols, big.mark = ",", format = "f", digits = 1), "B",
+          "<br>% of Digital Economy: ",
+          scales::percent((Bil_Dols /Bil_Dols[Category == "Digital Economy"]), accuracy = 1L)
+      ),  
 
+        paste( # else
+          "<b>Year</b>: ", Year,
+          "<br><b>Category</b>: ", Category,
+          "<br>$", formatC(Bil_Dols, big.mark = ",", format = "f", digits = 1), "B",
+          "<br><b>% of Digital Economy</b>: ",
+          scales::percent((Bil_Dols /Bil_Dols[Category == "Digital Economy"]), accuracy = 1L))          
+          ),
+        hoverinfo = 'text') %>% 
 
-fig
+  layout(
+    margin = list(l=100, r=50, b=50, t=50, pad=10),
+    legend =  list(title= "Real Digital Economy Gross Output by Activity",
+      x = 0.0,
+      y = 1.3),
+    yaxis = list(title = "$Billions", showgrid = FALSE, tickformat = ","),
+    xaxis = list (title = 'Year',showgrid = FALSE))
+
+gross_output_plot
 ```
+
+\[WORDs\]
+
+`/b`
+
+```{r message=TRUE,echo=FALSE, warning=FALSE}
+de_employment <-  DE22 %>%
+  filter(
+    !str_detect(MicroAttribute, regex("_TOTAL", ignore_case = TRUE)),     
+    Measurement == "Digital Economy Employment by Industry",
+         Year == 2022,
+         Value > 0) %>% 
+  mutate(Subcategory = str_remove(Subcategory, "_SC"),
+         Attribute = str_remove(Attribute, "_A"),
+         SubAttribute = str_remove(SubAttribute, "_SA")) %>% 
+        select(-Bil_Dols, Value_Type)
+
+ 
+# create factors to the bars are arranged largest to shortest
+de_employment$Subcategory <- factor(de_employment$Subcategory,
+                                    levels = c(
+                                      "Professional and business services",
+                                      "Wholesale trade",
+                                      "Information",
+                                      "Manufacturing",
+                                      "Retail Trade",
+                                      "Transportation and warehousing",
+                                       "Government",
+                                      "Finance, insurance, real estate, rental, and leasing",
+                                      "Utilities",
+                                      "Arts, entertainment, recreation, accommodation, and food services",
+                                      "Construction"   ))
+
+de_employment$Subcategory <- gsub(" ", "\n", de_employment$Subcategory)
+employ_plot <- plot_ly(
+  de_employment,
+  x = ~Subcategory,
+  y = ~Value,
+  color = ~SubAttribute,
+  colors = "#FF2f88",
+  type = 'bar',
+  text = ~paste(
+    "<b>Full and part-time employees [in thousands]:</b>",
+    formatC(Value, big.mark = ",", format = "f", digits = 0), "K",
+    "<br><b>Industry:</b>", SubAttribute), 
+    hoverinfo = 'text',
+    marker = list( 
+    line = list(
+      width = .5,  
+      color = "white" ))) %>% 
+
+  layout(
+    showlegend = FALSE,
+    xaxis = list(title = ""),
+    yaxis = list(title = "Value"),
+    barmode = 'stack',
+    margin = list(b = 100) # Adjust bottom margin for rotated labels
+  )
+employ_plot
+
+                                               
+# employment_plot <- plot_ly(de_employment, 
+#                            x = ~Subcategory, 
+#                            y = ~Value,
+#                            type = "bar",
+#                            color = ~SubAttribute,
+#                            marker = list(color = 'rgb(158,202,225)')) %>%
+#   layout(
+#     yaxis = list(title = 'Value'),
+#     barmode = 'stack'  # Set to 'stack' for stacked bars
+#   ) %>% 
+# 
+#   add_trace(
+#     text = (
+#         ~paste(
+#           "<br>Full and part time employees [in thousands]: ",
+#           formatC(Value, big.mark = ",", format = "f", digits = 0), "K","(", Year,")",
+#           "<br>Sector: ", Subcategory,
+#           "<br>Industry: ", SubAttribute)),
+#     hoverinfo = 'text')
+# 
+#     # layout(
+#     # yaxis = list(title = 'Value'),
+#     # margin = list(l=100, r=50, b=50, t=50, pad=10),
+#     # showlegend = FALSE,
+#     # yaxis = list(title = "Employees in Thousands", showgrid = FALSE, tickformat = ","),
+#     # xaxis = list (title = 'Year',showgrid = FALSE))
+# 
+# 
+# 
+# 
+# 
+# employment_plot
+
+
+```
+
+
 
 ```{r}
-de_time_graph <- ggplot(de_time, aes(x = year, y = Bil_Dols, fill = Category)) +
-  geom_area()  
 
-ggplotly(de_time_graph)
-de_time_graph
+de_employment <-  DE22 %>%
+  filter(
+    !str_detect(MicroAttribute, regex("_TOTAL", ignore_case = TRUE)),     
+    Measurement == "Digital Economy Employment by Industry",
+         Year == 2022,
+         Value > 0) %>% 
+  mutate(Subcategory = str_remove(Subcategory, "_SC"),
+         Attribute = str_remove(Attribute, "_A"),
+         SubAttribute = str_remove(SubAttribute, "_SA")) %>% 
+        select(-Bil_Dols, Value_Type)
+# create factors to the bars are arranged largest to shortest
+de_employment$Subcategory <- factor(de_employment$Subcategory,
+                                    levels = c(
+                                      "Professional and business services",
+                                      "Wholesale trade",
+                                      "Information",
+                                      "Retail Trade",
+                                      "Transportation and warehousing",
+                                       "Government",
+                                      "Finance, insurance, real estate, rental, and leasing",
+                                      "Utilities",
+                                      "Arts, entertainment, recreation, accommodation, and food services",
+                                      "Construction",
+                                       "Manufacturing "))
+
+
+employment_plot <-  ggplot(de_employment,
+                           mapping = aes(
+                             x = Subcategory,
+                             y = Value,
+                             fill = SubAttribute),
+                           colors = de_palette1) +
+
+  geom_bar(stat = "identity") +
+  
+  theme_minimal() +
+  theme(legend.position = "none") +
+  scale_x_discrete(limits = levels(de_employment$Subcategory)) +
+  coord_cartesian(clip = 'off') +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+my_plotly_chart <- ggplotly(employment_plot) %>% 
+
+  add_trace(
+    text = ~paste(
+      "<br>Full and part-time employees [in thousands]: ",
+      formatC(Value, big.mark = ",", format = "f", digits = 0), "K (", Year, ")",
+      # "<br>Sector: ", Subcategory,
+      "<br>Industry: ", SubAttribute),
+    hoverinfo = 'text')
+
+# Display the interactive Plotly chart
+my_plotly_chart
 ```
 
 
-
-
-
-
-```{r}
-
-
-
-```
 

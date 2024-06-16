@@ -25,7 +25,7 @@ website:
     - text: citations
       href: citations.qmd 
   page-footer:
-    background: "#78C2AD"
+    background: "#DBE55F"    
     right: "Brooke Walters 2024" 
     left: "This page is built with ☕ and [Quarto](https://quarto.org/)."
 
