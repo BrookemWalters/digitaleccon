@@ -1,3 +1,23 @@
 .navbar {
   background-color: #000  !important; 
 }
+
+.navbar li.nav-item a.nav-link span {
+  color: #fff !important;  /* White text color */
+}
+
+
+.navbar li.nav-item a.nav-link:hover span {
+  color: #DBE55F !important;  /* Green text on hover */
+}
+
+/* Hover rule for the main link */
+.navbar-brand:hover {  
+  color: #DBE55F !important; 
+}
+
+
+
+.toc-sidebar .toc a:hover {
+    color: #F1FF9B !important; /* Neon green color */
+}

@@ -3,7 +3,7 @@ project:
   output-dir: docs
 
 website:
-  title: "exploring the digital market"
+  title: "exploring the digital economy"
   page-navigation: true
   reader-mode: true
   favicon: "images/icon.png"
@@ -21,19 +21,18 @@ website:
     logo: "images/icon.png"
     left: 
     - text: home
-      href: dm.qmd
-    - text: citations
-      href: citations.qmd 
+      href: digital_markets.qmd
+    - text: references
+      href: references.qmd 
   page-footer:
-    background: "#DBE55F"    
+    background: "#F1FF9B"    
     right: "Brooke Walters 2024" 
     left: "This page is built with ☕ and [Quarto](https://quarto.org/)."
 
 format:
   html:
     code-fold: true
-    code-summary: "Show the code"
-    theme: minty
+    code-summary: "code"
     css: styles.css
     toc: true
 

@@ -25,45 +25,44 @@ DE22 <-  DE22 %>%
 
 
 de_palette0<- c(
-  "#F279B2", # eCommerce
-  "#C2D987", #infrastructure 
-  "#084C97")  # Printed digital serivces
+  "#FFE1EE", # eCommerce
+  "#F0E5FF", #infrastructure 
+  "#F1FF9B") # Printed digital serivces
 
 
 de_palette <- c(
   "Digital Economy" = "#555555",
-  "Priced Digital Services" = "#084c97",
-  "Infrastructure" = "#DBE55F",
+  "Priced Digital Services" = "#D0F500",
+  "Infrastructure" = "#A66CF7",
   "E-Commerce" = "#FF2f88",
-  "Federal Nondefense Digital Services" = "#F66A4E")
+  "Federal Nondefense Digital Services" = "#084C97")
 
 
 # there is probably a better way to do this, but automation was failing me
 de_palette1 <- c(
-  "Professional and business services" = "#78C2AD",
-  "Administrative and waste management services" = "#78C2AD",
-  "Computer systems design and related services" = "#78C2AD",
-  "Miscellaneous professional, scientific, and technical services" = "#78C2AD",
-  "Educational services, health care, and social assistance" = "#78C2AD",
-  "Educational services" = "#78C2AD",
-  "Management of companies and enterprises" = "#78C2AD",
-  "Finance, insurance, real estate, rental, and leasing" = "#5E77AA",
-  "Information" = "#FF2f88",
+  "Professional and business services" = "#D0F500",
+  "Administrative and waste management services" = "#D0F500",
+  "Computer systems design and related services" = "#D0F500",
+  "Miscellaneous professional, scientific, and technical services" = "#D0F500",
+  "Educational services, health care, and social assistance" = "#D0F500",
+  "Educational services" = "#D0F500",
+  "Management of companies and enterprises" = "#D0F500",
+  "Information" = "#D0F500",
   "Broadcasting and telecommunications" = "#FF2f88",
   "Data processing, internet publishing, and other information services" = "#FF2f88",
   "Publishing industries, except internet (includes software)" = "#FF2f88",
   "Motion picture and sound recording industries" = "#FF2f88",
   "Transportation and warehousing" = "#F279B2",
-  "Wholesale trade" = "#DBE55F",
+  "Wholesale trade" = "#084C97",
   "Manufacturing" = "#F66A4E",
   "Computer and electronic products" = "#F66A4E",
   "Other durable goods" = "#F66A4E",
   "Nondurable goods"= "#F66A4E",
-  "Retail Trade" = "#084c97",
-  "Other retail" = "#084c97",
-  "Food and beverage stores" = "#084c97",
-  "Motor vehicle and parts dealers" = "#084c97",
-  "General merchandise stores" = "#084c97",
+  "Retail Trade" = "#A66CF7",
+  "Other retail" = "#A66CF7",
+  "Food and beverage stores" = "#A66CF7",
+  "Motor vehicle and parts dealers" = "#A66CF7",
+  "General merchandise stores" = "#A66CF7",
   "Other transportation and support activities" = "#555555",
   "Finance and insurance" = "#555555",
   "Real estate and rental and leasing" = "#555555",

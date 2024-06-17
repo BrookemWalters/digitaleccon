@@ -1,0 +1,230 @@
+---
+title: ""
+---
+
+[![](images/title_image.png){fig-align="left" width="687"}](https://dribbble.com/shots/16115704-The-Digital-Dollar/attachments/7967833?mode=media)
+
+## exploring the digital market
+
+```{r Setup environment, message=FALSE, warning=FALSE}
+# load libraries
+library(treemap) # create a basic treemap
+library(d3treeR) # html tree mao
+library(htmlwidgets)
+library(plotly) # dynamic graphs
+library(tidyverse) # data wrangling
+library(readxl) # file reading
+
+
+# import data
+DE22 <- read_excel("docs/DE22.xlsx")
+
+# wrangle the data
+DE22 <-  DE22 %>% 
+  mutate(Value = as.numeric(Value))
+
+# tree map colors
+de_palette0<- c(
+  "#F279B2", # eCommerce
+  "#F1FF9B", # infrastructure 
+  "#B279FF") # printed services 
+
+
+# line graph colors
+de_palette <- c(
+  "Digital Economy" = "#555555",
+  "Priced Digital Services" = "#A66CF7",
+  "Infrastructure" = "#D0F500",
+  "E-Commerce" = "#FF2f88",
+  "Federal Nondefense Digital Services" = "#084C97")
+
+# stacked bar graph colors
+# there is probably a better way to do this, but automation was failing me
+de_palette1 <- c(
+  "Professional and business services" = "#A66CF7",
+  "Administrative and waste management services" = "#A66CF7",
+  "Computer systems design and related services" = "#A66CF7",
+  "Miscellaneous professional, scientific, and technical services" = "#A66CF7",
+  "Educational services, health care, and social assistance" = "#A66CF7",
+  "Educational services" = "#A66CF7",
+  "Management of companies and enterprises" = "#A66CF7",
+  "Information" = "#A66CF7",
+  "Broadcasting and telecommunications" = "#FF2f88",
+  "Data processing, internet publishing, and other information services" = "#FF2f88",
+  "Publishing industries, except internet (includes software)" = "#FF2f88",
+  "Motion picture and sound recording industries" = "#FF2f88",
+  "Transportation and warehousing" = "#F279B2",
+  "Wholesale trade" = "#084C97",
+  "Manufacturing" = "#F66A4E",
+  "Computer and electronic products" = "#F66A4E",
+  "Other durable goods" = "#F66A4E",
+  "Nondurable goods"= "#F66A4E",
+  "Retail Trade" = "#D0F500",
+  "Other retail" = "#D0F500",
+  "Food and beverage stores" = "#D0F500",
+  "Motor vehicle and parts dealers" = "#D0F500",
+  "General merchandise stores" = "#D0F500",
+  "Other transportation and support activities" = "#555555",
+  "Finance and insurance" = "#555555",
+  "Real estate and rental and leasing" = "#555555",
+  "Truck transportation" = "#555555",
+  "Government" = "#555555",
+  "Federal Government" = "#555555",
+  "State and local government"= "#555555",
+  "Other" = "#555555",
+  "Utilities" =  "#555555",
+  "Arts, entertainment, recreation, accommodation, and food services" = "#555555",
+  "Construction" = "#555555")
+```
+
+### Introduction
+
+For those of us in the WEIRD (*Western Educated Industrialized, Rich and Democratic*) part of the world, the digital economy is intertwined with our daily lives and nearly indistinguishable from other aspects of our national GDP, yet it is only in the last few years that the U.S government began to formally define this aspect of our economy.
+
+It becomes even more difficult to define, as many outputs, like social media , from this market are provided “without consumer cost. ” Additionally, digital markets are in constant flux, fueled by societal shifts in the aftermath of the COVID-19 pandemic and the accelerating adoption of artificial intelligence (AI)[^1].
+
+[^1]: Barefoot, K., Curtis, D., Jolliff, W., Nicholson, J. R., & Omohundro, R. (2018, March 15). *Defining and Measuring the Digital Economy (Working Paper)*. Bureau of Economic Analysis (BEA). \[idefining-and-measuring-the-digital-economy.pdf (bea.gov)\]
+
+This project visualizes the information provided by the Beau of Economic Analysis’s report “U.S. Digital Economy: New and Revised Estimates, 2017–2022” and explores trends . For more on the methodology behind their calculations visit HERE.\
+
+### ![](images/icon.png){width="37"}What makes up the digital economy?
+
+Looking at estimates for the real value added by activity, we see that in 2022 the total Digital Economy was \~2.6 Trillion dollars, with infrastructure accounting the largest portion of that, at roughly 945 Billion!
+
+"**Value added**", refers monetary gains from the compensation of employees, taxes, or revenue generated.[^2]
+
+[^2]: U.S. Bureau of Economic Analysis (BEA). (2023). U.S. Digital Economy: New and Revised Estimates, 2017–2022. ([bea.gov](https://apps.bea.gov/scb/issues/2023/12-december/1223-digital-economy.htm))
+
+::: callout-tip
+On the treemap below, click on each element to exapand and reveal the value added by each activity.
+:::
+
+```{r real value, eval=FALSE}
+# guide: https://rdrr.io/github/timelyportfolio/d3treeR/man/d3tree2.html
+
+# prepare the data for the chart
+real_value_activity <-  DE22 %>% 
+  # remove subtotals
+  filter(!str_detect(MicroAttribute, regex("_TOTAL", ignore_case = TRUE)),
+    Measurement == "Digital Economy Real Value Added by Activity", # select measurement
+    Year == "2022") %>% 
+  select(Category, MicroAttribute, Bil_Dols) %>% 
+  mutate( MicroAttribute= sub("_.*$", "", MicroAttribute),
+          Bil_dollars = round(Bil_Dols, 1),
+          # the d3 package doesn't allow for extra labels so combine the strings and make own label!
+          MicroAttribute_labels = str_c(MicroAttribute, ", $", Bil_Dols, " B"))
+
+
+
+# create a dynamic tree map
+real_value <- treemap(real_value_activity,
+    index = c("Category", "MicroAttribute_labels"),
+    align.labels=list(
+        c("center", "top"), 
+        c("right", "center")),  
+    vSize = "Bil_Dols",
+    type = "index",
+    vColor="MicroAttribute_labels",
+    title = "Digital Economy Real Value Added by Activity",
+    palette = de_palette0
+  ) # end of treemap options
+
+tree <- d3tree(real_value,
+              width = "100%",
+              height = "600px",
+              rootname ="2022 Digital Economy Real Value Added by Activity (US Billions)",
+              )
+
+
+
+saveWidget(tree, file = "TreePlot.html", selfcontained = T)
+```
+
+```{r include=FALSE}
+# running the code but not showing it, so it doesn't show both the static graph and the dynamic graph
+# https://rdrr.io/github/timelyportfolio/d3treeR/man/d3tree2.html
+
+# prepare the data for the chart
+real_value_activity <-  DE22 %>% 
+  # remove subtotals
+  filter(!str_detect(MicroAttribute, regex("_TOTAL", ignore_case = TRUE)),
+    Measurement == "Digital Economy Real Value Added by Activity", # select measurement
+    Year == "2022") %>% 
+  select(Category, MicroAttribute, Bil_Dols) %>% 
+  mutate( MicroAttribute= sub("_.*$", "", MicroAttribute),
+          Bil_dollars = round(Bil_Dols, 1),
+          # the d3 package doesn't allow for extra labels so combine the strings and make own label!
+          MicroAttribute_labels = str_c(MicroAttribute, ", $", Bil_Dols, " B"))
+
+
+
+# create a dynamic tree map
+real_value <- treemap(real_value_activity,
+    index = c("Category", "MicroAttribute_labels"),
+    align.labels=list(
+        c("center", "top"), 
+        c("right", "center")),  
+    vSize = "Bil_Dols",
+    type = "index",
+    vColor="MicroAttribute_labels",
+    title = "Digital Economy Real Value Added by Activity",
+    palette = de_palette0
+  ) # end of treemap options
+
+tree <- d3tree(real_value,
+              width = "100%",
+              height = "600px",
+              rootname ="2022 Digital Economy Real Value Added by Activity (US Billions)",
+              )
+
+
+
+saveWidget(tree, file = "TreePlot.html", selfcontained = T)
+```
+
+#### 2022 Digital Economy Real Value Added by Activity:
+
+::: panel-tabset
+## Plot
+
+```{r echo=FALSE}
+tree
+```
+
+## Definitions
+
+-   [**E-commerce:**]{style="color: #FF2f88;"} “the remote sale of goods and services over computer networks”.
+
+-   [**Federal non-defense digital services:**]{style="color: #F66A4E;"} “annual budget for federal non-defense government agencies whose services are directly related to supporting the digital economy”. (note hidden from tree-map due to low values)
+
+-   [**Infrastructure:**]{style="color: #A5B01C;"} physical materials and organizational arrangements that support the existence and use of computer networks and the digital economy, primarily information and communications technology (ICT) goods and services”.
+
+-   [**Priced digital services:**]{style="color: #A66CF7;"} “services related to computing and communication that are performed for a fee charged to the consumer”.
+
+## Data
+
+|                                                                                  |                                 |                                 |                                 |                                 |                                 |                                 |
+|-----------|----------:|----------:|----------:|----------:|----------:|----------:|
+|                                                                                  |                      ^**2017**^ |                      ^**2018**^ |                      ^**2019**^ |                      ^**2020**^ |                      ^**2021**^ |                      ^**2022**^ |
+| [**Digital Market:**]{.smallcaps}                                                | ^[***1,839,372***]{.smallcaps}^ | ^[***1,956,835***]{.smallcaps}^ | ^[***2,092,357***]{.smallcaps}^ | ^[***2,227,354***]{.smallcaps}^ | ^[***2,439,735***]{.smallcaps}^ | ^[***2,593,348***]{.smallcaps}^ |
+| [[**Infrastructure:**]{.smallcaps}]{style="color: #A5B01C;"}                     |     ^[**629,798**]{.smallcaps}^ |     ^[**677,037**]{.smallcaps}^ |     ^[**731,936**]{.smallcaps}^ |     ^[**790,468**]{.smallcaps}^ |     ^[**882,084**]{.smallcaps}^ |     ^[**944,697**]{.smallcaps}^ |
+| ^[Hardware]{.smallcaps}^                                                         |         ^[238,267]{.smallcaps}^ |         ^[246,195]{.smallcaps}^ |         ^[246,740]{.smallcaps}^ |         ^[254,085]{.smallcaps}^ |         ^[260,568]{.smallcaps}^ |         ^[265,619]{.smallcaps}^ |
+| ^[Software]{.smallcaps}^                                                         |         ^[391,531]{.smallcaps}^ |         ^[430,963]{.smallcaps}^ |         ^[486,019]{.smallcaps}^ |         ^[538,027]{.smallcaps}^ |         ^[626,225]{.smallcaps}^ |         ^[686,946]{.smallcaps}^ |
+| [[**E-Commerce:**]{.smallcaps}]{style="color: #FF2f88;"}                         |     ^[**409,601**]{.smallcaps}^ |     ^[**420,936**]{.smallcaps}^ |     ^[**424,624**]{.smallcaps}^ |     ^[**467,669**]{.smallcaps}^ |     ^[**466,006**]{.smallcaps}^ |     ^[**470,406**]{.smallcaps}^ |
+| ^[Business-to- Business]{.smallcaps}^                                            |         ^[309,496]{.smallcaps}^ |         ^[308,708]{.smallcaps}^ |         ^[308,832]{.smallcaps}^ |         ^[321,891]{.smallcaps}^ |         ^[315,434]{.smallcaps}^ |         ^[304,534]{.smallcaps}^ |
+| ^[Business-to-Consumer]{.smallcaps}^                                             |         ^[100,106]{.smallcaps}^ |         ^[112,377]{.smallcaps}^ |         ^[116,024]{.smallcaps}^ |         ^[146,378]{.smallcaps}^ |         ^[151,133]{.smallcaps}^ |         ^[167,672]{.smallcaps}^ |
+| [[**Priced Digital Services:**]{.smallcaps}]{style="color: #A66CF7;"}            |     ^[**799,673**]{.smallcaps}^ |     ^[**858,915**]{.smallcaps}^ |     ^[**938,124**]{.smallcaps}^ |     ^[**969,133**]{.smallcaps}^ |   ^[**1,102,138**]{.smallcaps}^ |   ^[**1,198,392**]{.smallcaps}^ |
+| ^[Cloud Services]{.smallcaps}^                                                   |          ^[57,782]{.smallcaps}^ |          ^[77,513]{.smallcaps}^ |         ^[106,626]{.smallcaps}^ |         ^[137,127]{.smallcaps}^ |         ^[187,496]{.smallcaps}^ |         ^[243,288]{.smallcaps}^ |
+| ^[Telecommunications Services]{.smallcaps}^                                      |         ^[417,618]{.smallcaps}^ |         ^[432,245]{.smallcaps}^ |         ^[457,233]{.smallcaps}^ |         ^[440,881]{.smallcaps}^ |         ^[472,051]{.smallcaps}^ |         ^[491,346]{.smallcaps}^ |
+| ^[Internet and Data Services]{.smallcaps}^                                       |         ^[130,158]{.smallcaps}^ |         ^[130,654]{.smallcaps}^ |         ^[143,147]{.smallcaps}^ |         ^[146,579]{.smallcaps}^ |         ^[173,912]{.smallcaps}^ |         ^[178,200]{.smallcaps}^ |
+| ^[All Other Priced Digital Services]{.smallcaps}^                                |         ^[194,115]{.smallcaps}^ |         ^[218,908]{.smallcaps}^ |         ^[233,178]{.smallcaps}^ |         ^[249,741]{.smallcaps}^ |         ^[278,721]{.smallcaps}^ |         ^[301,394]{.smallcaps}^ |
+| [[**Federal Nondefense Digital Services:**]{.smallcaps}]{style="color: #F66A4E;"} |         ^[**300**]{.smallcaps}^ |         ^[**287**]{.smallcaps}^ |         ^[**283**]{.smallcaps}^ |         ^[**265**]{.smallcaps}^ |         ^[**256**]{.smallcaps}^ |         ^[**258**]{.smallcaps}^ |
+
+~*note, bold items are subtotals*~
+:::
+
+[Fig.1 Digital Economy Real Value Added by Activity]{.smallcaps}[^3]
+
+[^3]: U.S. Bureau of Economic Analysis (BEA). (2023). U.S. Digital Economy: New and Revised Estimates, 2017–2022. ([bea.gov](https://apps.bea.gov/scb/issues/2023/12-december/1223-digital-economy.htm))
+
+Digital economy estimates for 2022. Statistics prepared by the Bureau of Economic Analysis (BEA), U.S. Department of Commerce.
