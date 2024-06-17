@@ -109,6 +109,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <script src="site_libs/d3tree-binding-0.1/d3tree.js"></script>
 
+<script src="site_libs/plotly-binding-4.10.2/plotly.js"></script>
+
+<script src="site_libs/typedarray-0.1/typedarray.min.js"></script>
+
+<script src="site_libs/jquery-3.5.1/jquery.min.js"></script>
+
+<link href="site_libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
+
+<script src="site_libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+
+<link href="site_libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet">
+
+<script src="site_libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
+
 
 
 <link rel="stylesheet" href="styles.css">
@@ -165,11 +179,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#exploring-the-digital-market" id="toc-exploring-the-digital-market" class="nav-link active" data-scroll-target="#exploring-the-digital-market">exploring the digital market</a>
-  <ul class="collapse">
-  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
-  <li><a href="#what-makes-up-the-digital-economy" id="toc-what-makes-up-the-digital-economy" class="nav-link" data-scroll-target="#what-makes-up-the-digital-economy"><img src="images/icon.png" class="img-fluid" width="37">What makes up the digital economy?</a></li>
-  </ul></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#what-makes-up-the-digital-economy" id="toc-what-makes-up-the-digital-economy" class="nav-link" data-scroll-target="#what-makes-up-the-digital-economy">What makes up the digital economy?</a></li>
+  <li><a href="#how-has-the-digital-market-changed-over-time" id="toc-how-has-the-digital-market-changed-over-time" class="nav-link" data-scroll-target="#how-has-the-digital-market-changed-over-time">How has the digital market changed over time?</a></li>
+  <li><a href="#what-is-the-digital-market-size-in-terms-of-productivity" id="toc-what-is-the-digital-market-size-in-terms-of-productivity" class="nav-link" data-scroll-target="#what-is-the-digital-market-size-in-terms-of-productivity">What is the digital market size in terms of productivity?</a></li>
+  <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions">Conclusions</a></li>
   </ul>
 </nav>
     </div>
@@ -184,8 +198,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><a href="https://dribbble.com/shots/16115704-The-Digital-Dollar/attachments/7967833?mode=media"><img src="images/title_image.png" class="img-fluid quarto-figure quarto-figure-left figure-img" width="687"></a></p>
 </figure>
 </div>
-<section id="exploring-the-digital-market" class="level2">
-<h2 class="anchored" data-anchor-id="exploring-the-digital-market">exploring the digital market</h2>
+<section id="introduction" class="level3">
+<h3 class="anchored" data-anchor-id="introduction">Introduction</h3>
+<p>For those of us in the WEIRD (<em>Western Educated Industrialized, Rich, and Democratic</em>) part of the world, the digital economy is intertwined with our daily lives and nearly indistinguishable from other aspects of our national GDP. Yet, it is only in the last few years that the U.S. government began to formally define this aspect of our economy.</p>
+<p>It becomes even more difficult to define, as many outputs, like social media, from this market are provided “without consumer cost.”<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> Additionally, digital markets are in constant flux, fueled by societal shifts in the aftermath of the COVID-19 pandemic and the accelerating adoption of artificial intelligence (AI).</p>
+<p>This project visualizes the information provided by the Bureau of Economic Analysis’s report “U.S. Digital Economy: New and Revised Estimates, 2017–2022” and explores trends. For more on the methodology behind their calculations visit the <a href="https://www.bea.gov/data/special-topics/digital-economy">BEA</a>.<br>
+</p>
+<p><br><br> #### Here’s how I loaded and prepared the data.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>code</summary>
@@ -208,44 +227,44 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co"># tree map colors</span></span>
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>de_palette0<span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="st">"#F279B2"</span>, <span class="co"># eCommerce</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="st">"#F1FF9B"</span>, <span class="co"># infrastructure </span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  <span class="st">"#B279FF"</span>) <span class="co"># printed services </span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="st">"#E3FF3B"</span>, <span class="co"># infrastructure </span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  <span class="st">"#C69FFF"</span>) <span class="co"># printed services </span></span>
 <span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co"># line graph colors</span></span>
 <span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>de_palette <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
 <span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Digital Economy"</span> <span class="ot">=</span> <span class="st">"#555555"</span>,</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Priced Digital Services"</span> <span class="ot">=</span> <span class="st">"#A66CF7"</span>,</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Infrastructure"</span> <span class="ot">=</span> <span class="st">"#D0F500"</span>,</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Priced Digital Services"</span> <span class="ot">=</span> <span class="st">"#B685FF"</span>,</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Infrastructure"</span> <span class="ot">=</span> <span class="st">"#E3FF3B"</span>,</span>
 <span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>  <span class="st">"E-Commerce"</span> <span class="ot">=</span> <span class="st">"#FF2f88"</span>,</span>
 <span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Federal Nondefense Digital Services"</span> <span class="ot">=</span> <span class="st">"#084C97"</span>)</span>
 <span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="co"># stacked bar graph colors</span></span>
 <span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="co"># there is probably a better way to do this, but automation was failing me</span></span>
 <span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>de_palette1 <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Professional and business services"</span> <span class="ot">=</span> <span class="st">"#A66CF7"</span>,</span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Administrative and waste management services"</span> <span class="ot">=</span> <span class="st">"#A66CF7"</span>,</span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Computer systems design and related services"</span> <span class="ot">=</span> <span class="st">"#A66CF7"</span>,</span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Miscellaneous professional, scientific, and technical services"</span> <span class="ot">=</span> <span class="st">"#A66CF7"</span>,</span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Educational services, health care, and social assistance"</span> <span class="ot">=</span> <span class="st">"#A66CF7"</span>,</span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Educational services"</span> <span class="ot">=</span> <span class="st">"#A66CF7"</span>,</span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Management of companies and enterprises"</span> <span class="ot">=</span> <span class="st">"#A66CF7"</span>,</span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Information"</span> <span class="ot">=</span> <span class="st">"#A66CF7"</span>,</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Professional and business services"</span> <span class="ot">=</span> <span class="st">"#B685FF"</span>,</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Administrative and waste management services"</span> <span class="ot">=</span> <span class="st">"#B685FF"</span>,</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Computer systems design and related services"</span> <span class="ot">=</span> <span class="st">"#B685FF"</span>,</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Miscellaneous professional, scientific, and technical services"</span> <span class="ot">=</span> <span class="st">"#B685FF"</span>,</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Educational services, health care, and social assistance"</span> <span class="ot">=</span> <span class="st">"#B685FF"</span>,</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Educational services"</span> <span class="ot">=</span> <span class="st">"#B685FF"</span>,</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Management of companies and enterprises"</span> <span class="ot">=</span> <span class="st">"#B685FF"</span>,</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Information"</span> <span class="ot">=</span> <span class="st">"#B685FF"</span>,</span>
 <span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Broadcasting and telecommunications"</span> <span class="ot">=</span> <span class="st">"#FF2f88"</span>,</span>
 <span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Data processing, internet publishing, and other information services"</span> <span class="ot">=</span> <span class="st">"#FF2f88"</span>,</span>
 <span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Publishing industries, except internet (includes software)"</span> <span class="ot">=</span> <span class="st">"#FF2f88"</span>,</span>
 <span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Motion picture and sound recording industries"</span> <span class="ot">=</span> <span class="st">"#FF2f88"</span>,</span>
 <span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Transportation and warehousing"</span> <span class="ot">=</span> <span class="st">"#F279B2"</span>,</span>
 <span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Wholesale trade"</span> <span class="ot">=</span> <span class="st">"#084C97"</span>,</span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Manufacturing"</span> <span class="ot">=</span> <span class="st">"#F66A4E"</span>,</span>
-<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Computer and electronic products"</span> <span class="ot">=</span> <span class="st">"#F66A4E"</span>,</span>
-<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Other durable goods"</span> <span class="ot">=</span> <span class="st">"#F66A4E"</span>,</span>
-<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Nondurable goods"</span><span class="ot">=</span> <span class="st">"#F66A4E"</span>,</span>
-<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Retail Trade"</span> <span class="ot">=</span> <span class="st">"#D0F500"</span>,</span>
-<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Other retail"</span> <span class="ot">=</span> <span class="st">"#D0F500"</span>,</span>
-<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Food and beverage stores"</span> <span class="ot">=</span> <span class="st">"#D0F500"</span>,</span>
-<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Motor vehicle and parts dealers"</span> <span class="ot">=</span> <span class="st">"#D0F500"</span>,</span>
-<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>  <span class="st">"General merchandise stores"</span> <span class="ot">=</span> <span class="st">"#D0F500"</span>,</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Manufacturing"</span> <span class="ot">=</span> <span class="st">"#FE7C58"</span>,</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Computer and electronic products"</span> <span class="ot">=</span> <span class="st">"#FE7C58"</span>,</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Other durable goods"</span> <span class="ot">=</span> <span class="st">"#FE7C58"</span>,</span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Nondurable goods"</span><span class="ot">=</span> <span class="st">"#FE7C58"</span>,</span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Retail Trade"</span> <span class="ot">=</span> <span class="st">"#E3FF3B"</span>,</span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Other retail"</span> <span class="ot">=</span> <span class="st">"#E3FF3B"</span>,</span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Food and beverage stores"</span> <span class="ot">=</span> <span class="st">"#E3FF3B"</span>,</span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Motor vehicle and parts dealers"</span> <span class="ot">=</span> <span class="st">"#E3FF3B"</span>,</span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>  <span class="st">"General merchandise stores"</span> <span class="ot">=</span> <span class="st">"#E3FF3B"</span>,</span>
 <span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Other transportation and support activities"</span> <span class="ot">=</span> <span class="st">"#555555"</span>,</span>
 <span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Finance and insurance"</span> <span class="ot">=</span> <span class="st">"#555555"</span>,</span>
 <span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Real estate and rental and leasing"</span> <span class="ot">=</span> <span class="st">"#555555"</span>,</span>
@@ -259,17 +278,57 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Construction"</span> <span class="ot">=</span> <span class="st">"#555555"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<section id="introduction" class="level3">
-<h3 class="anchored" data-anchor-id="introduction">Introduction</h3>
-<p>For those of us in the WEIRD (<em>Western Educated Industrialized, Rich and Democratic</em>) part of the world, the digital economy is intertwined with our daily lives and nearly indistinguishable from other aspects of our national GDP, yet it is only in the last few years that the U.S government began to formally define this aspect of our economy.</p>
-<p>It becomes even more difficult to define, as many outputs, like social media , from this market are provided “without consumer cost.” Additionally, digital markets are in constant flux, fueled by societal shifts in the aftermath of the COVID-19 pandemic and the accelerating adoption of artificial intelligence (AI)<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
-<p>This project visualizes the information provided by the Beau of Economic Analysis’s report “U.S. Digital Economy: New and Revised Estimates, 2017–2022” and explores trends . For more on the methodology behind their calculations visit HERE.<br>
-</p>
 </section>
 <section id="what-makes-up-the-digital-economy" class="level3">
-<h3 class="anchored" data-anchor-id="what-makes-up-the-digital-economy"><img src="images/icon.png" class="img-fluid" width="37">What makes up the digital economy?</h3>
+<h3 class="anchored" data-anchor-id="what-makes-up-the-digital-economy">What makes up the digital economy?</h3>
 <p>Looking at estimates for the real value added by activity, we see that in 2022 the total Digital Economy was ~2.6 Trillion dollars, with infrastructure accounting the largest portion of that, at roughly 945 Billion!</p>
 <p>“<strong>Value added</strong>”, refers monetary gains from the compensation of employees, taxes, or revenue generated.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<div class="cell">
+<details class="code-fold">
+<summary>code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># guide: https://rdrr.io/github/timelyportfolio/d3treeR/man/d3tree2.html</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># code creates a tree map, visit my github repo to see the code full code for the data tabs -&gt; https://github.com/BrookemWalters/digitaleccon/blob/main/digital_markets.qmd</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># prepare the data for the chart</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>real_value_activity <span class="ot">&lt;-</span>  DE22 <span class="sc">%&gt;%</span> </span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># remove subtotals</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">str_detect</span>(MicroAttribute, <span class="fu">regex</span>(<span class="st">"_TOTAL"</span>, <span class="at">ignore_case =</span> <span class="cn">TRUE</span>)),</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    Measurement <span class="sc">==</span> <span class="st">"Digital Economy Real Value Added by Activity"</span>, <span class="co"># select measurement</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    Year <span class="sc">==</span> <span class="st">"2022"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Category, MicroAttribute, Bil_Dols) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>( <span class="at">MicroAttribute=</span> <span class="fu">sub</span>(<span class="st">"_.*$"</span>, <span class="st">""</span>, MicroAttribute),</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>          <span class="at">Bil_dollars =</span> <span class="fu">round</span>(Bil_Dols, <span class="dv">1</span>),</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>          <span class="co"># the d3 package doesn't allow for extra labels so combine the strings and make own label!</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>          <span class="at">MicroAttribute_labels =</span> <span class="fu">str_c</span>(MicroAttribute, <span class="st">", $"</span>, Bil_Dols, <span class="st">" B"</span>))</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co"># create a dynamic tree map</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>real_value <span class="ot">&lt;-</span> <span class="fu">treemap</span>(real_value_activity,</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">index =</span> <span class="fu">c</span>(<span class="st">"Category"</span>, <span class="st">"MicroAttribute_labels"</span>),</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">align.labels=</span><span class="fu">list</span>(</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>        <span class="fu">c</span>(<span class="st">"center"</span>, <span class="st">"top"</span>), </span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>        <span class="fu">c</span>(<span class="st">"right"</span>, <span class="st">"center"</span>)),  </span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">vSize =</span> <span class="st">"Bil_Dols"</span>,</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">"index"</span>,</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">vColor=</span><span class="st">"MicroAttribute_labels"</span>,</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Digital Economy Real Value Added by Activity"</span>,</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">palette =</span> de_palette0</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>  ) <span class="co"># end of treemap options</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>tree <span class="ot">&lt;-</span> <span class="fu">d3tree</span>(real_value,</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>              <span class="at">width =</span> <span class="st">"100%"</span>,</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>              <span class="at">height =</span> <span class="st">"600px"</span>,</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>              <span class="at">rootname =</span><span class="st">"2022 Digital Economy Real Value Added by Activity (US Billions)"</span>,</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>              )</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a><span class="fu">saveWidget</span>(tree, <span class="at">file =</span> <span class="st">"TreePlot.html"</span>, <span class="at">selfcontained =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<section id="digital-economy-real-value-added-by-activity" class="level4">
+<h4 class="anchored" data-anchor-id="digital-economy-real-value-added-by-activity">2022 Digital Economy Real Value Added by Activity:</h4>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -280,87 +339,42 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>On the treemap below, click on each element to exapand and reveal the value added by each activity.</p>
+<p>On the treemap below, click on an element to expand and reveal the value added by each activity.</p>
 </div>
 </div>
-<div class="cell">
-<details class="code-fold">
-<summary>code</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># guide: https://rdrr.io/github/timelyportfolio/d3treeR/man/d3tree2.html</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># prepare the data for the chart</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>real_value_activity <span class="ot">&lt;-</span>  DE22 <span class="sc">%&gt;%</span> </span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># remove subtotals</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">str_detect</span>(MicroAttribute, <span class="fu">regex</span>(<span class="st">"_TOTAL"</span>, <span class="at">ignore_case =</span> <span class="cn">TRUE</span>)),</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    Measurement <span class="sc">==</span> <span class="st">"Digital Economy Real Value Added by Activity"</span>, <span class="co"># select measurement</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    Year <span class="sc">==</span> <span class="st">"2022"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Category, MicroAttribute, Bil_Dols) <span class="sc">%&gt;%</span> </span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>( <span class="at">MicroAttribute=</span> <span class="fu">sub</span>(<span class="st">"_.*$"</span>, <span class="st">""</span>, MicroAttribute),</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>          <span class="at">Bil_dollars =</span> <span class="fu">round</span>(Bil_Dols, <span class="dv">1</span>),</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>          <span class="co"># the d3 package doesn't allow for extra labels so combine the strings and make own label!</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>          <span class="at">MicroAttribute_labels =</span> <span class="fu">str_c</span>(MicroAttribute, <span class="st">", $"</span>, Bil_Dols, <span class="st">" B"</span>))</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co"># create a dynamic tree map</span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>real_value <span class="ot">&lt;-</span> <span class="fu">treemap</span>(real_value_activity,</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">index =</span> <span class="fu">c</span>(<span class="st">"Category"</span>, <span class="st">"MicroAttribute_labels"</span>),</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">align.labels=</span><span class="fu">list</span>(</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>        <span class="fu">c</span>(<span class="st">"center"</span>, <span class="st">"top"</span>), </span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>        <span class="fu">c</span>(<span class="st">"right"</span>, <span class="st">"center"</span>)),  </span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">vSize =</span> <span class="st">"Bil_Dols"</span>,</span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">"index"</span>,</span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">vColor=</span><span class="st">"MicroAttribute_labels"</span>,</span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Digital Economy Real Value Added by Activity"</span>,</span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">palette =</span> de_palette0</span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>  ) <span class="co"># end of treemap options</span></span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>tree <span class="ot">&lt;-</span> <span class="fu">d3tree</span>(real_value,</span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>              <span class="at">width =</span> <span class="st">"100%"</span>,</span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>              <span class="at">height =</span> <span class="st">"600px"</span>,</span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>              <span class="at">rootname =</span><span class="st">"2022 Digital Economy Real Value Added by Activity (US Billions)"</span>,</span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>              )</span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="fu">saveWidget</span>(tree, <span class="at">file =</span> <span class="st">"TreePlot.html"</span>, <span class="at">selfcontained =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<section id="digital-economy-real-value-added-by-activity" class="level4">
-<h4 class="anchored" data-anchor-id="digital-economy-real-value-added-by-activity">2022 Digital Economy Real Value Added by Activity:</h4>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">Plot</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Definitions</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false">Data</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">Plot</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Data Definitions</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false">Data</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <div class="cell">
 <div class="cell-output-display">
-<div id="htmlwidget-a18fb3b72d978447d8fc" style="width:100%;height:600px;" class="d3tree html-widget "></div>
-<script type="application/json" data-for="htmlwidget-a18fb3b72d978447d8fc">{"x":{"data":{"name":"2022 Digital Economy Real Value Added by Activity (US Billions)","id":1,"size":null,"children":[{"name":"E-Commerce","color":"#F279B2","h":0.3314258923012892,"id":2,"size":472.206,"stdErr":472.206,"vColor":2,"vSize":472.206,"w":0.5398906934030668,"x0":0.4601093065969331,"y0":0,"children":[{"name":"Business-to-Business E-Commerce, $304.534 B","color":"#DA57AA","h":0.3314258923012892,"id":3,"size":304.534,"stdErr":304.534,"vColor":1,"vSize":304.534,"w":0.3481850557273934,"x0":0.4601093065969331,"y0":0},{"name":"Business-to-Consumer E-Commerce, $167.672 B","color":"#DA577F","h":0.3314258923012892,"id":4,"size":167.672,"stdErr":167.672,"vColor":1,"vSize":167.672,"w":0.1917056376756734,"x0":0.8082943623243266,"y0":0}]},{"name":"Infrastructure","color":"#F1FF9B","h":0.6685741076987108,"id":5,"size":952.5650000000001,"stdErr":952.5650000000001,"vColor":2,"vSize":952.5650000000001,"w":0.5398906934030668,"x0":0.4601093065969331,"y0":0.3314258923012892,"children":[{"name":"Hardware, $265.619 B","color":"#E6E379","h":0.6685741076987108,"id":6,"size":265.619,"stdErr":265.619,"vColor":1,"vSize":265.619,"w":0.1505463943048813,"x0":0.8494536056951186,"y0":0.3314258923012892},{"name":"Software, $686.946 B","color":"#C4E679","h":0.6685741076987108,"id":7,"size":686.946,"stdErr":686.946,"vColor":1,"vSize":686.946,"w":0.3893442990981856,"x0":0.4601093065969331,"y0":0.3314258923012892}]},{"name":"Priced Digital Services","color":"#B279FF","h":1,"id":8,"size":1214.228,"stdErr":1214.228,"vColor":4,"vSize":1214.228,"w":0.4601093065969331,"x0":0,"y0":0,"children":[{"name":"All Other Priced Digital Services, $301.394 B","color":"#7A55E6","h":0.6528757366820729,"id":9,"size":301.394,"stdErr":301.394,"vColor":1,"vSize":301.394,"w":0.1749302222071247,"x0":0.2851790843898084,"y0":0.3471242633179271},{"name":"Cloud Services, $243.288 B","color":"#8A55E6","h":0.3471242633179271,"id":10,"size":243.288,"stdErr":243.288,"vColor":1,"vSize":243.288,"w":0.2655806879041744,"x0":0,"y0":0},{"name":"Internet and Data Services, $178.2 B","color":"#9A55E6","h":0.3471242633179271,"id":11,"size":178.2,"stdErr":178.2,"vColor":1,"vSize":178.2,"w":0.1945286186927587,"x0":0.2655806879041744,"y0":0},{"name":"Telecommunications Services, $491.346 B","color":"#AA55E6","h":0.6528757366820729,"id":12,"size":491.346,"stdErr":491.346,"vColor":1,"vSize":491.346,"w":0.2851790843898084,"x0":0,"y0":0.3471242633179271}]}]},"meta":{"type":"index","vSize":"Bil_Dols","vColor":null,"stdErr":"Bil_Dols","algorithm":"pivotSize","vpCoorX":[0.02812148481439815,0.9718785151856019],"vpCoorY":[0.01968503937007871,0.9103149606299213],"aspRatio":1.483511625850942,"range":null,"mapping":[null,null,null],"draw":true},"options":{"id":"id","celltext":"name","valueField":"size"}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-b60601a723fb9351761d" style="width:100%;height:600px;" class="d3tree html-widget "></div>
+<script type="application/json" data-for="htmlwidget-b60601a723fb9351761d">{"x":{"data":{"name":"2022 Digital Economy Real Value Added by Activity (US Billions)","id":1,"size":null,"children":[{"name":"E-Commerce","color":"#F279B2","h":0.3314258923012892,"id":2,"size":472.206,"stdErr":472.206,"vColor":2,"vSize":472.206,"w":0.5398906934030668,"x0":0.4601093065969331,"y0":0,"children":[{"name":"Business-to-Business E-Commerce, $304.534 B","color":"#DA57AA","h":0.3314258923012892,"id":3,"size":304.534,"stdErr":304.534,"vColor":1,"vSize":304.534,"w":0.3481850557273934,"x0":0.4601093065969331,"y0":0},{"name":"Business-to-Consumer E-Commerce, $167.672 B","color":"#DA577F","h":0.3314258923012892,"id":4,"size":167.672,"stdErr":167.672,"vColor":1,"vSize":167.672,"w":0.1917056376756734,"x0":0.8082943623243266,"y0":0}]},{"name":"Infrastructure","color":"#E3FF3B","h":0.6685741076987108,"id":5,"size":952.5650000000001,"stdErr":952.5650000000001,"vColor":2,"vSize":952.5650000000001,"w":0.5398906934030668,"x0":0.4601093065969331,"y0":0.3314258923012892,"children":[{"name":"Hardware, $265.619 B","color":"#E6E012","h":0.6685741076987108,"id":6,"size":265.619,"stdErr":265.619,"vColor":1,"vSize":265.619,"w":0.1505463943048813,"x0":0.8494536056951186,"y0":0.3314258923012892},{"name":"Software, $686.946 B","color":"#A4E612","h":0.6685741076987108,"id":7,"size":686.946,"stdErr":686.946,"vColor":1,"vSize":686.946,"w":0.3893442990981856,"x0":0.4601093065969331,"y0":0.3314258923012892}]},{"name":"Priced Digital Services","color":"#C69FFF","h":1,"id":8,"size":1214.228,"stdErr":1214.228,"vColor":4,"vSize":1214.228,"w":0.4601093065969331,"x0":0,"y0":0,"children":[{"name":"All Other Priced Digital Services, $301.394 B","color":"#977EE6","h":0.6528757366820729,"id":9,"size":301.394,"stdErr":301.394,"vColor":1,"vSize":301.394,"w":0.1749302222071247,"x0":0.2851790843898084,"y0":0.3471242633179271},{"name":"Cloud Services, $243.288 B","color":"#A27EE6","h":0.3471242633179271,"id":10,"size":243.288,"stdErr":243.288,"vColor":1,"vSize":243.288,"w":0.2655806879041744,"x0":0,"y0":0},{"name":"Internet and Data Services, $178.2 B","color":"#AE7EE6","h":0.3471242633179271,"id":11,"size":178.2,"stdErr":178.2,"vColor":1,"vSize":178.2,"w":0.1945286186927587,"x0":0.2655806879041744,"y0":0},{"name":"Telecommunications Services, $491.346 B","color":"#B97EE6","h":0.6528757366820729,"id":12,"size":491.346,"stdErr":491.346,"vColor":1,"vSize":491.346,"w":0.2851790843898084,"x0":0,"y0":0.3471242633179271}]}]},"meta":{"type":"index","vSize":"Bil_Dols","vColor":null,"stdErr":"Bil_Dols","algorithm":"pivotSize","vpCoorX":[0.02812148481439815,0.9718785151856019],"vpCoorY":[0.01968503937007871,0.9103149606299213],"aspRatio":1.483511625850942,"range":null,"mapping":[null,null,null],"draw":true},"options":{"id":"id","celltext":"name","valueField":"size"}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
 <ul>
-<li><p><span style="color: #FF2f88;"><strong>E-commerce:</strong></span> “the remote sale of goods and services over computer networks”.</p></li>
-<li><p><span style="color: #F66A4E;"><strong>Federal non-defense digital services:</strong></span> “annual budget for federal non-defense government agencies whose services are directly related to supporting the digital economy”. (note hidden from tree-map due to low values)</p></li>
+<li><p><span style="color: #F279B2;"><strong>E-commerce:</strong></span> “the remote sale of goods and services over computer networks”.</p></li>
+<li><p><span style="color: #78C2AD;"><strong>Federal non-defense digital services:</strong></span> “annual budget for federal non-defense government agencies whose services are directly related to supporting the digital economy”. (note hidden from tree-map due to low values)</p></li>
 <li><p><span style="color: #A5B01C;"><strong>Infrastructure:</strong></span> physical materials and organizational arrangements that support the existence and use of computer networks and the digital economy, primarily information and communications technology (ICT) goods and services”.</p></li>
-<li><p><span style="color: #A66CF7;"><strong>Priced digital services:</strong></span> “services related to computing and communication that are performed for a fee charged to the consumer”.</p></li>
+<li><p><span style="color: #C69FFF;"><strong>Priced digital services:</strong></span> “services related to computing and communication that are performed for a fee charged to the consumer”.</p></li>
 </ul>
 </div>
 <div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
 <table class="caption-top table">
 <colgroup>
-<col style="width: 29%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
 </colgroup>
 <tbody>
 <tr class="odd">
-<td></td>
+<td><em>in millions</em></td>
 <td style="text-align: right;"><sup><strong>2017</strong></sup></td>
 <td style="text-align: right;"><sup><strong>2018</strong></sup></td>
 <td style="text-align: right;"><sup><strong>2019</strong></sup></td>
@@ -405,7 +419,7 @@ Tip
 <td style="text-align: right;"><sup><span class="smallcaps">686,946</span></sup></td>
 </tr>
 <tr class="even">
-<td><span style="color: #FF2f88;"><span class="smallcaps"><strong>E-Commerce:</strong></span></span></td>
+<td><span style="color: #F279B2;"><span class="smallcaps"><strong>E-Commerce:</strong></span></span></td>
 <td style="text-align: right;"><sup><span class="smallcaps"><strong>409,601</strong></span></sup></td>
 <td style="text-align: right;"><sup><span class="smallcaps"><strong>420,936</strong></span></sup></td>
 <td style="text-align: right;"><sup><span class="smallcaps"><strong>424,624</strong></span></sup></td>
@@ -432,7 +446,7 @@ Tip
 <td style="text-align: right;"><sup><span class="smallcaps">167,672</span></sup></td>
 </tr>
 <tr class="odd">
-<td><span style="color: #A66CF7;"><span class="smallcaps"><strong>Priced Digital Services:</strong></span></span></td>
+<td><span style="color: #C69FFF;"><span class="smallcaps"><strong>Priced Digital Services:</strong></span></span></td>
 <td style="text-align: right;"><sup><span class="smallcaps"><strong>799,673</strong></span></sup></td>
 <td style="text-align: right;"><sup><span class="smallcaps"><strong>858,915</strong></span></sup></td>
 <td style="text-align: right;"><sup><span class="smallcaps"><strong>938,124</strong></span></sup></td>
@@ -477,7 +491,7 @@ Tip
 <td style="text-align: right;"><sup><span class="smallcaps">301,394</span></sup></td>
 </tr>
 <tr class="even">
-<td><span style="color: #F66A4E;"><span class="smallcaps"><strong>Federal Nondefense Digital Services:</strong></span></span></td>
+<td><span style="color: #084C97;"><span class="smallcaps"><strong>Federal Nondefense :</strong></span></span></td>
 <td style="text-align: right;"><sup><span class="smallcaps"><strong>300</strong></span></sup></td>
 <td style="text-align: right;"><sup><span class="smallcaps"><strong>287</strong></span></sup></td>
 <td style="text-align: right;"><sup><span class="smallcaps"><strong>283</strong></span></sup></td>
@@ -491,12 +505,286 @@ Tip
 </div>
 </div>
 </div>
-<p><span class="smallcaps">Fig.1 Digital Economy Real Value Added by Activity</span><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
-<p>Digital economy estimates for 2022. Statistics prepared by the Bureau of Economic Analysis (BEA), U.S. Department of Commerce.</p>
-
-
+<p><span class="smallcaps">Fig.1 Digital Economy Real Value Added by Activity</span></p>
+<p><br><br></p>
 </section>
 </section>
+<section id="how-has-the-digital-market-changed-over-time" class="level3">
+<h3 class="anchored" data-anchor-id="how-has-the-digital-market-changed-over-time">How has the digital market changed over time?</h3>
+<p>The area graph below reveals that the gross output of the digital economy has grown by ~36% over the last five years, with priced digital services accounting for 45% of the output annually. The gross output captures the value of goods and services produced.</p>
+<section id="digital-economy-gross-output-by-activity-2017-2022" class="level4">
+<h4 class="anchored" data-anchor-id="digital-economy-gross-output-by-activity-2017-2022">Digital Economy Gross Output by Activity, 2017-2022</h4>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>On the area graph below, hoover the mouse over the plotted points to see the proportional relationship between the different types of economic activity.</p>
+<p>2022 plots show the five year growth from 2017.</p>
+</div>
+</div>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Plot</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">Data Definitions</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div class="cell" data-paged.print="true">
+<details class="code-fold">
+<summary>code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># https://plotly.com/r/styling-figures/</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>de_time <span class="ot">&lt;-</span>  DE22 <span class="sc">%&gt;%</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(MicroAttribute, <span class="fu">regex</span>(<span class="st">"_TOTAL"</span>, <span class="at">ignore_case =</span> <span class="cn">TRUE</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Measurement <span class="sc">==</span> <span class="st">"Real Digital Economy Gross Output by Activity"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Category, Year) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">Bil_Dols=</span> <span class="fu">sum</span>(Bil_Dols))</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># create factors so the legend is in order of largest to smallest</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>de_time<span class="sc">$</span>Category <span class="ot">&lt;-</span> <span class="fu">factor</span>(de_time<span class="sc">$</span>Category,</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>                          <span class="at">levels =</span> <span class="fu">c</span>(</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"Federal Nondefense Digital Services"</span>,</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"E-Commerce"</span>,</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"Infrastructure"</span>,</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"Priced Digital Services"</span>,</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"Digital Economy"</span>))</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>gross_output_plot <span class="ot">&lt;-</span> <span class="fu">plot_ly</span>(de_time, </span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>                <span class="at">x =</span> <span class="sc">~</span>Year, </span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>                <span class="at">y =</span> <span class="sc">~</span>Bil_Dols,</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>                <span class="at">color =</span> <span class="sc">~</span>Category, <span class="co"># Use color for different categories</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>                <span class="at">colors =</span> de_palette,</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>                <span class="at">marker =</span> <span class="fu">list</span>(<span class="at">sizeref =</span> <span class="dv">8</span>), </span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>                <span class="at">line =</span> <span class="fu">list</span>(<span class="at">width =</span> <span class="dv">2</span>),</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>                <span class="at">fill =</span> <span class="st">"tonexty"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_trace</span>(</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">"scatter"</span>,</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">mode =</span> <span class="st">"lines+markers"</span>,   </span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">text =</span> <span class="sc">~</span><span class="fu">ifelse</span>(</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>      Year <span class="sc">==</span> <span class="dv">2022</span>,</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>        <span class="fu">paste</span>( <span class="co"># show five year growth for 2022 data points</span></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>          <span class="st">"Five Year Growth: +"</span>,</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>          scales<span class="sc">::</span><span class="fu">percent</span>((Bil_Dols[Year <span class="sc">==</span> <span class="dv">2022</span>] <span class="sc">-</span> Bil_Dols[Year <span class="sc">==</span> <span class="dv">2017</span>]) <span class="sc">/</span> Bil_Dols[Year <span class="sc">==</span> <span class="dv">2017</span>]),</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>          <span class="st">"&lt;br&gt;Year: "</span>, Year,</span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>          <span class="st">"&lt;br&gt;Category: "</span>, Category,</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>          <span class="st">"&lt;br&gt;$"</span>, <span class="fu">formatC</span>(Bil_Dols, <span class="at">big.mark =</span> <span class="st">","</span>, <span class="at">format =</span> <span class="st">"f"</span>, <span class="at">digits =</span> <span class="dv">1</span>), <span class="st">"B"</span>,</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>          <span class="st">"&lt;br&gt;% of Digital Economy: "</span>,</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>          scales<span class="sc">::</span><span class="fu">percent</span>((Bil_Dols <span class="sc">/</span>Bil_Dols[Category <span class="sc">==</span> <span class="st">"Digital Economy"</span>]), <span class="at">accuracy =</span> <span class="dv">1</span>L)</span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>      ),  </span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>        <span class="fu">paste</span>( <span class="co"># else</span></span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>          <span class="st">"&lt;b&gt;Year&lt;/b&gt;: "</span>, Year,</span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>          <span class="st">"&lt;br&gt;&lt;b&gt;Category&lt;/b&gt;: "</span>, Category,</span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>          <span class="st">"&lt;br&gt;$"</span>, <span class="fu">formatC</span>(Bil_Dols, <span class="at">big.mark =</span> <span class="st">","</span>, <span class="at">format =</span> <span class="st">"f"</span>, <span class="at">digits =</span> <span class="dv">1</span>), <span class="st">"B"</span>,</span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>          <span class="st">"&lt;br&gt;&lt;b&gt;% of Digital Economy&lt;/b&gt;: "</span>,</span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>          scales<span class="sc">::</span><span class="fu">percent</span>((Bil_Dols <span class="sc">/</span>Bil_Dols[Category <span class="sc">==</span> <span class="st">"Digital Economy"</span>]), <span class="at">accuracy =</span> <span class="dv">1</span>L))          </span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>          ),</span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>        <span class="at">hoverinfo =</span> <span class="st">'text'</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layout</span>(</span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>    <span class="at">margin =</span> <span class="fu">list</span>(<span class="at">l=</span><span class="dv">100</span>, <span class="at">r=</span><span class="dv">50</span>, <span class="at">b=</span><span class="dv">50</span>, <span class="at">t=</span><span class="dv">50</span>, <span class="at">pad=</span><span class="dv">10</span>),</span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend =</span>  <span class="fu">list</span>(<span class="at">title=</span> <span class="st">"Real Digital Economy Gross Output by Activity"</span>,</span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> <span class="fl">0.0</span>,</span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>      <span class="at">y =</span> <span class="fl">1.3</span>),</span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>    <span class="at">yaxis =</span> <span class="fu">list</span>(<span class="at">title =</span> <span class="st">"$Billions"</span>, <span class="at">showgrid =</span> <span class="cn">FALSE</span>, <span class="at">tickformat =</span> <span class="st">","</span>),</span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>    <span class="at">xaxis =</span> <span class="fu">list</span> (<span class="at">showgrid =</span> <span class="cn">FALSE</span>))</span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>gross_output_plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-e079bf7dd0a295c4c7c0" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-e079bf7dd0a295c4c7c0">{"x":{"visdat":{"432c3348c4b":["function () ","plotlyVisDat"]},"cur_data":"432c3348c4b","attrs":{"432c3348c4b":{"x":{},"y":{},"marker":{"sizeref":8},"line":{"width":2},"fill":"tonexty","color":{},"colors":["#555555","#B685FF","#E3FF3B","#FF2f88","#084C97"],"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter","mode":"lines+markers","text":{},"hoverinfo":"text","inherit":true}},"layout":{"margin":{"b":50,"l":100,"t":50,"r":50,"pad":10},"legend":{"title":"Real Digital Economy Gross Output by Activity","x":0,"y":1.3},"yaxis":{"domain":[0,1],"automargin":true,"title":"$Billions","showgrid":false,"tickformat":","},"xaxis":{"domain":[0,1],"automargin":true,"showgrid":false,"title":"Year"},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"fillcolor":"rgba(8,76,151,0.5)","x":[2017,2018,2019,2020,2021,2022],"y":[0.40200000000000002,0.38900000000000001,0.38300000000000001,0.38400000000000001,0.39600000000000002,0.39200000000000002],"marker":{"color":"rgba(8,76,151,1)","sizeref":8,"line":{"color":"rgba(8,76,151,1)"}},"line":{"color":"rgba(8,76,151,1)","width":2},"fill":"tonexty","type":"scatter","mode":"lines+markers","text":["<b>Year<\/b>:  2017 <br><b>Category<\/b>:  Federal Nondefense Digital Services <br>$ 0.4 B <br><b>% of Digital Economy<\/b>:  0%","<b>Year<\/b>:  2018 <br><b>Category<\/b>:  Federal Nondefense Digital Services <br>$ 0.4 B <br><b>% of Digital Economy<\/b>:  0%","<b>Year<\/b>:  2019 <br><b>Category<\/b>:  Federal Nondefense Digital Services <br>$ 0.4 B <br><b>% of Digital Economy<\/b>:  0%","<b>Year<\/b>:  2020 <br><b>Category<\/b>:  Federal Nondefense Digital Services <br>$ 0.4 B <br><b>% of Digital Economy<\/b>:  0%","<b>Year<\/b>:  2021 <br><b>Category<\/b>:  Federal Nondefense Digital Services <br>$ 0.4 B <br><b>% of Digital Economy<\/b>:  0%","Five Year Growth: + -2.49% <br>Year:  2022 <br>Category:  Federal Nondefense Digital Services <br>$ 0.4 B <br>% of Digital Economy:  0%"],"hoverinfo":["text","text","text","text","text","text"],"name":"Federal Nondefense Digital Services","textfont":{"color":"rgba(8,76,151,1)"},"error_y":{"color":"rgba(8,76,151,1)"},"error_x":{"color":"rgba(8,76,151,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(255,47,136,0.5)","x":[2017,2018,2019,2020,2021,2022],"y":[734.35500000000002,766.49699999999996,773.62900000000002,824.13800000000003,895.45600000000002,934.23800000000006],"marker":{"color":"rgba(255,47,136,1)","sizeref":8,"line":{"color":"rgba(255,47,136,1)"}},"line":{"color":"rgba(255,47,136,1)","width":2},"fill":"tonexty","type":"scatter","mode":"lines+markers","text":["<b>Year<\/b>:  2017 <br><b>Category<\/b>:  E-Commerce <br>$ 734.4 B <br><b>% of Digital Economy<\/b>:  24%","<b>Year<\/b>:  2018 <br><b>Category<\/b>:  E-Commerce <br>$ 766.5 B <br><b>% of Digital Economy<\/b>:  24%","<b>Year<\/b>:  2019 <br><b>Category<\/b>:  E-Commerce <br>$ 773.6 B <br><b>% of Digital Economy<\/b>:  24%","<b>Year<\/b>:  2020 <br><b>Category<\/b>:  E-Commerce <br>$ 824.1 B <br><b>% of Digital Economy<\/b>:  24%","<b>Year<\/b>:  2021 <br><b>Category<\/b>:  E-Commerce <br>$ 895.5 B <br><b>% of Digital Economy<\/b>:  24%","Five Year Growth: + 27.22% <br>Year:  2022 <br>Category:  E-Commerce <br>$ 934.2 B <br>% of Digital Economy:  23%"],"hoverinfo":["text","text","text","text","text","text"],"name":"E-Commerce","textfont":{"color":"rgba(255,47,136,1)"},"error_y":{"color":"rgba(255,47,136,1)"},"error_x":{"color":"rgba(255,47,136,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(227,255,59,0.5)","x":[2017,2018,2019,2020,2021,2022],"y":[924.27300000000002,981.93799999999999,1019.498,1075.27,1198.498,1315.9880000000001],"marker":{"color":"rgba(227,255,59,1)","sizeref":8,"line":{"color":"rgba(227,255,59,1)"}},"line":{"color":"rgba(227,255,59,1)","width":2},"fill":"tonexty","type":"scatter","mode":"lines+markers","text":["<b>Year<\/b>:  2017 <br><b>Category<\/b>:  Infrastructure <br>$ 924.3 B <br><b>% of Digital Economy<\/b>:  31%","<b>Year<\/b>:  2018 <br><b>Category<\/b>:  Infrastructure <br>$ 981.9 B <br><b>% of Digital Economy<\/b>:  31%","<b>Year<\/b>:  2019 <br><b>Category<\/b>:  Infrastructure <br>$ 1,019.5 B <br><b>% of Digital Economy<\/b>:  31%","<b>Year<\/b>:  2020 <br><b>Category<\/b>:  Infrastructure <br>$ 1,075.3 B <br><b>% of Digital Economy<\/b>:  31%","<b>Year<\/b>:  2021 <br><b>Category<\/b>:  Infrastructure <br>$ 1,198.5 B <br><b>% of Digital Economy<\/b>:  31%","Five Year Growth: + 42.38% <br>Year:  2022 <br>Category:  Infrastructure <br>$ 1,316.0 B <br>% of Digital Economy:  32%"],"hoverinfo":["text","text","text","text","text","text"],"name":"Infrastructure","textfont":{"color":"rgba(227,255,59,1)"},"error_y":{"color":"rgba(227,255,59,1)"},"error_x":{"color":"rgba(227,255,59,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(182,133,255,0.5)","x":[2017,2018,2019,2020,2021,2022],"y":[1350.692,1448.5530000000001,1497.721,1553.0039999999999,1716.046,1833.6489999999999],"marker":{"color":"rgba(182,133,255,1)","sizeref":8,"line":{"color":"rgba(182,133,255,1)"}},"line":{"color":"rgba(182,133,255,1)","width":2},"fill":"tonexty","type":"scatter","mode":"lines+markers","text":["<b>Year<\/b>:  2017 <br><b>Category<\/b>:  Priced Digital Services <br>$ 1,350.7 B <br><b>% of Digital Economy<\/b>:  45%","<b>Year<\/b>:  2018 <br><b>Category<\/b>:  Priced Digital Services <br>$ 1,448.6 B <br><b>% of Digital Economy<\/b>:  45%","<b>Year<\/b>:  2019 <br><b>Category<\/b>:  Priced Digital Services <br>$ 1,497.7 B <br><b>% of Digital Economy<\/b>:  46%","<b>Year<\/b>:  2020 <br><b>Category<\/b>:  Priced Digital Services <br>$ 1,553.0 B <br><b>% of Digital Economy<\/b>:  45%","<b>Year<\/b>:  2021 <br><b>Category<\/b>:  Priced Digital Services <br>$ 1,716.0 B <br><b>% of Digital Economy<\/b>:  45%","Five Year Growth: + 35.76% <br>Year:  2022 <br>Category:  Priced Digital Services <br>$ 1,833.6 B <br>% of Digital Economy:  45%"],"hoverinfo":["text","text","text","text","text","text"],"name":"Priced Digital Services","textfont":{"color":"rgba(182,133,255,1)"},"error_y":{"color":"rgba(182,133,255,1)"},"error_x":{"color":"rgba(182,133,255,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(85,85,85,0.5)","x":[2017,2018,2019,2020,2021,2022],"y":[3009.721,3197.1689999999999,3290.2150000000001,3452.8319999999999,3808.6469999999999,4077.8029999999999],"marker":{"color":"rgba(85,85,85,1)","sizeref":8,"line":{"color":"rgba(85,85,85,1)"}},"line":{"color":"rgba(85,85,85,1)","width":2},"fill":"tonexty","type":"scatter","mode":"lines+markers","text":["<b>Year<\/b>:  2017 <br><b>Category<\/b>:  Digital Economy <br>$ 3,009.7 B <br><b>% of Digital Economy<\/b>:  100%","<b>Year<\/b>:  2018 <br><b>Category<\/b>:  Digital Economy <br>$ 3,197.2 B <br><b>% of Digital Economy<\/b>:  100%","<b>Year<\/b>:  2019 <br><b>Category<\/b>:  Digital Economy <br>$ 3,290.2 B <br><b>% of Digital Economy<\/b>:  100%","<b>Year<\/b>:  2020 <br><b>Category<\/b>:  Digital Economy <br>$ 3,452.8 B <br><b>% of Digital Economy<\/b>:  100%","<b>Year<\/b>:  2021 <br><b>Category<\/b>:  Digital Economy <br>$ 3,808.6 B <br><b>% of Digital Economy<\/b>:  100%","Five Year Growth: + 35.49% <br>Year:  2022 <br>Category:  Digital Economy <br>$ 4,077.8 B <br>% of Digital Economy:  100%"],"hoverinfo":["text","text","text","text","text","text"],"name":"Digital Economy","textfont":{"color":"rgba(85,85,85,1)"},"error_y":{"color":"rgba(85,85,85,1)"},"error_x":{"color":"rgba(85,85,85,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<ul>
+<li><p><span style="color: #F279B2;"><strong>E-commerce:</strong></span> “the remote sale of goods and services over computer networks”.</p></li>
+<li><p><span style="color: #78C2AD;"><strong>Federal non-defense digital services:</strong></span> “annual budget for federal non-defense government agencies whose services are directly related to supporting the digital economy”. (note hidden from tree-map due to low values)</p></li>
+<li><p><span style="color: #A5B01C;"><strong>Infrastructure:</strong></span> physical materials and organizational arrangements that support the existence and use of computer networks and the digital economy, primarily information and communications technology (ICT) goods and services”.</p></li>
+<li><p><span style="color: #C69FFF;"><strong>Priced digital services:</strong></span> “services related to computing and communication that are performed for a fee charged to the consumer”.</p></li>
+</ul>
+</div>
+</div>
+</div>
+<p><span class="smallcaps">Fig.2 Real Digital Economy Gross Output by Activity</span></p>
+<p><br><br></p>
+</section>
+</section>
+<section id="what-is-the-digital-market-size-in-terms-of-productivity" class="level3">
+<h3 class="anchored" data-anchor-id="what-is-the-digital-market-size-in-terms-of-productivity">What is the digital market size in terms of productivity?</h3>
+<p>The area graph below reveals that the gross output of the digital economy has grown by ~36% over the last five years, with priced digital services accounting for 45% of the output annually. The gross output captures the value of goods and services produced.</p>
+<section id="digital-economy-employment-by-industry" class="level4">
+<h4 class="anchored" data-anchor-id="digital-economy-employment-by-industry">2022 Digital Economy Employment by Industry:</h4>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Hoover the mouse over the stacked bars to see which sectors are the largest employers by category</p>
+</div>
+</div>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">Plot</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false">Data Definitions</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<div class="cell" data-paged.print="true">
+<details class="code-fold">
+<summary>code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>de_employment <span class="ot">&lt;-</span>  DE22 <span class="sc">%&gt;%</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="sc">!</span><span class="fu">str_detect</span>(MicroAttribute, <span class="fu">regex</span>(<span class="st">"_TOTAL"</span>, <span class="at">ignore_case =</span> <span class="cn">TRUE</span>)),     </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    Measurement <span class="sc">==</span> <span class="st">"Digital Economy Employment by Industry"</span>,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>         Year <span class="sc">==</span> <span class="dv">2022</span>,</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>         Value <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">Subcategory =</span> <span class="fu">str_remove</span>(Subcategory, <span class="st">"_SC"</span>),</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">Attribute =</span> <span class="fu">str_remove</span>(Attribute, <span class="st">"_A"</span>),</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">SubAttribute =</span> <span class="fu">str_remove</span>(SubAttribute, <span class="st">"_SA"</span>),</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">Subcategory_Wrapped =</span> <span class="fu">case_when</span>( <span class="co"># shorten titles on the x-axis and create groupings to reduce clutter</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>      Subcategory <span class="sc">==</span> <span class="st">"Durable goods"</span> <span class="sc">~</span> <span class="st">"Professional &amp; Business Services"</span>,</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>      Subcategory <span class="sc">==</span> <span class="st">"Professional and business services"</span> <span class="sc">~</span> <span class="st">"Prof. &amp; Bus. Services"</span>,</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>      Subcategory <span class="sc">==</span> <span class="st">"Wholesale trade"</span> <span class="sc">~</span> <span class="st">"Wholesale Trade"</span>,</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>      Subcategory <span class="sc">==</span> <span class="st">"Transportation and warehousing"</span> <span class="sc">~</span> <span class="st">"Other"</span>,     </span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>      Subcategory <span class="sc">==</span> <span class="st">"Government"</span> <span class="sc">~</span> <span class="st">"Other"</span>,      </span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>      Subcategory <span class="sc">==</span> <span class="st">"Finance, insurance, real estate, rental, and leasing"</span> <span class="sc">~</span> <span class="st">"Other"</span>,  </span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>      Subcategory <span class="sc">==</span> <span class="st">"Construction"</span> <span class="sc">~</span> <span class="st">"Other"</span>, </span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>      Subcategory <span class="sc">==</span> <span class="st">"Utilities"</span> <span class="sc">~</span> <span class="st">"Other"</span>, </span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>      Subcategory <span class="sc">==</span> <span class="st">"Arts, entertainment, recreation, accommodation, and food services"</span> <span class="sc">~</span> <span class="st">"Other"</span>, <span class="cn">TRUE</span> <span class="sc">~</span> Subcategory)) <span class="sc">%&gt;%</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Subcategory, SubAttribute, Subcategory_Wrapped) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Total_Employees =</span> <span class="fu">sum</span>(Value))</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="co"># create factors to the bars are arranged largest to shortest</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>de_employment<span class="sc">$</span>Subcategory_Wrapped <span class="ot">&lt;-</span> <span class="fu">factor</span>(de_employment<span class="sc">$</span>Subcategory_Wrapped,</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">levels =</span> <span class="fu">c</span>(</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">"Prof. &amp; Bus. Services"</span>,</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">"Wholesale Trade"</span>,</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">"Information"</span>,</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">"Manufacturing"</span>,</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">"Retail Trade"</span>,</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">"Other"</span>))</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a> <span class="co"># this sorts so the stacks will look pretty and orderd. SMH</span></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>SA_Factors <span class="ot">&lt;-</span>  de_employment <span class="sc">%&gt;%</span></span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(SubAttribute) <span class="sc">%&gt;%</span></span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Value =</span> <span class="fu">sum</span>(Total_Employees)) <span class="sc">%&gt;%</span></span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Value))</span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>de_employment<span class="sc">$</span>SubAttribute_factors <span class="ot">&lt;-</span> <span class="fu">factor</span>(</span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>  de_employment<span class="sc">$</span>SubAttribute,</span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>  <span class="at">levels =</span> <span class="fu">c</span>(SA_Factors<span class="sc">$</span>SubAttribute))</span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>employ_plot <span class="ot">&lt;-</span> <span class="fu">plot_ly</span>(</span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>  de_employment,</span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="sc">~</span>Subcategory_Wrapped,</span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="sc">~</span>Total_Employees,</span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>  <span class="at">color =</span> <span class="sc">~</span>SubAttribute_factors,</span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>  <span class="at">colors =</span> <span class="sc">~</span>de_palette1,</span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>  <span class="at">textposition =</span> <span class="st">"none"</span>)<span class="sc">%&gt;%</span> </span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a><span class="fu">add_trace</span>(</span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"bar"</span>,</span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a>  <span class="at">text =</span> <span class="sc">~</span><span class="fu">paste</span>(</span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;b&gt;Employees:&lt;/b&gt;"</span>,</span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a>    <span class="fu">formatC</span>(Total_Employees, <span class="at">big.mark =</span> <span class="st">","</span>, <span class="at">format =</span> <span class="st">"f"</span>, <span class="at">digits =</span> <span class="dv">0</span>), <span class="st">"K"</span>,</span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;br&gt;&lt;b&gt;Category:&lt;/b&gt;"</span>, Subcategory, </span>
+<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;br&gt;&lt;b&gt;Industry:&lt;/b&gt;"</span>, SubAttribute), </span>
+<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a>    <span class="at">marker =</span> <span class="fu">list</span>(</span>
+<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a>    <span class="at">line =</span> <span class="fu">list</span>(</span>
+<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a>      <span class="at">width =</span> .<span class="dv">5</span>,</span>
+<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a>      <span class="at">color =</span> <span class="st">"white"</span> )),</span>
+<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a>  <span class="at">hoverinfo =</span> <span class="st">'text'</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layout</span>(</span>
+<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a>    <span class="at">showlegend =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a>    <span class="at">margin =</span> <span class="fu">list</span>(<span class="at">l=</span><span class="dv">100</span>, <span class="at">r=</span><span class="dv">50</span>, <span class="at">b=</span><span class="dv">50</span>, <span class="at">t=</span><span class="dv">50</span>, <span class="at">pad=</span><span class="dv">10</span>),</span>
+<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a>    <span class="at">xaxis =</span> <span class="fu">list</span>(<span class="at">title =</span> <span class="st">""</span>),</span>
+<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a>    <span class="at">yaxis =</span> <span class="fu">list</span>(<span class="at">title =</span> <span class="st">"Full &amp; Part-Time Employees (Thousands)"</span>, <span class="at">showgrid =</span> <span class="cn">FALSE</span>, <span class="at">tickformat =</span> <span class="st">","</span>),</span>
+<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a>    <span class="at">barmode =</span> <span class="st">'stack'</span> )</span>
+<span id="cb4-74"><a href="#cb4-74" aria-hidden="true" tabindex="-1"></a>employ_plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-1f5459c11795e1082347" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-1f5459c11795e1082347">{"x":{"visdat":{"432cc1d20c0":["function () ","plotlyVisDat"]},"cur_data":"432cc1d20c0","attrs":{"432cc1d20c0":{"x":{},"y":{},"textposition":"none","color":{},"colors":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar","text":{},"marker":{"line":{"width":0.5,"color":"white"}},"hoverinfo":"text","inherit":true}},"layout":{"margin":{"b":50,"l":100,"t":50,"r":50,"pad":10},"showlegend":false,"xaxis":{"domain":[0,1],"automargin":true,"title":"","type":"category","categoryorder":"array","categoryarray":["Prof. & Bus. Services","Wholesale Trade","Information","Manufacturing","Retail Trade","Other"]},"yaxis":{"domain":[0,1],"automargin":true,"title":"Full & Part-Time Employees (Thousands)","showgrid":false,"tickformat":","},"barmode":"stack","hovermode":"closest"},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":["Prof. & Bus. Services"],"y":[2393],"textposition":"none","type":"bar","text":"<b>Employees:<\/b> 2,393 K <br><b>Category:<\/b> Professional and business services <br><b>Industry:<\/b> Computer systems design and related services","marker":{"color":"rgba(182,133,255,1)","line":{"color":"white","width":0.5}},"hoverinfo":"text","name":"Computer systems design and related services","textfont":{"color":"rgba(182,133,255,1)"},"error_y":{"color":"rgba(182,133,255,1)"},"error_x":{"color":"rgba(182,133,255,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["Wholesale Trade"],"y":[1981],"textposition":"none","type":"bar","text":"<b>Employees:<\/b> 1,981 K <br><b>Category:<\/b> Wholesale trade <br><b>Industry:<\/b> Wholesale trade","marker":{"color":"rgba(8,76,151,1)","line":{"color":"white","width":0.5}},"hoverinfo":"text","name":"Wholesale trade","textfont":{"color":"rgba(8,76,151,1)"},"error_y":{"color":"rgba(8,76,151,1)"},"error_x":{"color":"rgba(8,76,151,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["Information"],"y":[701],"textposition":"none","type":"bar","text":"<b>Employees:<\/b> 701 K <br><b>Category:<\/b> Information <br><b>Industry:<\/b> Broadcasting and telecommunications","marker":{"color":"rgba(255,47,136,1)","line":{"color":"white","width":0.5}},"hoverinfo":"text","name":"Broadcasting and telecommunications","textfont":{"color":"rgba(255,47,136,1)"},"error_y":{"color":"rgba(255,47,136,1)"},"error_x":{"color":"rgba(255,47,136,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["Manufacturing"],"y":[692],"textposition":"none","type":"bar","text":"<b>Employees:<\/b> 692 K <br><b>Category:<\/b> Manufacturing <br><b>Industry:<\/b> Computer and electronic products","marker":{"color":"rgba(254,124,88,1)","line":{"color":"white","width":0.5}},"hoverinfo":"text","name":"Computer and electronic products","textfont":{"color":"rgba(254,124,88,1)"},"error_y":{"color":"rgba(254,124,88,1)"},"error_x":{"color":"rgba(254,124,88,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["Information"],"y":[598],"textposition":"none","type":"bar","text":"<b>Employees:<\/b> 598 K <br><b>Category:<\/b> Information <br><b>Industry:<\/b> Publishing industries, except internet (includes software)","marker":{"color":"rgba(255,47,136,1)","line":{"color":"white","width":0.5}},"hoverinfo":"text","name":"Publishing industries, except internet (includes software)","textfont":{"color":"rgba(255,47,136,1)"},"error_y":{"color":"rgba(255,47,136,1)"},"error_x":{"color":"rgba(255,47,136,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["Information"],"y":[543],"textposition":"none","type":"bar","text":"<b>Employees:<\/b> 543 K <br><b>Category:<\/b> Information <br><b>Industry:<\/b> Data processing, internet publishing, and other information services","marker":{"color":"rgba(255,47,136,1)","line":{"color":"white","width":0.5}},"hoverinfo":"text","name":"Data processing, internet publishing, and other information services","textfont":{"color":"rgba(255,47,136,1)"},"error_y":{"color":"rgba(255,47,136,1)"},"error_x":{"color":"rgba(255,47,136,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["Retail Trade"],"y":[504],"textposition":"none","type":"bar","text":"<b>Employees:<\/b> 504 K <br><b>Category:<\/b> Retail Trade <br><b>Industry:<\/b> Other retail","marker":{"color":"rgba(227,255,59,1)","line":{"color":"white","width":0.5}},"hoverinfo":"text","name":"Other retail","textfont":{"color":"rgba(227,255,59,1)"},"error_y":{"color":"rgba(227,255,59,1)"},"error_x":{"color":"rgba(227,255,59,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["Prof. & Bus. Services"],"y":[475],"textposition":"none","type":"bar","text":"<b>Employees:<\/b> 475 K <br><b>Category:<\/b> Professional and business services <br><b>Industry:<\/b> Miscellaneous professional, scientific, and technical services","marker":{"color":"rgba(182,133,255,1)","line":{"color":"white","width":0.5}},"hoverinfo":"text","name":"Miscellaneous professional, scientific, and technical services","textfont":{"color":"rgba(182,133,255,1)"},"error_y":{"color":"rgba(182,133,255,1)"},"error_x":{"color":"rgba(182,133,255,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["Information"],"y":[134],"textposition":"none","type":"bar","text":"<b>Employees:<\/b> 134 K <br><b>Category:<\/b> Information <br><b>Industry:<\/b> Motion picture and sound recording industries","marker":{"color":"rgba(255,47,136,1)","line":{"color":"white","width":0.5}},"hoverinfo":"text","name":"Motion picture and sound recording industries","textfont":{"color":"rgba(255,47,136,1)"},"error_y":{"color":"rgba(255,47,136,1)"},"error_x":{"color":"rgba(255,47,136,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["Prof. & Bus. Services"],"y":[133],"textposition":"none","type":"bar","text":"<b>Employees:<\/b> 133 K <br><b>Category:<\/b> Professional and business services <br><b>Industry:<\/b> Educational services","marker":{"color":"rgba(182,133,255,1)","line":{"color":"white","width":0.5}},"hoverinfo":"text","name":"Educational services","textfont":{"color":"rgba(182,133,255,1)"},"error_y":{"color":"rgba(182,133,255,1)"},"error_x":{"color":"rgba(182,133,255,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["Prof. & Bus. Services"],"y":[116],"textposition":"none","type":"bar","text":"<b>Employees:<\/b> 116 K <br><b>Category:<\/b> Professional and business services <br><b>Industry:<\/b> Administrative and waste management services","marker":{"color":"rgba(182,133,255,1)","line":{"color":"white","width":0.5}},"hoverinfo":"text","name":"Administrative and waste management services","textfont":{"color":"rgba(182,133,255,1)"},"error_y":{"color":"rgba(182,133,255,1)"},"error_x":{"color":"rgba(182,133,255,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["Retail Trade"],"y":[87],"textposition":"none","type":"bar","text":"<b>Employees:<\/b> 87 K <br><b>Category:<\/b> Retail Trade <br><b>Industry:<\/b> Food and beverage stores","marker":{"color":"rgba(227,255,59,1)","line":{"color":"white","width":0.5}},"hoverinfo":"text","name":"Food and beverage stores","textfont":{"color":"rgba(227,255,59,1)"},"error_y":{"color":"rgba(227,255,59,1)"},"error_x":{"color":"rgba(227,255,59,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["Manufacturing"],"y":[83],"textposition":"none","type":"bar","text":"<b>Employees:<\/b> 83 K <br><b>Category:<\/b> Manufacturing <br><b>Industry:<\/b> Other durable goods","marker":{"color":"rgba(254,124,88,1)","line":{"color":"white","width":0.5}},"hoverinfo":"text","name":"Other durable goods","textfont":{"color":"rgba(254,124,88,1)"},"error_y":{"color":"rgba(254,124,88,1)"},"error_x":{"color":"rgba(254,124,88,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["Retail Trade"],"y":[66],"textposition":"none","type":"bar","text":"<b>Employees:<\/b> 66 K <br><b>Category:<\/b> Retail Trade <br><b>Industry:<\/b> Motor vehicle and parts dealers","marker":{"color":"rgba(227,255,59,1)","line":{"color":"white","width":0.5}},"hoverinfo":"text","name":"Motor vehicle and parts dealers","textfont":{"color":"rgba(227,255,59,1)"},"error_y":{"color":"rgba(227,255,59,1)"},"error_x":{"color":"rgba(227,255,59,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["Prof. & Bus. Services"],"y":[59],"textposition":"none","type":"bar","text":"<b>Employees:<\/b> 59 K <br><b>Category:<\/b> Professional and business services <br><b>Industry:<\/b> Management of companies and enterprises","marker":{"color":"rgba(182,133,255,1)","line":{"color":"white","width":0.5}},"hoverinfo":"text","name":"Management of companies and enterprises","textfont":{"color":"rgba(182,133,255,1)"},"error_y":{"color":"rgba(182,133,255,1)"},"error_x":{"color":"rgba(182,133,255,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["Other"],"y":[53],"textposition":"none","type":"bar","text":"<b>Employees:<\/b> 53 K <br><b>Category:<\/b> Transportation and warehousing <br><b>Industry:<\/b> Truck transportation","marker":{"color":"rgba(85,85,85,1)","line":{"color":"white","width":0.5}},"hoverinfo":"text","name":"Truck transportation","textfont":{"color":"rgba(85,85,85,1)"},"error_y":{"color":"rgba(85,85,85,1)"},"error_x":{"color":"rgba(85,85,85,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["Other"],"y":[32],"textposition":"none","type":"bar","text":"<b>Employees:<\/b> 32 K <br><b>Category:<\/b> Government <br><b>Industry:<\/b> State and local government","marker":{"color":"rgba(85,85,85,1)","line":{"color":"white","width":0.5}},"hoverinfo":"text","name":"State and local government","textfont":{"color":"rgba(85,85,85,1)"},"error_y":{"color":"rgba(85,85,85,1)"},"error_x":{"color":"rgba(85,85,85,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["Prof. & Bus. Services"],"y":[24],"textposition":"none","type":"bar","text":"<b>Employees:<\/b> 24 K <br><b>Category:<\/b> Professional and business services <br><b>Industry:<\/b> Educational services, health care, and social assistance","marker":{"color":"rgba(182,133,255,1)","line":{"color":"white","width":0.5}},"hoverinfo":"text","name":"Educational services, health care, and social assistance","textfont":{"color":"rgba(182,133,255,1)"},"error_y":{"color":"rgba(182,133,255,1)"},"error_x":{"color":"rgba(182,133,255,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["Manufacturing"],"y":[22],"textposition":"none","type":"bar","text":"<b>Employees:<\/b> 22 K <br><b>Category:<\/b> Manufacturing <br><b>Industry:<\/b> Nondurable goods","marker":{"color":"rgba(254,124,88,1)","line":{"color":"white","width":0.5}},"hoverinfo":"text","name":"Nondurable goods","textfont":{"color":"rgba(254,124,88,1)"},"error_y":{"color":"rgba(254,124,88,1)"},"error_x":{"color":"rgba(254,124,88,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["Retail Trade"],"y":[18],"textposition":"none","type":"bar","text":"<b>Employees:<\/b> 18 K <br><b>Category:<\/b> Retail Trade <br><b>Industry:<\/b> General merchandise stores","marker":{"color":"rgba(227,255,59,1)","line":{"color":"white","width":0.5}},"hoverinfo":"text","name":"General merchandise stores","textfont":{"color":"rgba(227,255,59,1)"},"error_y":{"color":"rgba(227,255,59,1)"},"error_x":{"color":"rgba(227,255,59,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["Other"],"y":[16],"textposition":"none","type":"bar","text":"<b>Employees:<\/b> 16 K <br><b>Category:<\/b> Government <br><b>Industry:<\/b> Federal Government","marker":{"color":"rgba(85,85,85,1)","line":{"color":"white","width":0.5}},"hoverinfo":"text","name":"Federal Government","textfont":{"color":"rgba(85,85,85,1)"},"error_y":{"color":"rgba(85,85,85,1)"},"error_x":{"color":"rgba(85,85,85,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["Other"],"y":[15],"textposition":"none","type":"bar","text":"<b>Employees:<\/b> 15 K <br><b>Category:<\/b> Finance, insurance, real estate, rental, and leasing <br><b>Industry:<\/b> Finance and insurance","marker":{"color":"rgba(85,85,85,1)","line":{"color":"white","width":0.5}},"hoverinfo":"text","name":"Finance and insurance","textfont":{"color":"rgba(85,85,85,1)"},"error_y":{"color":"rgba(85,85,85,1)"},"error_x":{"color":"rgba(85,85,85,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["Other"],"y":[8],"textposition":"none","type":"bar","text":"<b>Employees:<\/b> 8 K <br><b>Category:<\/b> Transportation and warehousing <br><b>Industry:<\/b> Other transportation and support activities","marker":{"color":"rgba(85,85,85,1)","line":{"color":"white","width":0.5}},"hoverinfo":"text","name":"Other transportation and support activities","textfont":{"color":"rgba(85,85,85,1)"},"error_y":{"color":"rgba(85,85,85,1)"},"error_x":{"color":"rgba(85,85,85,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["Other"],"y":[7],"textposition":"none","type":"bar","text":"<b>Employees:<\/b> 7 K <br><b>Category:<\/b> Arts, entertainment, recreation, accommodation, and food services <br><b>Industry:<\/b> Arts, entertainment, recreation, accommodation, and food services","marker":{"color":"rgba(85,85,85,1)","line":{"color":"white","width":0.5}},"hoverinfo":"text","name":"Arts, entertainment, recreation, accommodation, and food services","textfont":{"color":"rgba(85,85,85,1)"},"error_y":{"color":"rgba(85,85,85,1)"},"error_x":{"color":"rgba(85,85,85,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["Other"],"y":[2],"textposition":"none","type":"bar","text":"<b>Employees:<\/b> 2 K <br><b>Category:<\/b> Finance, insurance, real estate, rental, and leasing <br><b>Industry:<\/b> Real estate and rental and leasing","marker":{"color":"rgba(85,85,85,1)","line":{"color":"white","width":0.5}},"hoverinfo":"text","name":"Real estate and rental and leasing","textfont":{"color":"rgba(85,85,85,1)"},"error_y":{"color":"rgba(85,85,85,1)"},"error_x":{"color":"rgba(85,85,85,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["Other"],"y":[1],"textposition":"none","type":"bar","text":"<b>Employees:<\/b> 1 K <br><b>Category:<\/b> Construction <br><b>Industry:<\/b> Construction","marker":{"color":"rgba(85,85,85,1)","line":{"color":"white","width":0.5}},"hoverinfo":"text","name":"Construction","textfont":{"color":"rgba(85,85,85,1)"},"error_y":{"color":"rgba(85,85,85,1)"},"error_x":{"color":"rgba(85,85,85,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["Prof. & Bus. Services"],"y":[1],"textposition":"none","type":"bar","text":"<b>Employees:<\/b> 1 K <br><b>Category:<\/b> Professional and business services <br><b>Industry:<\/b> Legal services","marker":{"color":"transparent","line":{"color":"white","width":0.5}},"hoverinfo":"text","name":"Legal services","textfont":{"color":"transparent"},"error_y":{"color":"transparent"},"error_x":{"color":"transparent"},"xaxis":"x","yaxis":"y","frame":null},{"x":["Other"],"y":[1],"textposition":"none","type":"bar","text":"<b>Employees:<\/b> 1 K <br><b>Category:<\/b> Utilities <br><b>Industry:<\/b> Utilities","marker":{"color":"rgba(85,85,85,1)","line":{"color":"white","width":0.5}},"hoverinfo":"text","name":"Utilities","textfont":{"color":"rgba(85,85,85,1)"},"error_y":{"color":"rgba(85,85,85,1)"},"error_x":{"color":"rgba(85,85,85,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</div>
+<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
+<ul>
+<li><span style="color: #FF2f88;"><strong>Information:</strong></span>
+<ul>
+<li>broadcasting and telecommunications</li>
+<li>data processing</li>
+<li>internet publishing, and other information services</li>
+<li>publishing industries, except internet (includes software)</li>
+<li>motion picture and sound recording industries</li>
+</ul></li>
+<li><span style="color: #F66A4E;"><strong>Manufacturing:</strong></span>
+<ul>
+<li><p>durable goods</p>
+<ul>
+<li>computer and electronic products</li>
+<li>other durable goods (wood, machinery, furniture , electrical equipment, etc.)</li>
+</ul></li>
+<li><p>non-durable goods (food, paper, petrol etc.)</p></li>
+</ul></li>
+<li><span style="color: #A66CF7;"><strong>Professional and business services:</strong></span>
+<ul>
+<li><p>administrative and waste management services</p></li>
+<li><p>educational services, health care, and social assistance</p></li>
+<li><p>health care and social assistance</p></li>
+<li><p>management of companies and enterprises</p></li>
+<li><p>professional, scientific, and technical services</p></li>
+</ul></li>
+<li><span style="color: #A5B01C;"><strong>Retail Trade:</strong></span>
+<ul>
+<li><p>broadcasting and telecommunications</p></li>
+<li><p>data processing</p></li>
+<li><p>internet publishing, and other information services</p></li>
+<li><p>publishing industries, except internet (includes software)</p></li>
+<li><p>motion picture and sound recording industries</p></li>
+</ul></li>
+<li><span style="color: #084C97;"><strong>Wholesale Trade:</strong></span>
+<ul>
+<li><p>broadcasting and telecommunications</p></li>
+<li><p>data processing</p></li>
+<li><p>internet publishing, and other information services</p></li>
+<li><p>publishing industries, except internet (includes software)</p></li>
+<li><p>motion picture and sound recording industries</p></li>
+</ul></li>
+<li><span style="color: #555555;"><strong>Other:</strong></span> a catch all for all other industries with low employee counts
+<ul>
+<li>arts</li>
+<li>construction</li>
+<li>federal ,state and local governments</li>
+<li>mining</li>
+<li>utilities</li>
+<li>construction</li>
+</ul></li>
+</ul>
+<p><sub><em>note,&nbsp;industries&nbsp;with&nbsp;counts&nbsp;reported&nbsp;a&nbsp;0&nbsp;were&nbsp;excluded.</em></sub></p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="conclusions" class="level3">
+<h3 class="anchored" data-anchor-id="conclusions">Conclusions</h3>
+<p>blah blah blah</p>
+
+
 </section>
 
 
@@ -505,7 +793,6 @@ Tip
 <ol>
 <li id="fn1"><p>Barefoot, K., Curtis, D., Jolliff, W., Nicholson, J. R., &amp; Omohundro, R. (2018, March 15). <em>Defining and Measuring the Digital Economy (Working Paper)</em>. Bureau of Economic Analysis (BEA). [idefining-and-measuring-the-digital-economy.pdf (bea.gov)]<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>U.S. Bureau of Economic Analysis (BEA). (2023). U.S. Digital Economy: New and Revised Estimates, 2017–2022. (<a href="https://apps.bea.gov/scb/issues/2023/12-december/1223-digital-economy.htm">bea.gov</a>)<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>U.S. Bureau of Economic Analysis (BEA). (2023). U.S. Digital Economy: New and Revised Estimates, 2017–2022. (<a href="https://apps.bea.gov/scb/issues/2023/12-december/1223-digital-economy.htm">bea.gov</a>)<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

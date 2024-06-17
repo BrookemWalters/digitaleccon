@@ -4,7 +4,17 @@ title: ""
 
 [![](images/title_image.png){fig-align="left" width="687"}](https://dribbble.com/shots/16115704-The-Digital-Dollar/attachments/7967833?mode=media)
 
-## exploring the digital market
+### Introduction
+
+For those of us in the WEIRD (*Western Educated Industrialized, Rich, and Democratic*) part of the world, the digital economy is intertwined with our daily lives and nearly indistinguishable from other aspects of our national GDP. Yet, it is only in the last few years that the U.S. government began to formally define this aspect of our economy.
+
+It becomes even more difficult to define, as many outputs, like social media, from this market are provided “without consumer cost.”[^1] Additionally, digital markets are in constant flux, fueled by societal shifts in the aftermath of the COVID-19 pandemic and the accelerating adoption of artificial intelligence (AI).
+
+[^1]: Barefoot, K., Curtis, D., Jolliff, W., Nicholson, J. R., & Omohundro, R. (2018, March 15). *Defining and Measuring the Digital Economy (Working Paper)*. Bureau of Economic Analysis (BEA). \[idefining-and-measuring-the-digital-economy.pdf (bea.gov)\]
+
+This project visualizes the information provided by the Bureau of Economic Analysis’s report “U.S. Digital Economy: New and Revised Estimates, 2017–2022” and explores trends. For more on the methodology behind their calculations visit the [BEA](https://www.bea.gov/data/special-topics/digital-economy).\
+
+<br/><br/> \#### Here's how I loaded and prepared the data.
 
 ```{r Setup environment, message=FALSE, warning=FALSE}
 # load libraries
@@ -26,44 +36,44 @@ DE22 <-  DE22 %>%
 # tree map colors
 de_palette0<- c(
   "#F279B2", # eCommerce
-  "#F1FF9B", # infrastructure 
-  "#B279FF") # printed services 
+  "#E3FF3B", # infrastructure 
+  "#C69FFF") # printed services 
 
 
 # line graph colors
 de_palette <- c(
   "Digital Economy" = "#555555",
-  "Priced Digital Services" = "#A66CF7",
-  "Infrastructure" = "#D0F500",
+  "Priced Digital Services" = "#B685FF",
+  "Infrastructure" = "#E3FF3B",
   "E-Commerce" = "#FF2f88",
   "Federal Nondefense Digital Services" = "#084C97")
 
 # stacked bar graph colors
 # there is probably a better way to do this, but automation was failing me
 de_palette1 <- c(
-  "Professional and business services" = "#A66CF7",
-  "Administrative and waste management services" = "#A66CF7",
-  "Computer systems design and related services" = "#A66CF7",
-  "Miscellaneous professional, scientific, and technical services" = "#A66CF7",
-  "Educational services, health care, and social assistance" = "#A66CF7",
-  "Educational services" = "#A66CF7",
-  "Management of companies and enterprises" = "#A66CF7",
-  "Information" = "#A66CF7",
+  "Professional and business services" = "#B685FF",
+  "Administrative and waste management services" = "#B685FF",
+  "Computer systems design and related services" = "#B685FF",
+  "Miscellaneous professional, scientific, and technical services" = "#B685FF",
+  "Educational services, health care, and social assistance" = "#B685FF",
+  "Educational services" = "#B685FF",
+  "Management of companies and enterprises" = "#B685FF",
+  "Information" = "#B685FF",
   "Broadcasting and telecommunications" = "#FF2f88",
   "Data processing, internet publishing, and other information services" = "#FF2f88",
   "Publishing industries, except internet (includes software)" = "#FF2f88",
   "Motion picture and sound recording industries" = "#FF2f88",
   "Transportation and warehousing" = "#F279B2",
   "Wholesale trade" = "#084C97",
-  "Manufacturing" = "#F66A4E",
-  "Computer and electronic products" = "#F66A4E",
-  "Other durable goods" = "#F66A4E",
-  "Nondurable goods"= "#F66A4E",
-  "Retail Trade" = "#D0F500",
-  "Other retail" = "#D0F500",
-  "Food and beverage stores" = "#D0F500",
-  "Motor vehicle and parts dealers" = "#D0F500",
-  "General merchandise stores" = "#D0F500",
+  "Manufacturing" = "#FE7C58",
+  "Computer and electronic products" = "#FE7C58",
+  "Other durable goods" = "#FE7C58",
+  "Nondurable goods"= "#FE7C58",
+  "Retail Trade" = "#E3FF3B",
+  "Other retail" = "#E3FF3B",
+  "Food and beverage stores" = "#E3FF3B",
+  "Motor vehicle and parts dealers" = "#E3FF3B",
+  "General merchandise stores" = "#E3FF3B",
   "Other transportation and support activities" = "#555555",
   "Finance and insurance" = "#555555",
   "Real estate and rental and leasing" = "#555555",
@@ -77,17 +87,7 @@ de_palette1 <- c(
   "Construction" = "#555555")
 ```
 
-### Introduction
-
-For those of us in the WEIRD (*Western Educated Industrialized, Rich and Democratic*) part of the world, the digital economy is intertwined with our daily lives and nearly indistinguishable from other aspects of our national GDP, yet it is only in the last few years that the U.S government began to formally define this aspect of our economy.
-
-It becomes even more difficult to define, as many outputs, like social media , from this market are provided “without consumer cost. ” Additionally, digital markets are in constant flux, fueled by societal shifts in the aftermath of the COVID-19 pandemic and the accelerating adoption of artificial intelligence (AI)[^1].
-
-[^1]: Barefoot, K., Curtis, D., Jolliff, W., Nicholson, J. R., & Omohundro, R. (2018, March 15). *Defining and Measuring the Digital Economy (Working Paper)*. Bureau of Economic Analysis (BEA). \[idefining-and-measuring-the-digital-economy.pdf (bea.gov)\]
-
-This project visualizes the information provided by the Beau of Economic Analysis’s report “U.S. Digital Economy: New and Revised Estimates, 2017–2022” and explores trends . For more on the methodology behind their calculations visit HERE.\
-
-### ![](images/icon.png){width="37"}What makes up the digital economy?
+### What makes up the digital economy?
 
 Looking at estimates for the real value added by activity, we see that in 2022 the total Digital Economy was \~2.6 Trillion dollars, with infrastructure accounting the largest portion of that, at roughly 945 Billion!
 
@@ -95,12 +95,9 @@ Looking at estimates for the real value added by activity, we see that in 2022 t
 
 [^2]: U.S. Bureau of Economic Analysis (BEA). (2023). U.S. Digital Economy: New and Revised Estimates, 2017–2022. ([bea.gov](https://apps.bea.gov/scb/issues/2023/12-december/1223-digital-economy.htm))
 
-::: callout-tip
-On the treemap below, click on each element to exapand and reveal the value added by each activity.
-:::
-
 ```{r real value, eval=FALSE}
 # guide: https://rdrr.io/github/timelyportfolio/d3treeR/man/d3tree2.html
+# code creates a tree map, visit my github repo to see the code full code for the data tabs -> https://github.com/BrookemWalters/digitaleccon/blob/main/digital_markets.qmd
 
 # prepare the data for the chart
 real_value_activity <-  DE22 %>% 
@@ -184,6 +181,10 @@ saveWidget(tree, file = "TreePlot.html", selfcontained = T)
 
 #### 2022 Digital Economy Real Value Added by Activity:
 
+::: callout-tip
+On the treemap below, click on an element to expand and reveal the value added by each activity.
+:::
+
 ::: panel-tabset
 ## Plot
 
@@ -191,40 +192,280 @@ saveWidget(tree, file = "TreePlot.html", selfcontained = T)
 tree
 ```
 
-## Definitions
+## Data Definitions
 
--   [**E-commerce:**]{style="color: #FF2f88;"} “the remote sale of goods and services over computer networks”.
+-   [**E-commerce:**]{style="color: #F279B2;"} “the remote sale of goods and services over computer networks”.
 
--   [**Federal non-defense digital services:**]{style="color: #F66A4E;"} “annual budget for federal non-defense government agencies whose services are directly related to supporting the digital economy”. (note hidden from tree-map due to low values)
+-   [**Federal non-defense digital services:**]{style="color: #78C2AD;"} “annual budget for federal non-defense government agencies whose services are directly related to supporting the digital economy”. (note hidden from tree-map due to low values)
 
 -   [**Infrastructure:**]{style="color: #A5B01C;"} physical materials and organizational arrangements that support the existence and use of computer networks and the digital economy, primarily information and communications technology (ICT) goods and services”.
 
--   [**Priced digital services:**]{style="color: #A66CF7;"} “services related to computing and communication that are performed for a fee charged to the consumer”.
+-   [**Priced digital services:**]{style="color: #C69FFF;"} “services related to computing and communication that are performed for a fee charged to the consumer”.
 
 ## Data
 
-|                                                                                   |                                 |                                 |                                 |                                 |                                 |                                 |
-|-----------------------------------------------------------------------------------|--------------------------------:|--------------------------------:|--------------------------------:|--------------------------------:|--------------------------------:|--------------------------------:|
-|                                                                                   |                      ^**2017**^ |                      ^**2018**^ |                      ^**2019**^ |                      ^**2020**^ |                      ^**2021**^ |                      ^**2022**^ |
-| [**Digital Market:**]{.smallcaps}                                                 | ^[***1,839,372***]{.smallcaps}^ | ^[***1,956,835***]{.smallcaps}^ | ^[***2,092,357***]{.smallcaps}^ | ^[***2,227,354***]{.smallcaps}^ | ^[***2,439,735***]{.smallcaps}^ | ^[***2,593,348***]{.smallcaps}^ |
-| [[**Infrastructure:**]{.smallcaps}]{style="color: #A5B01C;"}                      |     ^[**629,798**]{.smallcaps}^ |     ^[**677,037**]{.smallcaps}^ |     ^[**731,936**]{.smallcaps}^ |     ^[**790,468**]{.smallcaps}^ |     ^[**882,084**]{.smallcaps}^ |     ^[**944,697**]{.smallcaps}^ |
-| ^[Hardware]{.smallcaps}^                                                          |         ^[238,267]{.smallcaps}^ |         ^[246,195]{.smallcaps}^ |         ^[246,740]{.smallcaps}^ |         ^[254,085]{.smallcaps}^ |         ^[260,568]{.smallcaps}^ |         ^[265,619]{.smallcaps}^ |
-| ^[Software]{.smallcaps}^                                                          |         ^[391,531]{.smallcaps}^ |         ^[430,963]{.smallcaps}^ |         ^[486,019]{.smallcaps}^ |         ^[538,027]{.smallcaps}^ |         ^[626,225]{.smallcaps}^ |         ^[686,946]{.smallcaps}^ |
-| [[**E-Commerce:**]{.smallcaps}]{style="color: #FF2f88;"}                          |     ^[**409,601**]{.smallcaps}^ |     ^[**420,936**]{.smallcaps}^ |     ^[**424,624**]{.smallcaps}^ |     ^[**467,669**]{.smallcaps}^ |     ^[**466,006**]{.smallcaps}^ |     ^[**470,406**]{.smallcaps}^ |
-| ^[Business-to- Business]{.smallcaps}^                                             |         ^[309,496]{.smallcaps}^ |         ^[308,708]{.smallcaps}^ |         ^[308,832]{.smallcaps}^ |         ^[321,891]{.smallcaps}^ |         ^[315,434]{.smallcaps}^ |         ^[304,534]{.smallcaps}^ |
-| ^[Business-to-Consumer]{.smallcaps}^                                              |         ^[100,106]{.smallcaps}^ |         ^[112,377]{.smallcaps}^ |         ^[116,024]{.smallcaps}^ |         ^[146,378]{.smallcaps}^ |         ^[151,133]{.smallcaps}^ |         ^[167,672]{.smallcaps}^ |
-| [[**Priced Digital Services:**]{.smallcaps}]{style="color: #A66CF7;"}             |     ^[**799,673**]{.smallcaps}^ |     ^[**858,915**]{.smallcaps}^ |     ^[**938,124**]{.smallcaps}^ |     ^[**969,133**]{.smallcaps}^ |   ^[**1,102,138**]{.smallcaps}^ |   ^[**1,198,392**]{.smallcaps}^ |
-| ^[Cloud Services]{.smallcaps}^                                                    |          ^[57,782]{.smallcaps}^ |          ^[77,513]{.smallcaps}^ |         ^[106,626]{.smallcaps}^ |         ^[137,127]{.smallcaps}^ |         ^[187,496]{.smallcaps}^ |         ^[243,288]{.smallcaps}^ |
-| ^[Telecommunications Services]{.smallcaps}^                                       |         ^[417,618]{.smallcaps}^ |         ^[432,245]{.smallcaps}^ |         ^[457,233]{.smallcaps}^ |         ^[440,881]{.smallcaps}^ |         ^[472,051]{.smallcaps}^ |         ^[491,346]{.smallcaps}^ |
-| ^[Internet and Data Services]{.smallcaps}^                                        |         ^[130,158]{.smallcaps}^ |         ^[130,654]{.smallcaps}^ |         ^[143,147]{.smallcaps}^ |         ^[146,579]{.smallcaps}^ |         ^[173,912]{.smallcaps}^ |         ^[178,200]{.smallcaps}^ |
-| ^[All Other Priced Digital Services]{.smallcaps}^                                 |         ^[194,115]{.smallcaps}^ |         ^[218,908]{.smallcaps}^ |         ^[233,178]{.smallcaps}^ |         ^[249,741]{.smallcaps}^ |         ^[278,721]{.smallcaps}^ |         ^[301,394]{.smallcaps}^ |
-| [[**Federal Nondefense Digital Services:**]{.smallcaps}]{style="color: #F66A4E;"} |         ^[**300**]{.smallcaps}^ |         ^[**287**]{.smallcaps}^ |         ^[**283**]{.smallcaps}^ |         ^[**265**]{.smallcaps}^ |         ^[**256**]{.smallcaps}^ |         ^[**258**]{.smallcaps}^ |
+|                                                                       |                                 |                                 |                                 |                                 |                                 |                                 |
+|-----------|----------:|----------:|----------:|----------:|----------:|----------:|
+| *in millions*                                                         |                      ^**2017**^ |                      ^**2018**^ |                      ^**2019**^ |                      ^**2020**^ |                      ^**2021**^ |                      ^**2022**^ |
+| [**Digital Market:**]{.smallcaps}                                     | ^[***1,839,372***]{.smallcaps}^ | ^[***1,956,835***]{.smallcaps}^ | ^[***2,092,357***]{.smallcaps}^ | ^[***2,227,354***]{.smallcaps}^ | ^[***2,439,735***]{.smallcaps}^ | ^[***2,593,348***]{.smallcaps}^ |
+| [[**Infrastructure:**]{.smallcaps}]{style="color: #A5B01C;"}          |     ^[**629,798**]{.smallcaps}^ |     ^[**677,037**]{.smallcaps}^ |     ^[**731,936**]{.smallcaps}^ |     ^[**790,468**]{.smallcaps}^ |     ^[**882,084**]{.smallcaps}^ |     ^[**944,697**]{.smallcaps}^ |
+| ^[Hardware]{.smallcaps}^                                              |         ^[238,267]{.smallcaps}^ |         ^[246,195]{.smallcaps}^ |         ^[246,740]{.smallcaps}^ |         ^[254,085]{.smallcaps}^ |         ^[260,568]{.smallcaps}^ |         ^[265,619]{.smallcaps}^ |
+| ^[Software]{.smallcaps}^                                              |         ^[391,531]{.smallcaps}^ |         ^[430,963]{.smallcaps}^ |         ^[486,019]{.smallcaps}^ |         ^[538,027]{.smallcaps}^ |         ^[626,225]{.smallcaps}^ |         ^[686,946]{.smallcaps}^ |
+| [[**E-Commerce:**]{.smallcaps}]{style="color: #F279B2;"}              |     ^[**409,601**]{.smallcaps}^ |     ^[**420,936**]{.smallcaps}^ |     ^[**424,624**]{.smallcaps}^ |     ^[**467,669**]{.smallcaps}^ |     ^[**466,006**]{.smallcaps}^ |     ^[**470,406**]{.smallcaps}^ |
+| ^[Business-to- Business]{.smallcaps}^                                 |         ^[309,496]{.smallcaps}^ |         ^[308,708]{.smallcaps}^ |         ^[308,832]{.smallcaps}^ |         ^[321,891]{.smallcaps}^ |         ^[315,434]{.smallcaps}^ |         ^[304,534]{.smallcaps}^ |
+| ^[Business-to-Consumer]{.smallcaps}^                                  |         ^[100,106]{.smallcaps}^ |         ^[112,377]{.smallcaps}^ |         ^[116,024]{.smallcaps}^ |         ^[146,378]{.smallcaps}^ |         ^[151,133]{.smallcaps}^ |         ^[167,672]{.smallcaps}^ |
+| [[**Priced Digital Services:**]{.smallcaps}]{style="color: #C69FFF;"} |     ^[**799,673**]{.smallcaps}^ |     ^[**858,915**]{.smallcaps}^ |     ^[**938,124**]{.smallcaps}^ |     ^[**969,133**]{.smallcaps}^ |   ^[**1,102,138**]{.smallcaps}^ |   ^[**1,198,392**]{.smallcaps}^ |
+| ^[Cloud Services]{.smallcaps}^                                        |          ^[57,782]{.smallcaps}^ |          ^[77,513]{.smallcaps}^ |         ^[106,626]{.smallcaps}^ |         ^[137,127]{.smallcaps}^ |         ^[187,496]{.smallcaps}^ |         ^[243,288]{.smallcaps}^ |
+| ^[Telecommunications Services]{.smallcaps}^                           |         ^[417,618]{.smallcaps}^ |         ^[432,245]{.smallcaps}^ |         ^[457,233]{.smallcaps}^ |         ^[440,881]{.smallcaps}^ |         ^[472,051]{.smallcaps}^ |         ^[491,346]{.smallcaps}^ |
+| ^[Internet and Data Services]{.smallcaps}^                            |         ^[130,158]{.smallcaps}^ |         ^[130,654]{.smallcaps}^ |         ^[143,147]{.smallcaps}^ |         ^[146,579]{.smallcaps}^ |         ^[173,912]{.smallcaps}^ |         ^[178,200]{.smallcaps}^ |
+| ^[All Other Priced Digital Services]{.smallcaps}^                     |         ^[194,115]{.smallcaps}^ |         ^[218,908]{.smallcaps}^ |         ^[233,178]{.smallcaps}^ |         ^[249,741]{.smallcaps}^ |         ^[278,721]{.smallcaps}^ |         ^[301,394]{.smallcaps}^ |
+| [[**Federal Nondefense :**]{.smallcaps}]{style="color: #084C97;"}     |         ^[**300**]{.smallcaps}^ |         ^[**287**]{.smallcaps}^ |         ^[**283**]{.smallcaps}^ |         ^[**265**]{.smallcaps}^ |         ^[**256**]{.smallcaps}^ |         ^[**258**]{.smallcaps}^ |
 
 ~*note, bold items are subtotals*~
 :::
 
-[Fig.1 Digital Economy Real Value Added by Activity]{.smallcaps}[^3]
+[Fig.1 Digital Economy Real Value Added by Activity]{.smallcaps}
 
-[^3]: U.S. Bureau of Economic Analysis (BEA). (2023). U.S. Digital Economy: New and Revised Estimates, 2017–2022. ([bea.gov](https://apps.bea.gov/scb/issues/2023/12-december/1223-digital-economy.htm))
+<br/><br/>
 
-Digital economy estimates for 2022. Statistics prepared by the Bureau of Economic Analysis (BEA), U.S. Department of Commerce.
+### How has the digital market changed over time?
+
+The area graph below reveals that the gross output of the digital economy has grown by \~36% over the last five years, with priced digital services accounting for 45% of the output annually. The gross output captures the value of goods and services produced.
+
+#### Digital Economy Gross Output by Activity, 2017-2022
+
+::: callout-tip
+On the area graph below, hoover the mouse over the plotted points to see the proportional relationship between the different types of economic activity.
+
+2022 plots show the five year growth from 2017.
+:::
+
+::: panel-tabset
+## Plot
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=TRUE}
+# https://plotly.com/r/styling-figures/
+de_time <-  DE22 %>%
+  filter(str_detect(MicroAttribute, regex("_TOTAL", ignore_case = TRUE))) %>% 
+  filter(Measurement == "Real Digital Economy Gross Output by Activity") %>% 
+  group_by(Category, Year) %>% 
+    summarise(Bil_Dols= sum(Bil_Dols))
+
+
+# create factors so the legend is in order of largest to smallest
+de_time$Category <- factor(de_time$Category,
+                          levels = c(
+                            "Federal Nondefense Digital Services",
+                            "E-Commerce",
+                            "Infrastructure",
+                            "Priced Digital Services",
+                            "Digital Economy"))
+
+gross_output_plot <- plot_ly(de_time, 
+                x = ~Year, 
+                y = ~Bil_Dols,
+                color = ~Category, # Use color for different categories
+                colors = de_palette,
+                marker = list(sizeref = 8), 
+                line = list(width = 2),
+                fill = "tonexty") %>% 
+  
+  add_trace(
+    type = "scatter",
+    mode = "lines+markers",   
+    text = ~ifelse(
+      Year == 2022,
+        paste( # show five year growth for 2022 data points
+          "Five Year Growth: +",
+          scales::percent((Bil_Dols[Year == 2022] - Bil_Dols[Year == 2017]) / Bil_Dols[Year == 2017]),
+          "<br>Year: ", Year,
+          "<br>Category: ", Category,
+          "<br>$", formatC(Bil_Dols, big.mark = ",", format = "f", digits = 1), "B",
+          "<br>% of Digital Economy: ",
+          scales::percent((Bil_Dols /Bil_Dols[Category == "Digital Economy"]), accuracy = 1L)
+      ),  
+
+        paste( # else
+          "<b>Year</b>: ", Year,
+          "<br><b>Category</b>: ", Category,
+          "<br>$", formatC(Bil_Dols, big.mark = ",", format = "f", digits = 1), "B",
+          "<br><b>% of Digital Economy</b>: ",
+          scales::percent((Bil_Dols /Bil_Dols[Category == "Digital Economy"]), accuracy = 1L))          
+          ),
+        hoverinfo = 'text') %>% 
+
+  layout(
+    margin = list(l=100, r=50, b=50, t=50, pad=10),
+    legend =  list(title= "Real Digital Economy Gross Output by Activity",
+      x = 0.0,
+      y = 1.3),
+    yaxis = list(title = "$Billions", showgrid = FALSE, tickformat = ","),
+    xaxis = list (showgrid = FALSE))
+
+gross_output_plot
+```
+
+## Data Definitions
+
+-   [**E-commerce:**]{style="color: #F279B2;"} “the remote sale of goods and services over computer networks”.
+
+-   [**Federal non-defense digital services:**]{style="color: #78C2AD;"} “annual budget for federal non-defense government agencies whose services are directly related to supporting the digital economy”. (note hidden from tree-map due to low values)
+
+-   [**Infrastructure:**]{style="color: #A5B01C;"} physical materials and organizational arrangements that support the existence and use of computer networks and the digital economy, primarily information and communications technology (ICT) goods and services”.
+
+-   [**Priced digital services:**]{style="color: #C69FFF;"} “services related to computing and communication that are performed for a fee charged to the consumer”.
+:::
+
+[Fig.2 Real Digital Economy Gross Output by Activity]{.smallcaps}
+
+<br/><br/>
+
+### What is the digital market size in terms of productivity?
+
+The area graph below reveals that the gross output of the digital economy has grown by \~36% over the last five years, with priced digital services accounting for 45% of the output annually. The gross output captures the value of goods and services produced.
+
+#### 2022 Digital Economy Employment by Industry:
+
+::: callout-tip
+Hoover the mouse over the stacked bars to see which sectors are the largest employers by category
+:::
+
+::: panel-tabset
+## Plot
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=TRUE}
+de_employment <-  DE22 %>%
+  filter(
+    !str_detect(MicroAttribute, regex("_TOTAL", ignore_case = TRUE)),     
+    Measurement == "Digital Economy Employment by Industry",
+         Year == 2022,
+         Value > 0) %>% 
+  mutate(
+      Subcategory = str_remove(Subcategory, "_SC"),
+      Attribute = str_remove(Attribute, "_A"),
+      SubAttribute = str_remove(SubAttribute, "_SA"),
+      Subcategory_Wrapped = case_when( # shorten titles on the x-axis and create groupings to reduce clutter
+      Subcategory == "Durable goods" ~ "Professional & Business Services",
+      Subcategory == "Professional and business services" ~ "Prof. & Bus. Services",
+      Subcategory == "Wholesale trade" ~ "Wholesale Trade",
+      Subcategory == "Transportation and warehousing" ~ "Other",     
+      Subcategory == "Government" ~ "Other",      
+      Subcategory == "Finance, insurance, real estate, rental, and leasing" ~ "Other",  
+      Subcategory == "Construction" ~ "Other", 
+      Subcategory == "Utilities" ~ "Other", 
+      Subcategory == "Arts, entertainment, recreation, accommodation, and food services" ~ "Other", TRUE ~ Subcategory)) %>%
+  group_by(Subcategory, SubAttribute, Subcategory_Wrapped) %>% 
+  summarise(Total_Employees = sum(Value))
+
+
+# create factors to the bars are arranged largest to shortest
+de_employment$Subcategory_Wrapped <- factor(de_employment$Subcategory_Wrapped,
+                                    levels = c(
+                                      "Prof. & Bus. Services",
+                                      "Wholesale Trade",
+                                      "Information",
+                                      "Manufacturing",
+                                      "Retail Trade",
+                                      "Other"))
+
+ # this sorts so the stacks will look pretty and orderd. SMH
+SA_Factors <-  de_employment %>%
+  group_by(SubAttribute) %>%
+  summarise(Value = sum(Total_Employees)) %>%
+  arrange(desc(Value))
+
+
+de_employment$SubAttribute_factors <- factor(
+  de_employment$SubAttribute,
+  levels = c(SA_Factors$SubAttribute))
+
+
+employ_plot <- plot_ly(
+  de_employment,
+  x = ~Subcategory_Wrapped,
+  y = ~Total_Employees,
+  color = ~SubAttribute_factors,
+  colors = ~de_palette1,
+  textposition = "none")%>% 
+
+add_trace(
+  type = "bar",
+  text = ~paste(
+    "<b>Employees:</b>",
+    formatC(Total_Employees, big.mark = ",", format = "f", digits = 0), "K",
+    "<br><b>Category:</b>", Subcategory, 
+    "<br><b>Industry:</b>", SubAttribute), 
+    marker = list(
+    line = list(
+      width = .5,
+      color = "white" )),
+  hoverinfo = 'text') %>% 
+
+  layout(
+    showlegend = FALSE,
+    margin = list(l=100, r=50, b=50, t=50, pad=10),
+    xaxis = list(title = ""),
+    yaxis = list(title = "Full & Part-Time Employees (Thousands)", showgrid = FALSE, tickformat = ","),
+    barmode = 'stack' )
+employ_plot
+```
+
+## Data Definitions
+
+-   [**Information:**]{style="color: #FF2f88;"}
+    -   broadcasting and telecommunications
+    -   data processing
+    -   internet publishing, and other information services
+    -   publishing industries, except internet (includes software)
+    -   motion picture and sound recording industries
+-   [**Manufacturing:** ]{style="color: #F66A4E;"}
+    -   durable goods
+
+        -   computer and electronic products
+        -   other durable goods (wood, machinery, furniture , electrical equipment, etc.)
+
+    -   non-durable goods (food, paper, petrol etc.)
+-   [**Professional and business services:** ]{style="color: #A66CF7;"}
+    -   administrative and waste management services
+
+    -   educational services, health care, and social assistance
+
+    -   health care and social assistance
+
+    -   management of companies and enterprises
+
+    -   professional, scientific, and technical services
+-   [**Retail Trade:** ]{style="color: #A5B01C;"}
+    -   broadcasting and telecommunications
+
+    -   data processing
+
+    -   internet publishing, and other information services
+
+    -   publishing industries, except internet (includes software)
+
+    -   motion picture and sound recording industries
+-   [**Wholesale Trade:** ]{style="color: #084C97;"}
+    -   broadcasting and telecommunications
+
+    -   data processing
+
+    -   internet publishing, and other information services
+
+    -   publishing industries, except internet (includes software)
+
+    -   motion picture and sound recording industries
+-   [**Other:** ]{style="color: #555555;"} a catch all for all other industries with low employee counts
+    -   arts
+    -   construction
+    -    federal ,state and local governments
+    -   mining
+    -   utilities
+    -   construction
+
+~*note,\ industries\ with\ counts\ reported\ a\ 0\ were\ excluded.*~
+:::
+
+### Conclusions
+
+blah blah blah
