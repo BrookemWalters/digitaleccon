@@ -198,6 +198,7 @@ de_time <-  DE22 %>%
   group_by(Category, Year) %>% 
     summarise(Bil_Dols= sum(Bil_Dols))
 
+
 # create factors so the legend is in order of largest to smallest
 de_time$Category <- factor(de_time$Category,
                           levels = c(
@@ -214,7 +215,7 @@ gross_output_plot <- plot_ly(de_time,
                 colors = de_palette,
                 marker = list(sizeref = 8), 
                 line = list(width = 2),
-                fill =  "tonexty") %>% # allows colors to stack without colors overlapping
+                fill = "tonexty") %>% 
   
   add_trace(
     type = "scatter",
@@ -246,7 +247,7 @@ gross_output_plot <- plot_ly(de_time,
       x = 0.0,
       y = 1.3),
     yaxis = list(title = "$Billions", showgrid = FALSE, tickformat = ","),
-    xaxis = list (title = 'Year',showgrid = FALSE))
+    xaxis = list (showgrid = FALSE))
 
 gross_output_plot
 ```
@@ -256,7 +257,8 @@ gross_output_plot
 `/b`
 
 ## employment
-```{r message=TRUE,echo=FALSE, warning=FALSE}
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=TRUE}
 de_employment <-  DE22 %>%
   filter(
     !str_detect(MicroAttribute, regex("_TOTAL", ignore_case = TRUE)),     
@@ -326,12 +328,9 @@ add_trace(
 
   layout(
     showlegend = FALSE,
+    margin = list(l=100, r=50, b=50, t=50, pad=10),
     xaxis = list(title = ""),
     yaxis = list(title = "Full & Part-Time Employees (Thousands)", showgrid = FALSE, tickformat = ","),
     barmode = 'stack' )
 employ_plot
-
-
-
 ```
-
