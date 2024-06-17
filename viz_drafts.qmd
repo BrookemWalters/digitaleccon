@@ -38,93 +38,43 @@ de_palette <- c(
   "Federal Nondefense Digital Services" = "#F66A4E")
 
 
-
-de_palette1 <- c(
-    "Professional and business services" = "#78C2AD",
-    "Computer systems design and related services"= "#78C2AD",
-    "Miscellaneous professional, scientific, and technical services"="#78C2AD",
-    "Educational services, health care, and social assistance"="#78C2AD",
-    "Educational services"="#78C2AD",
-    "Management of companies and enterprises"="#78C2AD",
-    "Finance, insurance, real estate, rental, and leasing" = "#5E77AA",
-    "Government" = "#F66A4E",
-    "Information" = "#FF2f88",
-    "Broadcasting and telecommunications" = "#FF2f88",
-    "Data processing, internet publishing, and other information services"= "#FF2f88",
-    "Publishing industries, except internet (includes software)"  = "#FF2f88",
-    "Motion picture and sound recording industries" = "#FF2f88",
-    "Other" = "#555555", 
-    "Arts, entertainment, recreation, accommodation, and food services" = "#555555" ,
-    "Construction" = "#555555",
-    "Transportation and warehousing" = "#F279B2",
-    "Wholesale trade" = "#C2D987",
-    "Manufacturing" = "#DBE55F",
-    "Computer and electronic products" = "#DBE55F",
-    "Retail Trade" = "#084c97",
-    "Other retail"= "#084c97",
-    "Food and beverage stores" = "#084c97",
-    "Motor vehicle and parts dealers"= "#084c97",
-    "Utilities" = "#92B7D5"
-)
-
-
-
+# there is probably a better way to do this, but automation was failing me
 de_palette1 <- c(
   "Professional and business services" = "#78C2AD",
+  "Administrative and waste management services" = "#78C2AD",
   "Computer systems design and related services" = "#78C2AD",
   "Miscellaneous professional, scientific, and technical services" = "#78C2AD",
   "Educational services, health care, and social assistance" = "#78C2AD",
   "Educational services" = "#78C2AD",
   "Management of companies and enterprises" = "#78C2AD",
   "Finance, insurance, real estate, rental, and leasing" = "#5E77AA",
-  "Government" = "#F66A4E",
   "Information" = "#FF2f88",
   "Broadcasting and telecommunications" = "#FF2f88",
   "Data processing, internet publishing, and other information services" = "#FF2f88",
   "Publishing industries, except internet (includes software)" = "#FF2f88",
   "Motion picture and sound recording industries" = "#FF2f88",
-  "Other" = "#555555",
-  "Arts, entertainment, recreation, accommodation, and food services" = "#555555",
-  "Construction" = "#555555",
   "Transportation and warehousing" = "#F279B2",
-  "Wholesale trade" = "#C2D987",
-  "Manufacturing" = "#DBE55F",
-  "Computer and electronic products" = "#DBE55F",
+  "Wholesale trade" = "#DBE55F",
+  "Manufacturing" = "#F66A4E",
+  "Computer and electronic products" = "#F66A4E",
+  "Other durable goods" = "#F66A4E",
+  "Nondurable goods"= "#F66A4E",
   "Retail Trade" = "#084c97",
   "Other retail" = "#084c97",
   "Food and beverage stores" = "#084c97",
   "Motor vehicle and parts dealers" = "#084c97",
-  "Utilities" = "#92B7D5",
-  "Wood products" = "#555555",
-  "Nonmetallic mineral products" = "#555555",
-  "Primary metals" = "#555555",
-  "Fabricated metal products" = "#555555",
-  "Machinery" = "#555555",
-  "Electrical equipment, appliances, and components" = "#555555",
-  "Motor vehicles, bodies and trailers, and parts" = "#555555",
-  "Other transportation equipment" = "#555555",
-  "Furniture and related products" = "#555555",
-  "Miscellaneous manufacturing" = "#555555",
-  "Nondurable goods" = "#555555",
-  "General merchandise stores" = "#555555",
-  "Air transportation" = "#555555",
-  "Truck transportation" = "#555555",
+  "General merchandise stores" = "#084c97",
   "Other transportation and support activities" = "#555555",
-  "Warehousing and storage" = "#555555",
-  "Federal Reserve banks, credit intermediation, and related activities" = "#555555",
-  "Securities, commodity contracts, and investments" = "#555555",
-  "Insurance carriers and related activities" = "#555555",
-  "Real estate" = "#555555",
-  "Rental and leasing services and lessors of intangible assets" = "#555555",
-  "Legal services" = "#555555",
-  "Administrative and waste management services" = "#555555",
-  "National defense" = "#555555",
-  "Nondefense" = "#555555",
-  "Government enterprises" = "#555555",
-  "General government" = "#555555",
-  "Arts, entertainment, and recreation" = "#555555",
-  "Accommodation and food service" = "#555555"
-)
+  "Finance and insurance" = "#555555",
+  "Real estate and rental and leasing" = "#555555",
+  "Truck transportation" = "#555555",
+  "Government" = "#555555",
+  "Federal Government" = "#555555",
+  "State and local government"= "#555555",
+  "Other" = "#555555",
+  "Utilities" =  "#555555",
+  "Arts, entertainment, recreation, accommodation, and food services" = "#555555",
+  "Construction" = "#555555")
 
 
 
@@ -305,6 +255,7 @@ gross_output_plot
 
 `/b`
 
+## employment
 ```{r message=TRUE,echo=FALSE, warning=FALSE}
 de_employment <-  DE22 %>%
   filter(
@@ -316,90 +267,47 @@ de_employment <-  DE22 %>%
       Subcategory = str_remove(Subcategory, "_SC"),
       Attribute = str_remove(Attribute, "_A"),
       SubAttribute = str_remove(SubAttribute, "_SA"),
-      Subcategory_Wrapped = case_when( # shorten titles on the x-ax
-      Subcategory == "Professional and business services" ~ "Professional & Business Services",
+      Subcategory_Wrapped = case_when( # shorten titles on the x-axis and create groupings to reduce clutter
+      Subcategory == "Durable goods" ~ "Professional & Business Services",
+      Subcategory == "Professional and business services" ~ "Prof. & Bus. Services",
       Subcategory == "Wholesale trade" ~ "Wholesale Trade",
       Subcategory == "Transportation and warehousing" ~ "Other",     
       Subcategory == "Government" ~ "Other",      
       Subcategory == "Finance, insurance, real estate, rental, and leasing" ~ "Other",  
+      Subcategory == "Construction" ~ "Other", 
       Subcategory == "Utilities" ~ "Other", 
       Subcategory == "Arts, entertainment, recreation, accommodation, and food services" ~ "Other", TRUE ~ Subcategory)) %>%
-  select(-Bil_Dols, Value_Type)
+  group_by(Subcategory, SubAttribute, Subcategory_Wrapped) %>% 
+  summarise(Total_Employees = sum(Value))
 
 
 # create factors to the bars are arranged largest to shortest
 de_employment$Subcategory_Wrapped <- factor(de_employment$Subcategory_Wrapped,
                                     levels = c(
-                                      "Professional & Business Services",
+                                      "Prof. & Bus. Services",
                                       "Wholesale Trade",
                                       "Information",
                                       "Manufacturing",
                                       "Retail Trade",
                                       "Other"))
 
-#  this sorts so the stacks will look pretty and orderd. SMH
-# SA_Factors <-  de_employment %>%  
-#   group_by(SubAttribute) %>% 
-#   summarise(Value = sum(Value)) %>% 
-#   arrange(desc(Value))
-# 
-de_employment$SubAttribute <- factor(
+ # this sorts so the stacks will look pretty and orderd. SMH
+SA_Factors <-  de_employment %>%
+  group_by(SubAttribute) %>%
+  summarise(Value = sum(Total_Employees)) %>%
+  arrange(desc(Value))
+
+
+de_employment$SubAttribute_factors <- factor(
   de_employment$SubAttribute,
-  levels = c( # doing this manually because the grouping didnt work
-"Computer systems design and related services",
-"Wholesale trade",
-"Broadcasting and telecommunications",
-"Computer and electronic products",
-"Publishing industries, except internet (includes software)",
-"Data processing, internet publishing, and other information services",
-"Other retail",
-"Miscellaneous professional, scientific, and technical services",
-"Motion picture and sound recording industries",
-"Educational services",
-"Food and beverage stores",
-"Motor vehicle and parts dealers",
-"Management of companies and enterprises",
-"Truck transportation",
-"Machinery",
-"General government",
-"Electrical equipment, appliances, and components",
-"Educational services, health care, and social assistance",
-"Nondurable goods",
-"General merchandise stores",
-"Nondefense",
-"Miscellaneous manufacturing",
-"Insurance carriers and related activities",
-"Federal Reserve banks, credit intermediation, and related activities",
-"National defense",
-"Accommodation and food services",
-"Fabricated metal products",
-"Motor vehicles, bodies and trailers, and parts",
-"Air transportation",
-"Arts, entertainment, and recreation",
-"Warehousing and storage",
-"Other transportation and support activities",
-"Other transportation equipment",
-"Securities, commodity contracts, and investments",
-"Construction",
-"Furniture and related products",
-"Government enterprises",
-"Legal services",
-"Nonmetallic mineral products",
-"Primary metals",
-"Real estate",
-"Rental and leasing services and lessors of intangible assets",
-"Utilities",
-"Wood products" ))
-
-
-
+  levels = c(SA_Factors$SubAttribute))
 
 
 employ_plot <- plot_ly(
   de_employment,
   x = ~Subcategory_Wrapped,
-  y = ~Value,
-  color = ~SubAttribute,
+  y = ~Total_Employees,
+  color = ~SubAttribute_factors,
   colors = ~de_palette1,
   textposition = "none")%>% 
 
@@ -407,7 +315,7 @@ add_trace(
   type = "bar",
   text = ~paste(
     "<b>Employees:</b>",
-    formatC(Value, big.mark = ",", format = "f", digits = 0), "K",
+    formatC(Total_Employees, big.mark = ",", format = "f", digits = 0), "K",
     "<br><b>Category:</b>", Subcategory, 
     "<br><b>Industry:</b>", SubAttribute), 
     marker = list(
