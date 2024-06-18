@@ -2,25 +2,25 @@
 title: ""
 ---
 
+
 [![Illustration by Dmitrii Kharchenko](images/title_image.png){fig-align="left" width="687"}](https://dribbble.com/shots/21155565-Multiwallet-Illustration)
 
 ### Introduction
 
-For those of us in the WEIRD (*Western Educated Industrialized, Rich, and Democratic*) part of the world, the Digital Economy (DE) is intertwined with our daily lives and nearly indistinguishable from other aspects of our national Gross Domestic Prodcut (GDP). Yet, it is only in the last few years that the U.S. government began to formally define this aspect of our economy, leveraging the findings of other organizations such as the National Telecommunications and Information Administration (NTIA) and the Digital Economy Board of Advisors (DEBA).[^1]
+For those of us in the WEIRD (*Western Educated Industrialized, Rich, and Democratic*) part of the world, the Digital Economy (DE) is intertwined with our daily lives and nearly indistinguishable from other aspects of our national Gross Domestic Prodcut (GDP). Yet, it is only in the last few years that the U.S. government began to formally define this aspect of our economy, leveraging the findings of other organizations such as the National Telecommunications and Information Administration (NTIA) and the Digital Economy Board of Advisors (DEBA).
 
-[^1]: K. Barefoot, D. Curtis, W. Jolliff, J.R. Nicholson, & R. Omohundro, R. (2018, March). *Defining and Measuring the Digital Economy*. Bureau of Economic Analysis (BEA). <https://www.bea.gov/research/papers/2018/defining-and-measuring-digital-economy>
+Defining digital markets is challenging due to various factors. For instance, transactions on spaces like social media platforms often have minimal direct consumer costs, relying heavily on advertising revenue. In fact, it is currently estimated that priced digital services account for at least 45% of the DE (as seen in Figure 2).[^1]
 
-Defining digital markets is challenging due to various factors. For instance, transactions on spaces like social media platforms often have minimal direct consumer costs, relying heavily on advertising revenue. In fact, it is currently estimated that priced digital services account for at least 45% of the DE (as seen in Figure 2).[^2]
+[^1]: U.S. Bureau of Economic Analysis (BEA). (2023). U.S. Digital Economy: New and Revised Estimates, 2017–2022. ([bea.gov](https://apps.bea.gov/scb/issues/2023/12-december/1223-digital-economy.htm))\]
 
-[^2]: [U.S. Bureau of Economic Analysis](https://apps.bea.gov/scb/issues/2023/12-december/1223-digital-economy.htm) (BEA). (2023). *U.S. Digital Economy: New and Revised Estimates, 2017–2022*.
+The GDP, often looked to as our economic barometer, is not telling the full story; the DE is in a state of constant flux, growing and evolving faster than researchers can collect the data.[^2] Furthermore, societal shifts resulting from the COVID-19 pandemic—such as the widespread adoption of remote work, online education, and digital commerce—combined with the accelerating use of artificial intelligence, contribute significantly to this dynamic landscape. These factors provide a compelling case for studying this topic and deepening our understanding of our modern world.
 
-The GDP, often looked to as our economic barometer, is not telling the full story; the DE is in a state of constant flux, growing and evolving faster than researchers can collect the data.[^3] Furthermore, societal shifts resulting from the COVID-19 pandemic—such as the widespread adoption of remote work, online education, and digital commerce—combined with the accelerating use of artificial intelligence, contribute significantly to this dynamic landscape. These factors provide a compelling case for studying this topic and deepening our understanding of our modern world.
-
-[^3]: E. Brynjolfsson, & A, Collis (2019, November). *How Should We Measure the Digital Economy?* [Harvard Business Review.](https://hbr.org/2019/11/how-should-we-measure-the-digital-economy)
+[^2]: Brynjolfsson, E., & Collis, A. (2019, November 19). How Should We Measure the Digital Economy? *Harvard Business Review*. <https://hbr.org/2019/11/how-should-we-measure-the-digital-economy>\
 
 Accurately assessing the value of free digital goods and services is crucial for effective management of the digital economy. This project brings awareness to this through visualizing the information provided in the Bureau of Economic Analysis’s report “U.S. Digital Economy: New and Revised Estimates, 2017–2022” and further highlights emerging trends. For more on the methodology behind the calculations visit the [BEA](https://www.bea.gov/data/special-topics/digital-economy).
 
 ##### Prepping the data for the charts:
+
 
 ```{r Setup environment, message=FALSE, warning=FALSE}
     # load libraries
@@ -93,9 +93,11 @@ Accurately assessing the value of free digital goods and services is crucial for
       "Construction" = "#555555")
 ```
 
+
 ### What makes up the digital economy?
 
 The estimates for the real value added by activity reveal that in 2022, the total Digital Economy was \~2.6 trillion dollars, with infrastructure accounting the largest portion of that, at roughly 945 Billion! The "value added", refers to the monetary gains from sources such as compensation of employees, taxes, or revenue generated. ~[2]{.smallcaps}~
+
 
 ```{r real value, eval=FALSE}
 # guide: https://rdrr.io/github/timelyportfolio/d3treeR/man/d3tree2.html
@@ -181,6 +183,7 @@ tree <- d3tree(real_value,
 saveWidget(tree, file = "TreePlot.html", selfcontained = T)
 ```
 
+
 #### 2022 Digital Economy Real Value Added by Activity:
 
 ::: callout-tip
@@ -190,9 +193,11 @@ On the treemap below, click on an element to expand and reveal the value added b
 ::: panel-tabset
 ## Plot
 
+
 ```{r echo=FALSE}
 tree
 ```
+
 
 ## Data Definitions
 
@@ -244,6 +249,7 @@ On the area graph below, hoover the mouse over the plotted points to see the pro
 
 ::: panel-tabset
 ## Plot
+
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=TRUE}
 # https://plotly.com/r/styling-figures/
@@ -307,6 +313,7 @@ gross_output_plot <- plot_ly(de_time,
 gross_output_plot
 ```
 
+
 ## Data Definitions
 
 -   [**E-commerce:**]{style="color: #F279B2;"} “the remote sale of goods and services over computer networks”.
@@ -334,6 +341,7 @@ Hoover the mouse over the stacked bars to see which sectors are the largest empl
 
 ::: panel-tabset
 ## Plot
+
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=TRUE}
 de_employment <-  DE22 %>%
@@ -412,6 +420,7 @@ add_trace(
 employ_plot
 ```
 
+
 ## Data Definitions
 
 -   [**Information:**]{style="color: #FF2f88;"}
@@ -474,8 +483,9 @@ employ_plot
 
 \### Conclusion
 
-Economists from the Stanford Institute for Economic Policy Research emphasis that the digital economy will continue to play an important role, as investments into this sector are benefited by economies of scale and network effects ." [^4] As shown in figure 2, we an explosion of growth by between 2017 and 2020~[2]{.smallcaps}~. Considering that the top firms in our nation stem from the tech industry and primarily provide digital goods and services, it is crucial to measure and understand the impact of the digital economy on our GDP, a common source and compass for policy making.
+Economists from the National Bureau of Economic Research emphasis that the digital economy will continue to play an important role, as investments into this sector are benefited by economies of scale and network effects ." [^3] As shown in figure 2, we an explosion of growth by between 2017 and 2020~[2]{.smallcaps}~. Considering that the top firms in our nation stem from the tech industry and primarily provide digital goods and services, it is crucial to measure and understand the impact of the digital economy on our GDP, a common source and compass for policy making.
 
-[^4]: P. Tambe, L. Hitt, D. Rock, and E. Brynjolfsson. (2020, December) Digital Capital and Superstar Firms. [The Stanford Institute for Economic Policy Research (SIEPR)](https://siepr.stanford.edu/publications/working-paper/digital-capital-and-superstar-firms)
+[^3]: P. Tambe, L. Hitt, D. Rock, and E. Brynjolfsson. Digital Capital and Superstar Firms. NATIONAL BUREAU OF ECONOMIC RESEARCH, 2024. <https://www.nber.org/papers/w28285>
 
 In summary, the digital economy is the current catalyst of our economic future. Understanding its impact—both quantifiable and transformative—is essential for informed policymaking and sustainable growth.
+
