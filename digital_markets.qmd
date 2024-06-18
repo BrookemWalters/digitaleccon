@@ -6,96 +6,94 @@ title: ""
 
 ### Introduction
 
-For those of us in the WEIRD (*Western Educated Industrialized, Rich, and Democratic*) part of the world, the Digital Economy(DE) is intertwined with our daily lives and nearly indistinguishable from other aspects of our national Gross Domestic Prodcut (GDP). Yet, it is only in the last few years that the U.S. government began to formally define this aspect of our economy, leveraging the findings of other organizations such as the National Telecommunications and Information Administration (NTIA) and the Digital Economy Board of Advisors (DEBA).
+For those of us in the WEIRD (*Western Educated Industrialized, Rich, and Democratic*) part of the world, the Digital Economy (DE) is intertwined with our daily lives and nearly indistinguishable from other aspects of our national Gross Domestic Prodcut (GDP). Yet, it is only in the last few years that the U.S. government began to formally define this aspect of our economy, leveraging the findings of other organizations such as the National Telecommunications and Information Administration (NTIA) and the Digital Economy Board of Advisors (DEBA).
 
 Defining digital markets is challenging due to various factors. For instance, transactions on spaces like social media platforms often have minimal direct consumer costs, relying heavily on advertising revenue. In fact, it is currently estimated that priced digital services account for at least 45% of the DE (as seen in Figure 2).
 
 The GDP, often looked to as our economic barometer, is not telling the full story; the DE is in a state of constant flux, growing and evolving faster than researchers can collect the data.[^1] Furthermore, societal shifts resulting from the COVID-19 pandemic—such as the widespread adoption of remote work, online education, and digital commerce—combined with the accelerating use of artificial intelligence, contribute significantly to this dynamic landscape. These factors provide a compelling case for studying this topic and deepening our understanding of our modern world.
 
-[^1]: Barefoot, K., Curtis, D., Jolliff, W., Nicholson, J. R., & Omohundro, R. (2018, March 15). *Defining and Measuring the Digital Economy (Working Paper)*. Bureau of Economic Analysis (BEA). \[idefining-and-measuring-the-digital-economy.pdf (bea.gov)\]
+[^1]: [Barefoot, K., Curti](https://hbr.org/2019/11/how-should-we-measure-the-digital-economy)s, D., Jolliff, W., Nicholson, J. R., & Omohundro, R. (2018, March 15). *Defining and Measuring the Digital Economy (Working Paper)*. Bureau of Economic Analysis (BEA). \[idefining-and-measuring-the-digital-economy.pdf (bea.gov)\]
 
-Accurately assessing the value of free digital goods and services is crucial for effective management of the digital economy.[^2] This project brings awareness to this through visualizing the information provided in the Bureau of Economic Analysis’s report “U.S. Digital Economy: New and Revised Estimates, 2017–2022” and further highlights emerging trends. For more on the methodology behind the calculations visit the [BEA](https://www.bea.gov/data/special-topics/digital-economy).
+Accurately assessing the value of free digital goods and services is crucial for effective management of the digital economy. This project brings awareness to this through visualizing the information provided in the Bureau of Economic Analysis’s report “U.S. Digital Economy: New and Revised Estimates, 2017–2022” and further highlights emerging trends. For more on the methodology behind the calculations visit the [BEA](https://www.bea.gov/data/special-topics/digital-economy). [^2]
 
-[^2]: Brynjolfsson, E., & Collis, A. (2019, November 19). How Should We Measure the Digital Economy? *Harvard Business Review*. <https://hbr.org/2019/11/how-should-we-measure-the-digital-economy>
+[^2]: Brynjolfsson, E., & Collis, A. (2019, November 19). How Should We Measure the Digital Economy? *Harvard Business Review*. <https://hbr.org/2019/11/how-should-we-measure-the-digital-economy> \
 
-<br/><br/>\
-
-##### Here's how I loaded and prepared the data:
+##### Preping the data for the charts:
 
 ```{r Setup environment, message=FALSE, warning=FALSE}
-# load libraries
-library(treemap) # create a basic treemap
-library(d3treeR) # html tree mao
-library(htmlwidgets)
-library(plotly) # dynamic graphs
-library(tidyverse) # data wrangling
-library(readxl) # file reading
+    # load libraries
+    library(treemap) # create a basic treemap
+    library(d3treeR) # html tree mao
+    library(htmlwidgets)
+    library(plotly) # dynamic graphs
+    library(tidyverse) # data wrangling
+    library(readxl) # file reading
 
 
-# import data
-DE22 <- read_excel("docs/DE22.xlsx")
+    # import data
+    DE22 <- read_excel("docs/DE22.xlsx")
 
-# wrangle the data
-DE22 <-  DE22 %>% 
-  mutate(Value = as.numeric(Value))
+    # wrangle the data
+    DE22 <-  DE22 %>% 
+      mutate(Value = as.numeric(Value))
 
-# tree map colors
-de_palette0<- c(
-  "#F279B2", # eCommerce
-  "#E3FF3B", # infrastructure 
-  "#C69FFF") # printed services 
+    # tree map colors
+    de_palette0<- c(
+      "#F279B2", # eCommerce
+      "#E3FF3B", # infrastructure 
+      "#C69FFF") # printed services 
 
 
-# line graph colors
-de_palette <- c(
-  "Digital Economy" = "#555555",
-  "Priced Digital Services" = "#B685FF",
-  "Infrastructure" = "#E3FF3B",
-  "E-Commerce" = "#FF2f88",
-  "Federal Nondefense Digital Services" = "#084C97")
+    # line graph colors
+    de_palette <- c(
+      "Digital Economy" = "#555555",
+      "Priced Digital Services" = "#B685FF",
+      "Infrastructure" = "#E3FF3B",
+      "E-Commerce" = "#FF2f88",
+      "Federal Nondefense Digital Services" = "#084C97")
 
-# stacked bar graph colors
-# there is probably a better way to do this, but automation was failing me
-de_palette1 <- c(
-  "Professional and business services" = "#B685FF",
-  "Administrative and waste management services" = "#B685FF",
-  "Computer systems design and related services" = "#B685FF",
-  "Miscellaneous professional, scientific, and technical services" = "#B685FF",
-  "Educational services, health care, and social assistance" = "#B685FF",
-  "Educational services" = "#B685FF",
-  "Management of companies and enterprises" = "#B685FF",
-  "Information" = "#B685FF",
-  "Broadcasting and telecommunications" = "#FF2f88",
-  "Data processing, internet publishing, and other information services" = "#FF2f88",
-  "Publishing industries, except internet (includes software)" = "#FF2f88",
-  "Motion picture and sound recording industries" = "#FF2f88",
-  "Transportation and warehousing" = "#F279B2",
-  "Wholesale trade" = "#084C97",
-  "Manufacturing" = "#FE7C58",
-  "Computer and electronic products" = "#FE7C58",
-  "Other durable goods" = "#FE7C58",
-  "Nondurable goods"= "#FE7C58",
-  "Retail Trade" = "#E3FF3B",
-  "Other retail" = "#E3FF3B",
-  "Food and beverage stores" = "#E3FF3B",
-  "Motor vehicle and parts dealers" = "#E3FF3B",
-  "General merchandise stores" = "#E3FF3B",
-  "Other transportation and support activities" = "#555555",
-  "Finance and insurance" = "#555555",
-  "Real estate and rental and leasing" = "#555555",
-  "Truck transportation" = "#555555",
-  "Government" = "#555555",
-  "Federal Government" = "#555555",
-  "State and local government"= "#555555",
-  "Other" = "#555555",
-  "Utilities" =  "#555555",
-  "Arts, entertainment, recreation, accommodation, and food services" = "#555555",
-  "Construction" = "#555555")
+    # stacked bar graph colors
+    # there is probably a better way to do this, but automation was failing me
+    de_palette1 <- c(
+      "Professional and business services" = "#B685FF",
+      "Administrative and waste management services" = "#B685FF",
+      "Computer systems design and related services" = "#B685FF",
+      "Miscellaneous professional, scientific, and technical services" = "#B685FF",
+      "Educational services, health care, and social assistance" = "#B685FF",
+      "Educational services" = "#B685FF",
+      "Management of companies and enterprises" = "#B685FF",
+      "Information" = "#B685FF",
+      "Broadcasting and telecommunications" = "#FF2f88",
+      "Data processing, internet publishing, and other information services" = "#FF2f88",
+      "Publishing industries, except internet (includes software)" = "#FF2f88",
+      "Motion picture and sound recording industries" = "#FF2f88",
+      "Transportation and warehousing" = "#F279B2",
+      "Wholesale trade" = "#084C97",
+      "Manufacturing" = "#FE7C58",
+      "Computer and electronic products" = "#FE7C58",
+      "Other durable goods" = "#FE7C58",
+      "Nondurable goods"= "#FE7C58",
+      "Retail Trade" = "#E3FF3B",
+      "Other retail" = "#E3FF3B",
+      "Food and beverage stores" = "#E3FF3B",
+      "Motor vehicle and parts dealers" = "#E3FF3B",
+      "General merchandise stores" = "#E3FF3B",
+      "Other transportation and support activities" = "#555555",
+      "Finance and insurance" = "#555555",
+      "Real estate and rental and leasing" = "#555555",
+      "Truck transportation" = "#555555",
+      "Government" = "#555555",
+      "Federal Government" = "#555555",
+      "State and local government"= "#555555",
+      "Other" = "#555555",
+      "Utilities" =  "#555555",
+      "Arts, entertainment, recreation, accommodation, and food services" = "#555555",
+      "Construction" = "#555555")
 ```
 
 ### What makes up the digital economy?
 
-The estimates for the real value added by activity reveal that in 2022. the total Digital Economy was \~2.6 trillion dollars, with infrastructure accounting the largest portion of that, at roughly 945 Billion! The "value added", refers to the monetary gains from sources such as compensation of employees, taxes, or revenue generated.[^3]
+The estimates for the real value added by activity reveal that in 2022, the total Digital Economy was \~2.6 trillion dollars, with infrastructure accounting the largest portion of that, at roughly 945 Billion! The "value added", refers to the monetary gains from sources such as compensation of employees, taxes, or revenue generated.[^3]
 
 [^3]: U.S. Bureau of Economic Analysis (BEA). (2023). U.S. Digital Economy: New and Revised Estimates, 2017–2022. ([bea.gov](https://apps.bea.gov/scb/issues/2023/12-december/1223-digital-economy.htm))
 
@@ -234,7 +232,7 @@ tree
 
 ### How has the digital market changed over time?
 
-The area graph below reveals that the gross output of the digital economy has grown by \~36% over the last five years, with priced digital services accounting for 45% of the output annually. The gross output captures the value of goods and services produced.
+The area graph below reveals that the gross output of the digital economy has grown by \~36% over the last five years, with priced digital services accounting for 45% of the output annually. The gross output captures the value of goods and services produced. \[3\]
 
 #### Digital Economy Gross Output by Activity, 2017-2022
 
@@ -326,7 +324,7 @@ gross_output_plot
 
 ### What is the digital market size in terms of productivity?
 
-Professional and business services contain the largest share of the digital market's workforce, with over 3 million employed in this sector and computer systems design and related services comprising nearly 79% of that total.
+Professional and business services contain the largest share of the digital market's workforce, with over 3 million employed in this sector and computer systems design and related services comprising nearly 79% of that total. \[3\]
 
 #### 2022 Digital Economy Employment by Industry:
 
@@ -470,8 +468,14 @@ employ_plot
 ~*note, industries with counts reported a 0 were excluded.*~
 :::
 
+[Fig.3 2022 Digital Economy Employment by Industry]{.smallcaps}
 
+### Conclusion
 
+The digital economy has shown remarkable growth, increasing by 45% year-over-year between 2017 and 2020, with digital services being the largest component at the intersection of economic trends and technology. "Investments related to digital technologies are likely to play a particularly important role, reflecting, among other things, economies of scale and network effects ."[^4]
 
+[^4]: \[1\] P. Tambe, L. Hitt, D. Rock, and E. Brynjolfsson. Digital Capital and Superstar Firms. NATIONAL BUREAU OF ECONOMIC RESEARCH, 2024. <https://www.nber.org/papers/w28285>
 
+Considering that the top firms in our nation stem from the tech industry and primarily provide digital goods and services, it is crucial to measure and understand the impact of the digital economy on our GDP. As we near peak political season, with economic distress being a significant concern for voters, the relevance of the digital economy cannot be overstated.
 
+For instance, as of February 2020, the five most valuable firms in the S&P 500 were all from the tech industry—Microsoft, Google, Facebook, Amazon, and Apple. Their share of stock market capitalization has been growing, indicating the increasing importance of digital firms. Figure I illustrates that as a fraction of the overall value of firms in the S&P 500 index, the value of the top five most valuable firms has been rising since about 2010, with an especially rapid increase in recent years. This underscores the significant role digital technologies play in shaping our economic landscape. \[4\]
