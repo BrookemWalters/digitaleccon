@@ -16,7 +16,7 @@ The GDP, often looked to as our economic barometer, is not telling the full stor
 
 Accurately assessing the value of free digital goods and services is crucial for effective management of the digital economy. This project brings awareness to this through visualizing the information provided in the Bureau of Economic Analysis’s report “U.S. Digital Economy: New and Revised Estimates, 2017–2022” and further highlights emerging trends. For more on the methodology behind the calculations visit the [BEA](https://www.bea.gov/data/special-topics/digital-economy). [^2]
 
-[^2]: Brynjolfsson, E., & Collis, A. (2019, November 19). How Should We Measure the Digital Economy? *Harvard Business Review*. <https://hbr.org/2019/11/how-should-we-measure-the-digital-economy> \
+[^2]: Brynjolfsson, E., & Collis, A. (2019, November 19). How Should We Measure the Digital Economy? *Harvard Business Review*. <https://hbr.org/2019/11/how-should-we-measure-the-digital-economy>\
 
 ##### Prepping the data for the charts:
 
@@ -207,7 +207,7 @@ tree
 ## Data
 
 |                                                                       |                                 |                                 |                                 |                                 |                                 |                                 |
-|-----------|----------:|----------:|----------:|----------:|----------:|----------:|
+|-----------------------------------------------------------------------|--------------------------------:|--------------------------------:|--------------------------------:|--------------------------------:|--------------------------------:|--------------------------------:|
 | *in millions*                                                         |                      ^**2017**^ |                      ^**2018**^ |                      ^**2019**^ |                      ^**2020**^ |                      ^**2021**^ |                      ^**2022**^ |
 | [**Digital Market:**]{.smallcaps}                                     | ^[***1,839,372***]{.smallcaps}^ | ^[***1,956,835***]{.smallcaps}^ | ^[***2,092,357***]{.smallcaps}^ | ^[***2,227,354***]{.smallcaps}^ | ^[***2,439,735***]{.smallcaps}^ | ^[***2,593,348***]{.smallcaps}^ |
 | [[**Infrastructure:**]{.smallcaps}]{style="color: #A5B01C;"}          |     ^[**629,798**]{.smallcaps}^ |     ^[**677,037**]{.smallcaps}^ |     ^[**731,936**]{.smallcaps}^ |     ^[**790,468**]{.smallcaps}^ |     ^[**882,084**]{.smallcaps}^ |     ^[**944,697**]{.smallcaps}^ |
@@ -474,7 +474,7 @@ employ_plot
 
 The digital economy has shown remarkable growth, increasing by 45% year-over-year between 2017 and 2020, with digital services being the largest component at the intersection of economic trends and technology. "Investments related to digital technologies are likely to play a particularly important role, reflecting, among other things, economies of scale and network effects ."[^4]
 
-[^4]:  P. Tambe, L. Hitt, D. Rock, and E. Brynjolfsson. Digital Capital and Superstar Firms. NATIONAL BUREAU OF ECONOMIC RESEARCH, 2024. <https://www.nber.org/papers/w28285>
+[^4]: P. Tambe, L. Hitt, D. Rock, and E. Brynjolfsson. Digital Capital and Superstar Firms. NATIONAL BUREAU OF ECONOMIC RESEARCH, 2024. <https://www.nber.org/papers/w28285>
 
 Considering that the top firms in our nation stem from the tech industry and primarily provide digital goods and services, it is crucial to measure and understand the impact of the digital economy on our GDP. As we near peak political season, with economic distress being a significant concern for voters, the relevance of the digital economy cannot be overstated.
 

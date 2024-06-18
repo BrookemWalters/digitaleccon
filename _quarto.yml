@@ -1,5 +1,6 @@
 project:
   type: website
+    site-url: https://github.com/BrookemWalters/digitaleccon/digital_markets.html
   output-dir: docs
 
 website:
