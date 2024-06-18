@@ -20,10 +20,13 @@ website:
     type: dark
     logo: "images/icon.png"
     left: 
-    - text: home
+    - text: The DE
       href: digital_markets.qmd
-    - text: references
+    - text: Target Audience
+      href: persona.qmd    
+    - text: References
       href: references.qmd 
+
   page-footer:
     background: "#F1FF9B"    
     right: "Brooke Walters 2024" 

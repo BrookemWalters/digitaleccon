@@ -2,19 +2,25 @@
 title: ""
 ---
 
-[![](images/title_image.png){fig-align="left" width="687"}](https://dribbble.com/shots/16115704-The-Digital-Dollar/attachments/7967833?mode=media)
+[![Illustration by Dmitrii Kharchenko](images/title_image.png){fig-align="left" width="687"}](https://dribbble.com/shots/21155565-Multiwallet-Illustration)
 
 ### Introduction
 
-For those of us in the WEIRD (*Western Educated Industrialized, Rich, and Democratic*) part of the world, the digital economy is intertwined with our daily lives and nearly indistinguishable from other aspects of our national GDP. Yet, it is only in the last few years that the U.S. government began to formally define this aspect of our economy.
+For those of us in the WEIRD (*Western Educated Industrialized, Rich, and Democratic*) part of the world, the Digital Economy(DE) is intertwined with our daily lives and nearly indistinguishable from other aspects of our national Gross Domestic Prodcut (GDP). Yet, it is only in the last few years that the U.S. government began to formally define this aspect of our economy, leveraging the findings of other organizations such as the National Telecommunications and Information Administration (NTIA) and the Digital Economy Board of Advisors (DEBA).
 
-It becomes even more difficult to define, as many outputs, like social media, from this market are provided “without consumer cost.”[^1] Additionally, digital markets are in constant flux, fueled by societal shifts in the aftermath of the COVID-19 pandemic and the accelerating adoption of artificial intelligence (AI).
+Defining digital markets is challenging due to various factors. For instance, transactions on spaces like social media platforms often have minimal direct consumer costs, relying heavily on advertising revenue. In fact, it is currently estimated that priced digital services account for at least 45% of the DE (as seen in Figure 2).
+
+The GDP, often looked to as our economic barometer, is not telling the full story; the DE is in a state of constant flux, growing and evolving faster than researchers can collect the data.[^1] Furthermore, societal shifts resulting from the COVID-19 pandemic—such as the widespread adoption of remote work, online education, and digital commerce—combined with the accelerating use of artificial intelligence, contribute significantly to this dynamic landscape. These factors provide a compelling case for studying this topic and deepening our understanding of our modern world.
 
 [^1]: Barefoot, K., Curtis, D., Jolliff, W., Nicholson, J. R., & Omohundro, R. (2018, March 15). *Defining and Measuring the Digital Economy (Working Paper)*. Bureau of Economic Analysis (BEA). \[idefining-and-measuring-the-digital-economy.pdf (bea.gov)\]
 
-This project visualizes the information provided by the Bureau of Economic Analysis’s report “U.S. Digital Economy: New and Revised Estimates, 2017–2022” and explores trends. For more on the methodology behind their calculations visit the [BEA](https://www.bea.gov/data/special-topics/digital-economy).\
+Accurately assessing the value of free digital goods and services is crucial for effective management of the digital economy.[^2] This project brings awareness to this through visualizing the information provided in the Bureau of Economic Analysis’s report “U.S. Digital Economy: New and Revised Estimates, 2017–2022” and further highlights emerging trends. For more on the methodology behind the calculations visit the [BEA](https://www.bea.gov/data/special-topics/digital-economy).
 
-<br/><br/> \#### Here's how I loaded and prepared the data.
+[^2]: Brynjolfsson, E., & Collis, A. (2019, November 19). How Should We Measure the Digital Economy? *Harvard Business Review*. <https://hbr.org/2019/11/how-should-we-measure-the-digital-economy>
+
+<br/><br/>\
+
+##### Here's how I loaded and prepared the data:
 
 ```{r Setup environment, message=FALSE, warning=FALSE}
 # load libraries
@@ -89,11 +95,9 @@ de_palette1 <- c(
 
 ### What makes up the digital economy?
 
-Looking at estimates for the real value added by activity, we see that in 2022 the total Digital Economy was \~2.6 Trillion dollars, with infrastructure accounting the largest portion of that, at roughly 945 Billion!
+The estimates for the real value added by activity reveal that in 2022. the total Digital Economy was \~2.6 trillion dollars, with infrastructure accounting the largest portion of that, at roughly 945 Billion! The "value added", refers to the monetary gains from sources such as compensation of employees, taxes, or revenue generated.[^3]
 
-"**Value added**", refers monetary gains from the compensation of employees, taxes, or revenue generated.[^2]
-
-[^2]: U.S. Bureau of Economic Analysis (BEA). (2023). U.S. Digital Economy: New and Revised Estimates, 2017–2022. ([bea.gov](https://apps.bea.gov/scb/issues/2023/12-december/1223-digital-economy.htm))
+[^3]: U.S. Bureau of Economic Analysis (BEA). (2023). U.S. Digital Economy: New and Revised Estimates, 2017–2022. ([bea.gov](https://apps.bea.gov/scb/issues/2023/12-december/1223-digital-economy.htm))
 
 ```{r real value, eval=FALSE}
 # guide: https://rdrr.io/github/timelyportfolio/d3treeR/man/d3tree2.html
@@ -322,12 +326,12 @@ gross_output_plot
 
 ### What is the digital market size in terms of productivity?
 
-The area graph below reveals that the gross output of the digital economy has grown by \~36% over the last five years, with priced digital services accounting for 45% of the output annually. The gross output captures the value of goods and services produced.
+Professional and business services contain the largest share of the digital market's workforce, with over 3 million employed in this sector and computer systems design and related services comprising nearly 79% of that total.
 
 #### 2022 Digital Economy Employment by Industry:
 
 ::: callout-tip
-Hoover the mouse over the stacked bars to see which sectors are the largest employers by category
+Hoover the mouse over the stacked bars to see which sectors are the largest employers by category.
 :::
 
 ::: panel-tabset
@@ -418,14 +422,14 @@ employ_plot
     -   internet publishing, and other information services
     -   publishing industries, except internet (includes software)
     -   motion picture and sound recording industries
--   [**Manufacturing:** ]{style="color: #F66A4E;"}
+-   [**Manufacturing:**]{style="color: #F66A4E;"}
     -   durable goods
 
         -   computer and electronic products
         -   other durable goods (wood, machinery, furniture , electrical equipment, etc.)
 
     -   non-durable goods (food, paper, petrol etc.)
--   [**Professional and business services:** ]{style="color: #A66CF7;"}
+-   [**Professional and business services:**]{style="color: #A66CF7;"}
     -   administrative and waste management services
 
     -   educational services, health care, and social assistance
@@ -435,7 +439,7 @@ employ_plot
     -   management of companies and enterprises
 
     -   professional, scientific, and technical services
--   [**Retail Trade:** ]{style="color: #A5B01C;"}
+-   [**Retail Trade:**]{style="color: #A5B01C;"}
     -   broadcasting and telecommunications
 
     -   data processing
@@ -445,7 +449,7 @@ employ_plot
     -   publishing industries, except internet (includes software)
 
     -   motion picture and sound recording industries
--   [**Wholesale Trade:** ]{style="color: #084C97;"}
+-   [**Wholesale Trade:**]{style="color: #084C97;"}
     -   broadcasting and telecommunications
 
     -   data processing
@@ -455,17 +459,19 @@ employ_plot
     -   publishing industries, except internet (includes software)
 
     -   motion picture and sound recording industries
--   [**Other:** ]{style="color: #555555;"} a catch all for all other industries with low employee counts
+-   [**Other:**]{style="color: #555555;"} a catch all for all other industries with low employee counts
     -   arts
     -   construction
-    -    federal ,state and local governments
+    -   federal ,state and local governments
     -   mining
     -   utilities
     -   construction
 
-~*note,\ industries\ with\ counts\ reported\ a\ 0\ were\ excluded.*~
+~*note, industries with counts reported a 0 were excluded.*~
 :::
 
-### Conclusions
 
-blah blah blah
+
+
+
+
