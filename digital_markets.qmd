@@ -18,7 +18,7 @@ Accurately assessing the value of free digital goods and services is crucial for
 
 [^2]: Brynjolfsson, E., & Collis, A. (2019, November 19). How Should We Measure the Digital Economy? *Harvard Business Review*. <https://hbr.org/2019/11/how-should-we-measure-the-digital-economy> \
 
-##### Preping the data for the charts:
+##### Prepping the data for the charts:
 
 ```{r Setup environment, message=FALSE, warning=FALSE}
     # load libraries

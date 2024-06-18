@@ -2,11 +2,8 @@
 title: "Target Audience"
 ---
 
-Audience: 
-The visualizations and written summaries are for a lay audience, more specifically, for the “Alice” persona. 
+Audience: The visualizations and written summaries are for a lay audience, more specifically, for the “Alice” persona.
 
-Alice is business-minded, curious, with internet access, and general computer skills. She’s intelligent, but not a professional economist. 
+Alice is business-minded, curious, with internet access, and general computer skills. She’s intelligent, but not a professional economist.
 
-
-
-![](images/persona 1.png)
+![](images/persona%201.png)
