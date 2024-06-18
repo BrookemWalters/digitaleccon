@@ -474,7 +474,7 @@ employ_plot
 
 The digital economy has shown remarkable growth, increasing by 45% year-over-year between 2017 and 2020, with digital services being the largest component at the intersection of economic trends and technology. "Investments related to digital technologies are likely to play a particularly important role, reflecting, among other things, economies of scale and network effects ."[^4]
 
-[^4]: \[1\] P. Tambe, L. Hitt, D. Rock, and E. Brynjolfsson. Digital Capital and Superstar Firms. NATIONAL BUREAU OF ECONOMIC RESEARCH, 2024. <https://www.nber.org/papers/w28285>
+[^4]:  P. Tambe, L. Hitt, D. Rock, and E. Brynjolfsson. Digital Capital and Superstar Firms. NATIONAL BUREAU OF ECONOMIC RESEARCH, 2024. <https://www.nber.org/papers/w28285>
 
 Considering that the top firms in our nation stem from the tech industry and primarily provide digital goods and services, it is crucial to measure and understand the impact of the digital economy on our GDP. As we near peak political season, with economic distress being a significant concern for voters, the relevance of the digital economy cannot be overstated.
 
