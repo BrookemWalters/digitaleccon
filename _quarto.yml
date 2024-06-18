@@ -1,6 +1,5 @@
 project:
   type: website
-    site-url: https://github.com/BrookemWalters/digitaleccon/digital_markets.html
   output-dir: docs
 
 website:
@@ -21,8 +20,6 @@ website:
     type: dark
     logo: "images/icon.png"
     left: 
-    - text: The DE
-      href: digital_markets.qmd
     - text: Target Audience
       href: persona.qmd    
     - text: References

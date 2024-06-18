@@ -8,15 +8,15 @@ title: ""
 
 For those of us in the WEIRD (*Western Educated Industrialized, Rich, and Democratic*) part of the world, the Digital Economy (DE) is intertwined with our daily lives and nearly indistinguishable from other aspects of our national Gross Domestic Prodcut (GDP). Yet, it is only in the last few years that the U.S. government began to formally define this aspect of our economy, leveraging the findings of other organizations such as the National Telecommunications and Information Administration (NTIA) and the Digital Economy Board of Advisors (DEBA).
 
-Defining digital markets is challenging due to various factors. For instance, transactions on spaces like social media platforms often have minimal direct consumer costs, relying heavily on advertising revenue. In fact, it is currently estimated that priced digital services account for at least 45% of the DE (as seen in Figure 2).
+Defining digital markets is challenging due to various factors. For instance, transactions on spaces like social media platforms often have minimal direct consumer costs, relying heavily on advertising revenue. In fact, it is currently estimated that priced digital services account for at least 45% of the DE (as seen in Figure 2).[^1]
 
-The GDP, often looked to as our economic barometer, is not telling the full story; the DE is in a state of constant flux, growing and evolving faster than researchers can collect the data.[^1] Furthermore, societal shifts resulting from the COVID-19 pandemic—such as the widespread adoption of remote work, online education, and digital commerce—combined with the accelerating use of artificial intelligence, contribute significantly to this dynamic landscape. These factors provide a compelling case for studying this topic and deepening our understanding of our modern world.
+[^1]: U.S. Bureau of Economic Analysis (BEA). (2023). U.S. Digital Economy: New and Revised Estimates, 2017–2022. ([bea.gov](https://apps.bea.gov/scb/issues/2023/12-december/1223-digital-economy.htm))\]
 
-[^1]: [Barefoot, K., Curti](https://hbr.org/2019/11/how-should-we-measure-the-digital-economy)s, D., Jolliff, W., Nicholson, J. R., & Omohundro, R. (2018, March 15). *Defining and Measuring the Digital Economy (Working Paper)*. Bureau of Economic Analysis (BEA). \[idefining-and-measuring-the-digital-economy.pdf (bea.gov)\]
-
-Accurately assessing the value of free digital goods and services is crucial for effective management of the digital economy. This project brings awareness to this through visualizing the information provided in the Bureau of Economic Analysis’s report “U.S. Digital Economy: New and Revised Estimates, 2017–2022” and further highlights emerging trends. For more on the methodology behind the calculations visit the [BEA](https://www.bea.gov/data/special-topics/digital-economy). [^2]
+The GDP, often looked to as our economic barometer, is not telling the full story; the DE is in a state of constant flux, growing and evolving faster than researchers can collect the data.[^2] Furthermore, societal shifts resulting from the COVID-19 pandemic—such as the widespread adoption of remote work, online education, and digital commerce—combined with the accelerating use of artificial intelligence, contribute significantly to this dynamic landscape. These factors provide a compelling case for studying this topic and deepening our understanding of our modern world.
 
 [^2]: Brynjolfsson, E., & Collis, A. (2019, November 19). How Should We Measure the Digital Economy? *Harvard Business Review*. <https://hbr.org/2019/11/how-should-we-measure-the-digital-economy>\
+
+Accurately assessing the value of free digital goods and services is crucial for effective management of the digital economy. This project brings awareness to this through visualizing the information provided in the Bureau of Economic Analysis’s report “U.S. Digital Economy: New and Revised Estimates, 2017–2022” and further highlights emerging trends. For more on the methodology behind the calculations visit the [BEA](https://www.bea.gov/data/special-topics/digital-economy).
 
 ##### Prepping the data for the charts:
 
@@ -93,9 +93,7 @@ Accurately assessing the value of free digital goods and services is crucial for
 
 ### What makes up the digital economy?
 
-The estimates for the real value added by activity reveal that in 2022, the total Digital Economy was \~2.6 trillion dollars, with infrastructure accounting the largest portion of that, at roughly 945 Billion! The "value added", refers to the monetary gains from sources such as compensation of employees, taxes, or revenue generated.[^3]
-
-[^3]: U.S. Bureau of Economic Analysis (BEA). (2023). U.S. Digital Economy: New and Revised Estimates, 2017–2022. ([bea.gov](https://apps.bea.gov/scb/issues/2023/12-december/1223-digital-economy.htm))
+The estimates for the real value added by activity reveal that in 2022, the total Digital Economy was \~2.6 trillion dollars, with infrastructure accounting the largest portion of that, at roughly 945 Billion! The "value added", refers to the monetary gains from sources such as compensation of employees, taxes, or revenue generated. ~[1](http://localhost:7057/#fn1)~
 
 ```{r real value, eval=FALSE}
 # guide: https://rdrr.io/github/timelyportfolio/d3treeR/man/d3tree2.html
@@ -204,10 +202,12 @@ tree
 
 -   [**Priced digital services:**]{style="color: #C69FFF;"} “services related to computing and communication that are performed for a fee charged to the consumer”.
 
+source : U.S. Bureau of Economic Analysis (BEA). (2023). U.S. Digital Economy: New and Revised Estimates, 2017–2022. ([bea.gov](https://apps.bea.gov/scb/issues/2023/12-december/1223-digital-economy.htm))
+
 ## Data
 
 |                                                                       |                                 |                                 |                                 |                                 |                                 |                                 |
-|-----------------------------------------------------------------------|--------------------------------:|--------------------------------:|--------------------------------:|--------------------------------:|--------------------------------:|--------------------------------:|
+|-----------|----------:|----------:|----------:|----------:|----------:|----------:|
 | *in millions*                                                         |                      ^**2017**^ |                      ^**2018**^ |                      ^**2019**^ |                      ^**2020**^ |                      ^**2021**^ |                      ^**2022**^ |
 | [**Digital Market:**]{.smallcaps}                                     | ^[***1,839,372***]{.smallcaps}^ | ^[***1,956,835***]{.smallcaps}^ | ^[***2,092,357***]{.smallcaps}^ | ^[***2,227,354***]{.smallcaps}^ | ^[***2,439,735***]{.smallcaps}^ | ^[***2,593,348***]{.smallcaps}^ |
 | [[**Infrastructure:**]{.smallcaps}]{style="color: #A5B01C;"}          |     ^[**629,798**]{.smallcaps}^ |     ^[**677,037**]{.smallcaps}^ |     ^[**731,936**]{.smallcaps}^ |     ^[**790,468**]{.smallcaps}^ |     ^[**882,084**]{.smallcaps}^ |     ^[**944,697**]{.smallcaps}^ |
@@ -232,7 +232,7 @@ tree
 
 ### How has the digital market changed over time?
 
-The area graph below reveals that the gross output of the digital economy has grown by \~36% over the last five years, with priced digital services accounting for 45% of the output annually. The gross output captures the value of goods and services produced. \[3\]
+The area graph below reveals that the gross output of the digital economy has grown by \~36% over the last five years, with priced digital services accounting for 45% of the output annually. The gross output captures the value of goods and services produced.\[^1^\]\[1\]
 
 #### Digital Economy Gross Output by Activity, 2017-2022
 
@@ -307,7 +307,7 @@ gross_output_plot <- plot_ly(de_time,
 gross_output_plot
 ```
 
-## Data Definitions
+## Data Definitions\[^1^\]\[1\]
 
 -   [**E-commerce:**]{style="color: #F279B2;"} “the remote sale of goods and services over computer networks”.
 
@@ -324,7 +324,7 @@ gross_output_plot
 
 ### What is the digital market size in terms of productivity?
 
-Professional and business services contain the largest share of the digital market's workforce, with over 3 million employed in this sector and computer systems design and related services comprising nearly 79% of that total. \[3\]
+Professional and business services contain the largest share of the digital market's workforce, with over 3 million employed in this sector and computer systems design and related services comprising nearly 79% of that total. \[^1^\]\[1\]
 
 #### 2022 Digital Economy Employment by Industry:
 
@@ -470,11 +470,11 @@ employ_plot
 
 [Fig.3 2022 Digital Economy Employment by Industry]{.smallcaps}
 
-### Conclusion
+<br/><br/> \### Conclusion
 
-The digital economy has shown remarkable growth, increasing by 45% year-over-year between 2017 and 2020, with digital services being the largest component at the intersection of economic trends and technology. "Investments related to digital technologies are likely to play a particularly important role, reflecting, among other things, economies of scale and network effects ."[^4]
+The digital economy has shown remarkable growth, increasing by 45% year-over-year between 2017 and 2020, with digital services being the largest component at the intersection of economic trends and technology. "Investments related to digital technologies are likely to play a particularly important role, reflecting, among other things, economies of scale and network effects ."[^3]
 
-[^4]: P. Tambe, L. Hitt, D. Rock, and E. Brynjolfsson. Digital Capital and Superstar Firms. NATIONAL BUREAU OF ECONOMIC RESEARCH, 2024. <https://www.nber.org/papers/w28285>
+[^3]: P. Tambe, L. Hitt, D. Rock, and E. Brynjolfsson. Digital Capital and Superstar Firms. NATIONAL BUREAU OF ECONOMIC RESEARCH, 2024. <https://www.nber.org/papers/w28285>
 
 Considering that the top firms in our nation stem from the tech industry and primarily provide digital goods and services, it is crucial to measure and understand the impact of the digital economy on our GDP. As we near peak political season, with economic distress being a significant concern for voters, the relevance of the digital economy cannot be overstated.
 
