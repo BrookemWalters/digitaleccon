@@ -6,7 +6,7 @@ title: ""
 
 ### Introduction
 
-For those of us in the WEIRD (*Western Educated Industrialized, Rich, and Democratic*) part of the world, the Digital Economy (DE) is intertwined with our daily lives and nearly indistinguishable from other aspects of our national Gross Domestic Prodcut (GDP). Yet, it is only in the last few years that the U.S. government began to formally define this aspect of our economy, leveraging the findings of other organizations such as the National Telecommunications and Information Administration (NTIA) and the Digital Economy Board of Advisors (DEBA).[^1]
+For those of us in the WEIRD (*Western Educated Industrialized, Rich, and Democratic*) part of the world, the Digital Economy (DE) is intertwined with our daily lives and nearly indistinguishable from other aspects of our national Gross Domestic Product (GDP). Yet, it is only in the last few years that the U.S. government began to formally define this aspect of our economy, leveraging the findings of other organizations such as the National Telecommunications and Information Administration (NTIA) and the Digital Economy Board of Advisors (DEBA).[^1]
 
 [^1]: K. Barefoot, D. Curtis, W. Jolliff, J.R. Nicholson, & R. Omohundro, R. (2018, March). *Defining and Measuring the Digital Economy*. [Bureau of Economic Analysis (BEA)](https://www.bea.gov/research/papers/2018/defining-and-measuring-digital-economy).
 
@@ -465,7 +465,7 @@ employ_plot
 
 ### Conclusion
 
-Economists from the Stanford Institute for Economic Policy Research emphasis that the digital economy will continue to play an important role, as investments into this sector are benefited by economies of scale and network effects ." [^4] As shown in figure 2, we an explosion of growth between 2017 and 2020~[2]{.smallcaps}~. Considering that the top firms in our nation stem from the tech industry and primarily provide digital goods and services, it is crucial to measure and understand the impact of the digital economy on our GDP, a common source and compass for policy making~[3]{.smallcaps}~.
+Economists from the Stanford Institute for Economic Policy Research emphasize that the digital economy will continue to play an important role, as investments into this sector are benefited by economies of scale and network effects ." [^4] As shown in figure 2, we an explosion of growth between 2017 and 2020~[2]{.smallcaps}~. Considering that the top firms in our nation stem from the tech industry and primarily provide digital goods and services, it is crucial to measure and understand the impact of the digital economy on our GDP, a common source and compass for policy making~[3]{.smallcaps}~.
 
 [^4]: P. Tambe, L. Hitt, D. Rock, and E. Brynjolfsson. (2020, December) Digital Capital and Superstar Firms. [The Stanford Institute for Economic Policy Research (SIEPR)](https://siepr.stanford.edu/publications/working-paper/digital-capital-and-superstar-firms)
 
