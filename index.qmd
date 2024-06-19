@@ -394,7 +394,7 @@ add_trace(
   type = "bar",
   text = ~paste(
     "<b>Employees:</b>",
-    formatC(Total_Employees, big.mark = ",", format = "f", digits = 0), "K",
+    formatC(Total_Employees, big.mark = ",", format = "f", digits = 0),
     "<br><b>Category:</b>", Subcategory, 
     "<br><b>Industry:</b>", SubAttribute), 
     marker = list(
