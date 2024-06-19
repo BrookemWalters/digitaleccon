@@ -420,43 +420,34 @@ employ_plot
     -   internet publishing, and other information services
     -   publishing industries, except internet (includes software)
     -   motion picture and sound recording industries
+    
 -   [**Manufacturing:**]{style="color: #F66A4E;"}
     -   durable goods
-
         -   computer and electronic products
         -   other durable goods (wood, machinery, furniture , electrical equipment, etc.)
-
     -   non-durable goods (food, paper, petrol etc.)
+    
 -   [**Professional and business services:**]{style="color: #A66CF7;"}
     -   administrative and waste management services
-
     -   educational services, health care, and social assistance
-
     -   health care and social assistance
-
     -   management of companies and enterprises
-
     -   professional, scientific, and technical services
+    
 -   [**Retail Trade:**]{style="color: #A5B01C;"}
     -   broadcasting and telecommunications
-
     -   data processing
-
     -   internet publishing, and other information services
-
     -   publishing industries, except internet (includes software)
-
     -   motion picture and sound recording industries
+    
 -   [**Wholesale Trade:**]{style="color: #084C97;"}
     -   broadcasting and telecommunications
-
     -   data processing
-
     -   internet publishing, and other information services
-
     -   publishing industries, except internet (includes software)
-
     -   motion picture and sound recording industries
+    
 -   [**Other:**]{style="color: #555555;"} a catch all for all other industries with low employee counts
     -   arts
     -   construction
@@ -472,9 +463,9 @@ employ_plot
 
 <br/><br/>
 
-\### Conclusion
+### Conclusion
 
-Economists from the Stanford Institute for Economic Policy Research emphasis that the digital economy will continue to play an important role, as investments into this sector are benefited by economies of scale and network effects ." [^4] As shown in figure 2, we an explosion of growth by between 2017 and 2020~[2]{.smallcaps}~. Considering that the top firms in our nation stem from the tech industry and primarily provide digital goods and services, it is crucial to measure and understand the impact of the digital economy on our GDP, a common source and compass for policy making~[3]{.smallcaps}~.
+Economists from the Stanford Institute for Economic Policy Research emphasis that the digital economy will continue to play an important role, as investments into this sector are benefited by economies of scale and network effects ." [^4] As shown in figure 2, we an explosion of growth between 2017 and 2020~[2]{.smallcaps}~. Considering that the top firms in our nation stem from the tech industry and primarily provide digital goods and services, it is crucial to measure and understand the impact of the digital economy on our GDP, a common source and compass for policy making~[3]{.smallcaps}~.
 
 [^4]: P. Tambe, L. Hitt, D. Rock, and E. Brynjolfsson. (2020, December) Digital Capital and Superstar Firms. [The Stanford Institute for Economic Policy Research (SIEPR)](https://siepr.stanford.edu/publications/working-paper/digital-capital-and-superstar-firms)
 
