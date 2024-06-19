@@ -10,7 +10,7 @@ website:
   navbar:
     tools:
       - icon: github
-        href: https://github.com/BrookemWalters/digitaleccon/digital_markets.html
+        href: https://github.com/BrookemWalters/digitaleccon
         text: "gitHub organization"
       - icon: linkedin
         href: https://www.linkedin.com/in/bmwlters
